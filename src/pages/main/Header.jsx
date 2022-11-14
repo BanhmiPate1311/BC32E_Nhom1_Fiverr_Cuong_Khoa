@@ -2,12 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./main.css";
 
-const Header = () => {
+const Header = (props) => {
   return (
-    <div className="main_header relative">
-      <nav className="py-2 md:py-4 overflow-hidden fixed top-0 w-full z-[1]">
+    <div className="main_header relative ">
+      <nav className="py-2 md:py-4 overflow-hidden fixed top-0 w-full z-[1] text-white">
         <div className="container mx-auto md:flex md:items-center">
-          <div className="flex justify-between items-center text-white">
+          <div className="flex justify-between items-center ">
             <NavLink href="#" className="font-bold text-4xl">
               fiverr<span className="text-green-400">.</span>
             </NavLink>
@@ -19,7 +19,7 @@ const Header = () => {
             </button>
           </div>
           <div
-            className="text-white font-bold hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0"
+            className=" font-bold hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0"
             id="navbar-collapse"
           >
             <NavLink href="#" className="lg:px-4 md:mx-2">
