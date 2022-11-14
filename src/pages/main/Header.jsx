@@ -27,13 +27,13 @@ const Header = () => {
             </NavLink>
 
             <NavLink
-              href="#"
+              to="/dangnhap"
               className="lg:px-4 md:mx-2 text-center border border-transparent"
             >
               Sign In
             </NavLink>
             <NavLink
-              href="#"
+              to="/dangky"
               className="lg:px-4 md:mx-2 text-center border border-solid border-white rounded hover:bg-green-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1"
             >
               Join
