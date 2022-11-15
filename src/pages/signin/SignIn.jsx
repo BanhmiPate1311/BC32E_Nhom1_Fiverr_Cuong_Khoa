@@ -14,7 +14,11 @@ import {
 } from "@ant-design/icons";
 
 const SignIn = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onBlur" });
   const dispatch = useDispatch();
   const { userLogIn } = useSelector((state) => state.authReducer);
   const navigate = useNavigate();
@@ -26,7 +30,7 @@ const SignIn = () => {
   }, [userLogIn]);
 
   return (
-    <div className="conatiner flex">
+    <Container className="conatiner flex">
       <div className="w-2/4 bg-[#F1FDF7]">
         <div className="px-10 py-5 animate__animated animate__bounce animate__fadeInLeft">
           <h1 className="text-4xl font-bold mb-10">
@@ -93,11 +97,13 @@ const SignIn = () => {
           })}
         >
           <div className="border-b w-full text-center pt-2 mx-24">
-            <span className="text-3xl font-bold mb-3 signin">Đăng nhập</span>
+            <span className="text-3xl font-bold mb-3 signin">
+              Sign In to Fiverr
+            </span>
           </div>
           <div className="w-full px-6 flex flex-wrap mt-4">
             <div className="w-full text-center mb-3">
-              <span className="text-lg font-semibold">Đăng nhập bằng</span>
+              <span className="text-lg font-semibold">Continue with</span>
             </div>
             <div className="w-full flex justify-center border-b mx-32 pb-4">
               <span className="mr-3 cursor-pointer">
@@ -146,55 +152,73 @@ const SignIn = () => {
           </div>
           <div className="w-full p-3">
             <div className="text-center text-lg font-semibold">
-              <span>Hoặc</span>
+              <span>OR</span>
             </div>
             <div className="w-full p-3">
-              <span className="text-lg font-semibold">Tài khoản</span>
+              <span className="text-lg font-semibold">Email</span>
               <input
-                className="w-full p-3 border border-indigo-600 mt-2 mb-3"
+                className="w-full p-3 border border-indigo-600 mt-2 "
                 type="text"
-                placeholder="Tài khoản"
-                {...register("email")}
+                placeholder="Email"
+                {...register("email", {
+                  required: "Looks like this email is incomplete.",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Email is invalid or already taken",
+                  },
+                })}
               />
+              <p className="text-red-600 error">{errors?.email?.message}</p>
             </div>
             <div className="w-full px-3">
-              <span className="text-lg font-semibold">Mật khẩu</span>
+              <span className="text-lg font-semibold">Password</span>
               <input
                 className="w-full p-3 border border-indigo-600 mt-2"
-                type="text"
-                placeholder="Mật khẩu"
-                {...register("password")}
+                type="password"
+                placeholder="Password"
+                {...register("password", {
+                  required: "Looks like this password is incomplete.",
+                  minLength: {
+                    value: 5,
+                    message:
+                      "Make sure it's at least 12 characters OR at least 5 characters.",
+                  },
+                  maxLength: {
+                    value: 12,
+                    message:
+                      "Make sure it's at least 12 characters OR at least 5 characters.",
+                  },
+                })}
               />
+              <p className="text-red-600 error">{errors?.password?.message}</p>
             </div>
           </div>
           <div className="w-full px-6">
             <button className="btn-signin w-full h-[40px] mb-3">
-              <span className="text-white text-xl font-semibold">
-                Đăng nhập
-              </span>
+              <span className="text-white text-xl font-semibold">Continue</span>
             </button>
             <div className="text-center flex flex-wrap">
               <div className="w-full">
                 <span className="text-black-500">
-                  Chưa có tài khoản?
+                  Not a remember yet?
                   <Link
                     to="/dangky"
                     className="cursor-pointer underline text-green-600 ml-2"
                   >
-                    Đăng ký
+                    Join Now
                   </Link>
                 </span>
               </div>
               <div className="w-full">
                 <span className="text-green-600 cursor-pointer underline">
-                  Quên mật khẩu ?
+                  Forgot Password?
                 </span>
               </div>
             </div>
           </div>
         </Form>
       </div>
-    </div>
+    </Container>
   );
 };
 
@@ -205,9 +229,17 @@ const Form = styled.form`
   flex-wrap: wrap;
   margin: 0 auto;
   width: 70%;
-  height: 550px;
+  height: 100%;
   background-color: white;
   border-radius: 18px;
   box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px,
     rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
+`;
+
+const Container = styled.div`
+  .error {
+    &:empty {
+      display: none;
+    }
+  }
 `;
