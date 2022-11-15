@@ -8,7 +8,7 @@ import Trusted from "../../pages/main/Trusted";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="box-border">
       <Header />
       <CarouselHeader />
       <Trusted />

@@ -1,5 +1,25 @@
-.slick-prev:before,
-.slick-next:before {
-  color: gray;
-  font-size: 5rem;
+/* .dropdown:hover .dropdown-menu {
+  display: block;
+} */
+
+.menu-item {
+  display: inline-block;
+  position: relative;
+}
+.menu-item:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.menu-item:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
