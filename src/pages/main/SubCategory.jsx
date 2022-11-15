@@ -26,7 +26,6 @@ const SamplePrevArrow = (props) => {
     />
   );
 };
-const abc = {};
 
 const SubCategory = () => {
   const settings = {
@@ -73,7 +72,9 @@ const SubCategory = () => {
   };
   return (
     <div className="container mx-auto">
-      <h2>Popular professional services</h2>
+      <h2 className="pb-6 text-[32px] leading-[120%] font-bold">
+        Popular professional services
+      </h2>
       <div className="text-white">
         <Slider {...settings}>
           <div className="px-[18px]">
@@ -81,14 +82,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/logo-design-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Build your brand
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Logo Design
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -96,14 +97,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/wordpress-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Customize your site
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   WordPress
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -111,14 +112,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/voiceover-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Share your message
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Voice Over
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -128,14 +129,14 @@ const SubCategory = () => {
                 backgroundImage: 'url("./images/animated-explainer-2x.png")',
               }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Engage your audience
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Video Explainer
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -143,14 +144,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/logo-design-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Reach more customers
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Social Media
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -158,14 +159,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/seo-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Unlock growth online
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   SEO
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -173,14 +174,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/illustration-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Color your dreams
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Illustration
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -188,14 +189,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/translation-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Go global
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Translation
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -203,14 +204,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/data-entry-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Learn your bussiness
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Data Entry
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
           <div className="px-[18px]">
@@ -218,14 +219,14 @@ const SubCategory = () => {
               className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
               style={{ backgroundImage: 'url("./images/book-covers-2x.png")' }}
             >
-              <h4 className="p-4">
+              <div className="p-4">
                 <span className="block text-[14px] leading-[20px] font-normal">
                   Showcase your story
                 </span>
                 <span className="text-[24px] leading-[130%] font-bold">
                   Book Covers
                 </span>
-              </h4>
+              </div>
             </div>
           </div>
         </Slider>
