@@ -52,11 +52,13 @@ const Header = () => {
   return (
     <div className="main_header relative">
       <nav
-        className={`fixed top-0 w-full z-[1]  ${
-          isScroll.scrollNav ? "bg-white" : "text-white"
+        className={`fixed top-0 w-full z-[1] transition-all duration-500 ease-in-out ${
+          isScroll.scrollNav
+            ? "bg-white border-b-[1px] border-solid border-[#e4e5e7]"
+            : "text-white"
         }`}
       >
-        <div className="border-b-[1px] border-solid border-[#e4e5e7]">
+        <div>
           <div className="container mx-auto md:flex md:justify-between h-20 md:items-center">
             <div className="flex justify-between items-center ">
               <NavLink href="#" className="font-bold text-4xl text-inherit">
@@ -70,7 +72,7 @@ const Header = () => {
               </button>
             </div>
             <div
-              className={`w-[40%] ${
+              className={`w-[40%] transition-all duration-500 ease-in-out ${
                 isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
               }`}
             >
@@ -117,7 +119,7 @@ const Header = () => {
               <NavLink
                 to="/dangky"
                 className={`lg:px-4 md:mx-2 text-center border border-solid  rounded hover:bg-green-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1 ${
-                  isScroll
+                  isScroll.scrollNav
                     ? "border-green-400 text-green-400"
                     : "border-white text-inherit"
                 }`}
@@ -129,7 +131,7 @@ const Header = () => {
         </div>
 
         <div
-          className={`container mx-auto ${
+          className={`container mx-auto transition-all duration-500 ease-in-out ${
             isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
           }`}
         >
