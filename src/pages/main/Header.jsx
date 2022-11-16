@@ -42,7 +42,7 @@ const Header = (props) => {
               </button>
             </div>
             <div
-              className={`w-[40%] transition-all duration-300 ease-in-out ${
+              className={`header-searchform w-[40%] transition-all duration-300 ease-in-out ${
                 isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
               }`}
             >

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import CarouselHeader from "../../pages/main/CarouselHeader";
+import Footer from "../../pages/main/Footer";
 
 import Header from "../../pages/main/Header";
+import MainCategories from "../../pages/main/MainCategories";
 import SellingProposition from "../../pages/main/SellingProposition";
 import SubCategory from "../../pages/main/SubCategory";
 import Testtimonials from "../../pages/main/Testtimonials";
@@ -51,6 +53,8 @@ const MainLayout = () => {
       <SubCategory />
       <SellingProposition />
       <Testtimonials />
+      <MainCategories />
+      <Footer />
     </div>
   );
 };
