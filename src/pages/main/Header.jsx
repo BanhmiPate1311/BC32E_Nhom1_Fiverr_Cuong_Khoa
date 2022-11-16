@@ -7,52 +7,22 @@ import {
 } from "../../store/quanLyCongViec";
 import "./main.css";
 
-const Header = () => {
+const Header = (props) => {
+  const { isScroll } = props;
+  console.log("isScroll: ", isScroll);
   const { menuLoaiCongViec } = useQuanLyCongViec();
   console.log("menuLoaiCongViec: ", menuLoaiCongViec);
-  const [isScroll, setIsScroll] = useState({
-    scrollNav: false,
-    scrollMenu: false,
-  });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const handleScroll = (event) => {
-      if (window.scrollY >= 170) {
-        setIsScroll({
-          ...isScroll,
-          scrollNav: true,
-          scrollMenu: true,
-        });
-      } else if (window.scrollY >= 70) {
-        setIsScroll({
-          ...isScroll,
-          scrollNav: true,
-          scrollMenu: false,
-        });
-      } else {
-        setIsScroll({
-          ...isScroll,
-          scrollNav: false,
-          scrollMenu: false,
-        });
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
     dispatch(layMenuLoaiCongViec());
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
 
   return (
     <div className="main_header relative">
       <nav
-        className={`fixed top-0 w-full z-[1] transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 w-full z-[1] transition-all duration-300 ease-in-out ${
           isScroll.scrollNav
             ? "bg-white border-b-[1px] border-solid border-[#e4e5e7]"
             : "text-white"
@@ -72,7 +42,7 @@ const Header = () => {
               </button>
             </div>
             <div
-              className={`w-[40%] transition-all duration-500 ease-in-out ${
+              className={`w-[40%] transition-all duration-300 ease-in-out ${
                 isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
               }`}
             >
@@ -131,45 +101,51 @@ const Header = () => {
         </div>
 
         <div
-          className={`container mx-auto transition-all duration-500 ease-in-out ${
+          className={`border-t-[1px] border-solid border-[#e4e5e7] ${
             isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
           }`}
         >
-          <nav className="categories flex justify-between">
-            {menuLoaiCongViec.map((loaiCV) => (
-              <div
-                key={loaiCV.id}
-                className="group/dropdown dropdown inline-block relative "
-              >
-                <NavLink className="menu-item py-2 text-base text-[#62646a] inline-flex items-center whitespace-nowrap pr-[10px]">
-                  <span className="mr-1">{loaiCV.tenLoaiCongViec}</span>
-                </NavLink>
-                <ul className="dropdown-menu absolute hidden group-hover/dropdown:block text-gray-700 bg-white shadow">
-                  {loaiCV.dsNhomChiTietLoai.map((nhomChiTietLoai) => (
-                    <li key={nhomChiTietLoai.id}>
-                      <span
-                        className="font-bold rounded-sm text-base text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap"
-                        href="#"
-                      >
-                        {nhomChiTietLoai.tenNhom}
-                      </span>
-                      <ul>
-                        {nhomChiTietLoai.dsChiTietLoai.map((chiTiet) => (
-                          <li key={chiTiet.id}>
-                            <NavLink>
-                              <span className="text-base text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap">
-                                {chiTiet.tenChiTiet}
-                              </span>
-                            </NavLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
+          <div
+            className={
+              "container mx-auto transition-all duration-500 ease-in-out"
+            }
+          >
+            <nav className="categories flex justify-between">
+              {menuLoaiCongViec.map((loaiCV) => (
+                <div
+                  key={loaiCV.id}
+                  className="group/dropdown dropdown inline-block relative "
+                >
+                  <NavLink className="menu-item py-2 text-base text-[#62646a] inline-flex items-center whitespace-nowrap pr-[10px]">
+                    <span className="mr-1">{loaiCV.tenLoaiCongViec}</span>
+                  </NavLink>
+                  <ul className="dropdown-menu absolute hidden group-hover/dropdown:block text-gray-700 bg-white shadow">
+                    {loaiCV.dsNhomChiTietLoai.map((nhomChiTietLoai) => (
+                      <li key={nhomChiTietLoai.id}>
+                        <span
+                          className="font-bold rounded-sm text-base text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap"
+                          href="#"
+                        >
+                          {nhomChiTietLoai.tenNhom}
+                        </span>
+                        <ul>
+                          {nhomChiTietLoai.dsChiTietLoai.map((chiTiet) => (
+                            <li key={chiTiet.id}>
+                              <NavLink>
+                                <span className="text-base text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap">
+                                  {chiTiet.tenChiTiet}
+                                </span>
+                              </NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </nav>
+          </div>
         </div>
       </nav>
     </div>
