@@ -1,4 +1,5 @@
 import React from "react";
+import "./maincategories.css";
 
 const MainCategories = () => {
   return (
