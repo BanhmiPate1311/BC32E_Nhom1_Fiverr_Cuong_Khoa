@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import {
   layMenuLoaiCongViec,
   useQuanLyCongViec,
 } from "../../store/quanLyCongViec";
-import "./main.css";
+import "./header.css";
 
 const Header = (props) => {
   const { isScroll } = props;
-  console.log("isScroll: ", isScroll);
+  // console.log("isScroll: ", isScroll);
   const { menuLoaiCongViec } = useQuanLyCongViec();
-  console.log("menuLoaiCongViec: ", menuLoaiCongViec);
+  // console.log("menuLoaiCongViec: ", menuLoaiCongViec);
 
+  const [searchParams, setSearchParam] = useSearchParams();
+  // console.log("searchParams: ", searchParams.get("search"));
+  const search = searchParams.get("search");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,16 +25,20 @@ const Header = (props) => {
   return (
     <div className="main_header relative">
       <nav
-        className={`fixed top-0 w-full z-[1] transition-all duration-300 ease-in-out ${
-          isScroll.scrollNav
-            ? "bg-white border-b-[1px] border-solid border-[#e4e5e7]"
-            : "text-white"
-        }`}
+        className={` ${
+          search
+            ? "bg-white border-b-[1px] border-solid border-[#e4e5e7] text-black"
+            : `fixed top-0 w-full z-[2] transition-all duration-300 ease-in-out ${
+                isScroll.scrollNav
+                  ? "bg-white border-b-[1px] border-solid border-[#e4e5e7] text-black"
+                  : "text-white"
+              }`
+        } `}
       >
         <div>
           <div className="container mx-auto md:flex md:justify-between h-20 md:items-center">
             <div className="flex justify-between items-center ">
-              <NavLink href="#" className="font-bold text-4xl text-inherit">
+              <NavLink to="/home" className="font-bold text-4xl text-inherit">
                 fiverr<span className="text-green-400">.</span>
               </NavLink>
               <button
@@ -43,8 +50,14 @@ const Header = (props) => {
             </div>
             <div
               className={`header-searchform w-[40%] transition-all duration-300 ease-in-out ${
-                isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
-              }`}
+                search
+                  ? "opacity-100 block"
+                  : `${
+                      isScroll.scrollMenu
+                        ? "opacity-100 block"
+                        : "opacity-0 hidden"
+                    }`
+              }  `}
             >
               <form className="search-form relative flex border-2">
                 <input
@@ -88,11 +101,15 @@ const Header = (props) => {
               </NavLink>
               <NavLink
                 to="/dangky"
-                className={`lg:px-4 md:mx-2 text-center border border-solid  rounded hover:bg-green-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1 ${
-                  isScroll.scrollNav
-                    ? "border-green-400 text-green-400"
-                    : "border-white text-inherit"
-                }`}
+                className={`lg:px-4 md:mx-2 text-center border border-solid rounded transition-colors duration-300 mt-1 md:mt-0 md:ml-1 ${
+                  search
+                    ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
+                    : ` ${
+                        isScroll.scrollNav
+                          ? "border-green-400 text-green-400"
+                          : "border-white text-inherit"
+                      }`
+                }   `}
               >
                 Join
               </NavLink>
@@ -102,8 +119,12 @@ const Header = (props) => {
 
         <div
           className={`border-t-[1px] border-solid border-[#e4e5e7] ${
-            isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
-          }`}
+            search
+              ? "opacity-100 block"
+              : `${
+                  isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
+                }`
+          } `}
         >
           <div
             className={

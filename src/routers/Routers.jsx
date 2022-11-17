@@ -1,6 +1,8 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/mainlayout/MainLayout";
+import Home from "../pages/main/Home";
+import WorkList from "../pages/main/WorkList";
 import SignIn from "../pages/signin/SignIn";
 import SignUp from "../pages/signup/SignUp";
 
@@ -9,7 +11,17 @@ const Routers = () => {
     {
       path: "/",
       element: <MainLayout />,
-      children: [],
+      children: [
+        { path: "/", element: <Home /> },
+        {
+          path: "home",
+          element: <Home />,
+        },
+        {
+          path: "worklist",
+          element: <WorkList />,
+        },
+      ],
     },
     {
       path: "/dangnhap",
