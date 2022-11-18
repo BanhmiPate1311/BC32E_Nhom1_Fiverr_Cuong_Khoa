@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { NavLink, useSearchParams } from "react-router-dom";
+import {
+  NavLink,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import {
   layMenuLoaiCongViec,
   useQuanLyCongViec,
@@ -8,19 +14,51 @@ import {
 import "./header.css";
 
 const Header = (props) => {
-  const { isScroll } = props;
-  // console.log("isScroll: ", isScroll);
+  const [isScroll, setIsScroll] = useState();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      let newScroll = 0;
+      if (window.scrollY < 70) {
+        newScroll = 0;
+      } else if (window.scrollY < 170) {
+        newScroll = 1;
+      } else newScroll = 2;
+      if (isScroll !== newScroll) {
+        setIsScroll(newScroll);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const { menuLoaiCongViec } = useQuanLyCongViec();
   // console.log("menuLoaiCongViec: ", menuLoaiCongViec);
 
   const [searchParams, setSearchParam] = useSearchParams();
-  // console.log("searchParams: ", searchParams.get("search"));
+  console.log("searchParams: ");
   const search = searchParams.get("search");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
     dispatch(layMenuLoaiCongViec());
   }, []);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (pathname === "/home") {
+      reset({ searchText: "" });
+    } else {
+      reset({ searchText: search });
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, search]);
 
   return (
     <div className="main_header relative">
@@ -29,7 +67,7 @@ const Header = (props) => {
           search
             ? "bg-white border-b-[1px] border-solid border-[#e4e5e7] text-black"
             : `fixed top-0 w-full z-[2] transition-all duration-300 ease-in-out ${
-                isScroll.scrollNav
+                isScroll === 1 || isScroll === 2
                   ? "bg-white border-b-[1px] border-solid border-[#e4e5e7] text-black"
                   : "text-white"
               }`
@@ -53,18 +91,26 @@ const Header = (props) => {
                 search
                   ? "opacity-100 block"
                   : `${
-                      isScroll.scrollMenu
-                        ? "opacity-100 block"
-                        : "opacity-0 hidden"
+                      isScroll === 2 ? "opacity-100 block" : "opacity-0 hidden"
                     }`
               }  `}
             >
-              <form className="search-form relative flex border-2">
+              <form
+                onSubmit={handleSubmit((data) => {
+                  console.log({ data });
+                  if (data.searchText === "") {
+                    return;
+                  }
+                  navigate(`/worklist?search=${data.searchText}`);
+                })}
+                className="search-form relative flex border-2"
+              >
                 <input
                   className="rounded-l  pl-[16px] mb-0 border-[#dadbdd] flex flex-auto"
                   type="text"
                   autoComplete="off"
                   placeholder="What service are you looking for today?"
+                  {...register("searchText")}
                 />
 
                 <button className="m-0 rounded-r block text-[16px] h-[42px] font-bold px-6  submit-button text-white bg-black">
@@ -105,7 +151,7 @@ const Header = (props) => {
                   search
                     ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
                     : ` ${
-                        isScroll.scrollNav
+                        isScroll === 1 || isScroll === 2
                           ? "border-green-400 text-green-400"
                           : "border-white text-inherit"
                       }`
@@ -121,9 +167,7 @@ const Header = (props) => {
           className={`border-t-[1px] border-solid border-[#e4e5e7] ${
             search
               ? "opacity-100 block"
-              : `${
-                  isScroll.scrollMenu ? "opacity-100 block" : "opacity-0 hidden"
-                }`
+              : `${isScroll === 2 ? "opacity-100 block" : "opacity-0 hidden"}`
           } `}
         >
           <div

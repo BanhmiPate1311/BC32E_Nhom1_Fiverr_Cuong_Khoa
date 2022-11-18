@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   menuLoaiCongViec: [],
+  dsCongViecTheoTen: [],
   isFetching: false,
 };
 
@@ -26,6 +27,20 @@ export const {
       .addCase(layMenuLoaiCongViec.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
+      })
+
+      // layDsCongViecTheoTen
+      .addCase(layDsCongViecTheoTen.pending, (state, action) => {
+        state.isFetching = true;
+      })
+      .addCase(layDsCongViecTheoTen.fulfilled, (state, action) => {
+        state.dsCongViecTheoTen = action.payload;
+        state.isFetching = false;
+      })
+      .addCase(layDsCongViecTheoTen.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+        console.log(action.payload);
       });
   },
 });
@@ -44,6 +59,26 @@ export const layMenuLoaiCongViec = createAsyncThunk(
       });
       return result.data.content;
     } catch (err) {
+      return rejectWithValue(err.respone.data);
+    }
+  }
+);
+
+export const layDsCongViecTheoTen = createAsyncThunk(
+  "quanLyCongViec/layDsCongViecTheoTen",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/cong-viec/lay-danh-sach-cong-viec-theo-ten/${data}`,
+        method: "GET",
+        headers: {
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+      });
+      return result.data.content;
+    } catch (err) {
+      console.log(err.respone.data);
       return rejectWithValue(err.respone.data);
     }
   }
