@@ -8,7 +8,6 @@ const MainLayout = () => {
     <div className="box-border">
       <Header />
       <Outlet />
-
       <Footer />
     </div>
   );

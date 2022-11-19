@@ -4,8 +4,8 @@ const SellingProposition = () => {
   return (
     <div className="sell-proposition">
       <section className="text-gray-600 body-font bg-[#f1fdf7]">
-        <div className="container py-24 mx-auto flex flex-wrap items-center">
-          <div className="lg:w-1/2 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
+        <div className="max-w-[1400px] py-24 mx-auto flex flex-wrap items-center">
+          <div className="lg:w-1/2 md:w-1/2 md:pr-16  pr-[11%]">
             <h2 className="title-font font-medium text-3xl text-gray-900 mb-[24px]">
               A whole world of freelance talent at your fingertips
             </h2>

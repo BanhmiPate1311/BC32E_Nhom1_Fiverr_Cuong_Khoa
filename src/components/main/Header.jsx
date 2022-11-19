@@ -5,9 +5,11 @@ import {
   NavLink,
   useLocation,
   useNavigate,
+  useParams,
   useSearchParams,
 } from "react-router-dom";
 import {
+  layCongViecTheoChiTietLoai,
   layMenuLoaiCongViec,
   useQuanLyCongViec,
 } from "../../store/quanLyCongViec";
@@ -15,6 +17,9 @@ import "./header.css";
 
 const Header = (props) => {
   const [isScroll, setIsScroll] = useState();
+  // Get work's catagory by useParams
+  const params = useParams();
+  const { dsCongViecTheoTen } = useQuanLyCongViec();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,10 +41,10 @@ const Header = (props) => {
     };
   }, []);
   const { menuLoaiCongViec } = useQuanLyCongViec();
-  // console.log("menuLoaiCongViec: ", menuLoaiCongViec);
+  console.log("menuLoaiCongViec: ", menuLoaiCongViec);
 
   const [searchParams, setSearchParam] = useSearchParams();
-  console.log("searchParams: ");
+  // console.log("searchParams: ");
   const search = searchParams.get("search");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,6 +55,15 @@ const Header = (props) => {
   }, []);
 
   const { pathname } = useLocation();
+
+  const handleClick = async (data) => {
+    try {
+      dispatch(layCongViecTheoChiTietLoai(data));
+      // navigate("/worklist");
+    } catch (error) {
+      // handle any rejections/errors
+    }
+  };
 
   useEffect(() => {
     if (pathname === "/home") {
@@ -64,7 +78,7 @@ const Header = (props) => {
     <div className="main_header relative">
       <nav
         className={` ${
-          search
+          pathname !== "/home"
             ? "bg-white border-b-[1px] border-solid border-[#e4e5e7] text-black"
             : `fixed top-0 w-full z-[2] transition-all duration-300 ease-in-out ${
                 isScroll === 1 || isScroll === 2
@@ -74,7 +88,7 @@ const Header = (props) => {
         } `}
       >
         <div>
-          <div className="container mx-auto md:flex md:justify-between h-20 md:items-center">
+          <div className="max-w-[1400px] mx-auto md:flex md:justify-between h-20 md:items-center">
             <div className="flex justify-between items-center ">
               <NavLink to="/home" className="font-bold text-4xl text-inherit">
                 fiverr<span className="text-green-400">.</span>
@@ -88,7 +102,7 @@ const Header = (props) => {
             </div>
             <div
               className={`header-searchform w-[40%] transition-all duration-300 ease-in-out ${
-                search
+                pathname !== "/home"
                   ? "opacity-100 block"
                   : `${
                       isScroll === 2 ? "opacity-100 block" : "opacity-0 hidden"
@@ -98,7 +112,7 @@ const Header = (props) => {
               <form
                 onSubmit={handleSubmit((data) => {
                   console.log({ data });
-                  if (data.searchText === "") {
+                  if (data.searchText === "" || data.searchText === null) {
                     return;
                   }
                   navigate(`/worklist?search=${data.searchText}`);
@@ -148,7 +162,7 @@ const Header = (props) => {
               <NavLink
                 to="/dangky"
                 className={`lg:px-4 md:mx-2 text-center border border-solid rounded transition-colors duration-300 mt-1 md:mt-0 md:ml-1 ${
-                  search
+                  pathname !== "/home"
                     ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
                     : ` ${
                         isScroll === 1 || isScroll === 2
@@ -165,14 +179,14 @@ const Header = (props) => {
 
         <div
           className={`border-t-[1px] border-solid border-[#e4e5e7] ${
-            search
+            pathname !== "/home"
               ? "opacity-100 block"
               : `${isScroll === 2 ? "opacity-100 block" : "opacity-0 hidden"}`
           } `}
         >
           <div
             className={
-              "container mx-auto transition-all duration-500 ease-in-out"
+              "max-w-[1400px] mx-auto transition-all duration-500 ease-in-out"
             }
           >
             <nav className="categories flex justify-between">
@@ -181,10 +195,13 @@ const Header = (props) => {
                   key={loaiCV.id}
                   className="group/dropdown dropdown inline-block relative "
                 >
-                  <NavLink className="menu-item py-2 text-base text-[#62646a] inline-flex items-center whitespace-nowrap pr-[10px]">
+                  <NavLink
+                    to={`/workcategory/${loaiCV.id}`}
+                    className="menu-item py-2 text-base text-[#62646a] inline-flex items-center whitespace-nowrap pr-[10px]"
+                  >
                     <span className="mr-1">{loaiCV.tenLoaiCongViec}</span>
                   </NavLink>
-                  <ul className="dropdown-menu absolute hidden group-hover/dropdown:block text-gray-700 bg-white shadow">
+                  <ul className="dropdown-menu absolute hidden group-hover/dropdown:block text-gray-700 bg-white shadow z-[1]">
                     {loaiCV.dsNhomChiTietLoai.map((nhomChiTietLoai) => (
                       <li key={nhomChiTietLoai.id}>
                         <span
@@ -196,11 +213,15 @@ const Header = (props) => {
                         <ul>
                           {nhomChiTietLoai.dsChiTietLoai.map((chiTiet) => (
                             <li key={chiTiet.id}>
-                              <NavLink>
-                                <span className="text-base text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap">
+                              <div>
+                                <NavLink
+                                  to="/worklist"
+                                  onClick={() => handleClick(chiTiet.id)}
+                                  className="text-base cursor-pointer text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap"
+                                >
                                   {chiTiet.tenChiTiet}
-                                </span>
-                              </NavLink>
+                                </NavLink>
+                              </div>
                             </li>
                           ))}
                         </ul>

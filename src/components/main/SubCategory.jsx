@@ -71,7 +71,7 @@ const SubCategory = () => {
     ],
   };
   return (
-    <div className="container mx-auto pb-24">
+    <div className="max-w-[1400px] mx-auto pb-24">
       <h2 className="pb-6 text-[32px] leading-[120%] font-bold">
         Popular professional services
       </h2>

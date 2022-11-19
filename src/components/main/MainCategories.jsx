@@ -3,7 +3,7 @@ import "./maincategories.css";
 
 const MainCategories = () => {
   return (
-    <div className="main-categories container mx-auto mb-24">
+    <div className="max-w-[1400px] main-categories mx-auto mb-24">
       <h2 className="pb-6 mb-10 text-[32px] leading-[120%] text-[#404145]">
         Explore the marketplace
       </h2>
