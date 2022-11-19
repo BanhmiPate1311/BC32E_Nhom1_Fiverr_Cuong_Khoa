@@ -4,7 +4,7 @@ const Testtimonials = () => {
   return (
     <div className="sell-proposition">
       <section className="text-gray-600 body-font bg-white">
-        <div className="container py-24 mx-auto flex flex-wrap items-center">
+        <div className="max-w-[1400px] py-24 mx-auto flex flex-wrap items-center">
           <div className="lg:w-2/5 md:w-2/5 bg-gray-100 rounded-lg  flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <iframe
               width={"100%"}

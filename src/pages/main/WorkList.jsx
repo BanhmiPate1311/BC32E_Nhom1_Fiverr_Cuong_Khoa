@@ -10,6 +10,7 @@ import "./worklist.css";
 const WorkList = () => {
   const [searchParams, setSearchParam] = useSearchParams();
   const search = searchParams.get("search");
+  const query = searchParams.get("query");
   console.log("search: ", search);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,10 +18,9 @@ const WorkList = () => {
   console.log("dsCongViecTheoTen: ", dsCongViecTheoTen);
 
   useEffect(() => {
-    if (!search || search === "") {
-      navigate("/home");
+    if (search !== null) {
+      dispatch(layDsCongViecTheoTen(search));
     }
-    dispatch(layDsCongViecTheoTen(search));
   }, [search]);
   return (
     <div className="worklist max-w-[1400px] mx-auto">
@@ -28,7 +28,6 @@ const WorkList = () => {
         <header className="related-search bg-[#f5f5f5]">
           <nav className="flex px-8 flex-nowrap overflow-hidden h-14">
             <b className="text-[15px] my-auto px-[10px]">Suggested</b>
-            <form></form>
             <div className="search-tags">
               <Link
                 to="/worklist?search=html css"
@@ -77,7 +76,11 @@ const WorkList = () => {
         </header>
         <div className="pt-8 px-8 pb-3">
           <span className="text-black text-[32px] leading-[150%] font-bold">
-            Results for "{search}"
+            {search !== null
+              ? `Results for "${search}"`
+              : query !== null
+              ? `Results for "${query}"`
+              : ""}
           </span>
         </div>
         <div className="worklist-menu px-8 flex flex-wrap justify-between text-[18px] font-[600px] text-[#222325] bg-white sticky top-0">
