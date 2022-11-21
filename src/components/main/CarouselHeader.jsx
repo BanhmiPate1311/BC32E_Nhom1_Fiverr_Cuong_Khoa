@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Carousel } from "react-responsive-carousel";
+import "./carouselheader.css";
 // Carousel
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ const CarouselHeader = () => {
   return (
     <div className="carousel relative">
       <Carousel
+        className="carousel-header"
         autoPlay
         infiniteLoop
         interval={5000}
@@ -24,7 +26,7 @@ const CarouselHeader = () => {
         effect="fade"
       >
         <div
-          className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
+          className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/andrea.png")' }}
         >
           <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
@@ -34,7 +36,7 @@ const CarouselHeader = () => {
           </div>
         </div>
         <div
-          className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
+          className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/gabriell.png")' }}
         >
           <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
@@ -44,7 +46,7 @@ const CarouselHeader = () => {
           </div>
         </div>
         <div
-          className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
+          className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/moon.png")' }}
         >
           <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
@@ -54,7 +56,7 @@ const CarouselHeader = () => {
           </div>
         </div>
         <div
-          className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
+          className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/ritika.png")' }}
         >
           <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
@@ -64,7 +66,7 @@ const CarouselHeader = () => {
           </div>
         </div>
         <div
-          className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
+          className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/zach.png")' }}
         >
           <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
@@ -75,7 +77,7 @@ const CarouselHeader = () => {
         </div>
       </Carousel>
 
-      <div className="max-w-[1400px] mx-auto absolute top-0 left-0 bottom-0 right-0 flex items-center">
+      <div className="max-width-container carousel-header-text absolute top-0 right-0 bottom-0 left-0 flex items-center">
         <div className="max-w-[650px]">
           <h1 className="text-white pb-[24px] text-[48px] leading-[56px] font-bold mb-0">
             Find the perfect <i>freelance</i> services for your business
@@ -120,7 +122,7 @@ const CarouselHeader = () => {
             </form>
           </div>
 
-          <div className="flex text-[14px] leading-[27px] font-[600] text-white pt-6">
+          <div className="search-popular flex text-[14px] leading-[27px] font-[600] text-white pt-6">
             Popular:
             <ul className="flex w-full ml-3">
               <li className="mr-3">

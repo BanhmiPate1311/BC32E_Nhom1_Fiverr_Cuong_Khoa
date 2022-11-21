@@ -7,6 +7,7 @@ import {
   useQuanLyCongViec,
 } from "../../store/quanLyCongViec";
 import dataimg from "./data-img.json";
+import "./workcategory.css";
 
 const WorkCategory = () => {
   const params = useParams();
@@ -23,7 +24,7 @@ const WorkCategory = () => {
 
   return (
     <div className="workcategory">
-      <div className="workcategory-content max-w-[1400px] mx-auto py-8">
+      <div className="workcategory-content max-width-container py-8">
         <div
           className="workcategory-banner h-[272px] w-full bg-no-repeat bg-cover rounded-md text-white text-center p-[50px]"
           style={{
@@ -159,9 +160,12 @@ const WorkCategory = () => {
           <h2 className="text-2xl font-bold">
             Explore {dsChiTietLoaiCongViec[0]?.tenLoaiCongViec}
           </h2>
-          <div className="div-lamthe flex gap-4">
+          <div className="div-lamthe flex flex-wrap">
             {dsChiTietLoaiCongViec[0]?.dsNhomChiTietLoai.map((congViec) => (
-              <div key={congViec.id} className="card w-1/4">
+              <div
+                key={congViec.id}
+                className="workcategory-item card px-2 w-1/4 py-4"
+              >
                 <div
                   className="h-[181px] rounded-2xl bg-center bg-cover bg-no-repeat"
                   style={{ backgroundImage: `url(${congViec.hinhAnh})` }}
