@@ -1,5 +1,7 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
+import "./subcategory.css";
 
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -71,163 +73,193 @@ const SubCategory = () => {
     ],
   };
   return (
-    <div className="max-w-[1400px] mx-auto pb-24">
+    <div className="services max-width-container">
       <h2 className="pb-6 text-[32px] leading-[120%] font-bold">
         Popular professional services
       </h2>
       <div className="text-white">
         <Slider {...settings}>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/logo-design-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Build your brand
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Logo Design
-                </span>
+            <NavLink to="/worklist?search=Logo Design">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{
+                  backgroundImage: 'url("./images/logo-design-2x.png")',
+                }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Build your brand
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Logo Design
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/wordpress-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Customize your site
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  WordPress
-                </span>
+            <NavLink to="/worklist?search=WordPress">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{ backgroundImage: 'url("./images/wordpress-2x.png")' }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Customize your site
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    WordPress
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/voiceover-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Share your message
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Voice Over
-                </span>
+            <NavLink to="/worklist?search=Voice Over">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{ backgroundImage: 'url("./images/voiceover-2x.png")' }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Share your message
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Voice Over
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{
-                backgroundImage: 'url("./images/animated-explainer-2x.png")',
-              }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Engage your audience
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Video Explainer
-                </span>
+            <NavLink to="/worklist?search=Video Explainer">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{
+                  backgroundImage: 'url("./images/animated-explainer-2x.png")',
+                }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Engage your audience
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Video Explainer
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/logo-design-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Reach more customers
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Social Media
-                </span>
+            <NavLink to="/worklist?search=Social Media">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{
+                  backgroundImage: 'url("./images/logo-design-2x.png")',
+                }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Reach more customers
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Social Media
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/seo-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Unlock growth online
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  SEO
-                </span>
+            <NavLink to="/worklist?search=SEO">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{ backgroundImage: 'url("./images/seo-2x.png")' }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Unlock growth online
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    SEO
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/illustration-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Color your dreams
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Illustration
-                </span>
+            <NavLink to="/worklist?search=Illustration">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{
+                  backgroundImage: 'url("./images/illustration-2x.png")',
+                }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Color your dreams
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Illustration
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/translation-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Go global
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Translation
-                </span>
+            <NavLink to="/worklist?search=Translation">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{
+                  backgroundImage: 'url("./images/translation-2x.png")',
+                }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Go global
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Translation
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/data-entry-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Learn your bussiness
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Data Entry
-                </span>
+            <NavLink to="/worklist?search=Data Entry">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{ backgroundImage: 'url("./images/data-entry-2x.png")' }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Learn your bussiness
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Data Entry
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
           <div className="px-[18px]">
-            <div
-              className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
-              style={{ backgroundImage: 'url("./images/book-covers-2x.png")' }}
-            >
-              <div className="p-4">
-                <span className="block text-[14px] leading-[20px] font-normal">
-                  Showcase your story
-                </span>
-                <span className="text-[24px] leading-[130%] font-bold">
-                  Book Covers
-                </span>
+            <NavLink to="/worklist?search=Book Covers">
+              <div
+                className="h-[345px] bg-center bg-no-repeat bg-cover rounded-md"
+                style={{
+                  backgroundImage: 'url("./images/book-covers-2x.png")',
+                }}
+              >
+                <div className="p-4 text-white">
+                  <span className="block text-[14px] leading-[20px] font-normal">
+                    Showcase your story
+                  </span>
+                  <span className="text-[24px] leading-[130%] font-bold">
+                    Book Covers
+                  </span>
+                </div>
               </div>
-            </div>
+            </NavLink>
           </div>
         </Slider>
       </div>
