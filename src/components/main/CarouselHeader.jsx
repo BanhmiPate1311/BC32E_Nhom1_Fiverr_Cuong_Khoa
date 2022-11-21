@@ -29,7 +29,7 @@ const CarouselHeader = () => {
           className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/andrea.png")' }}
         >
-          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-width-container mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Andrea, <b>Fashion Designer</b>
             </p>
@@ -39,7 +39,7 @@ const CarouselHeader = () => {
           className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/gabriell.png")' }}
         >
-          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-width-container mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Gabrielle, <b>Video Editor</b>
             </p>
@@ -49,7 +49,7 @@ const CarouselHeader = () => {
           className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/moon.png")' }}
         >
-          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-width-container mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Moon, <b>Marketing Expert</b>
             </p>
@@ -59,7 +59,7 @@ const CarouselHeader = () => {
           className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/ritika.png")' }}
         >
-          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-width-container mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Ritika, <b>ShoeMaker and Designer</b>
             </p>
@@ -69,7 +69,7 @@ const CarouselHeader = () => {
           className=" h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/zach.png")' }}
         >
-          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-width-container mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Zach, <b>Bar Owner</b>
             </p>
