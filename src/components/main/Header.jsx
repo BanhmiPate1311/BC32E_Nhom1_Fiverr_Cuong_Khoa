@@ -5,7 +5,6 @@ import {
   NavLink,
   useLocation,
   useNavigate,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
 import {
@@ -18,8 +17,6 @@ import "./header.css";
 const Header = (props) => {
   const [isScroll, setIsScroll] = useState();
   // Get work's catagory by useParams
-  const params = useParams();
-  const { dsCongViecTheoTen } = useQuanLyCongViec();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +38,7 @@ const Header = (props) => {
     };
   }, []);
   const { menuLoaiCongViec } = useQuanLyCongViec();
-  console.log("menuLoaiCongViec: ", menuLoaiCongViec);
+  // console.log("menuLoaiCongViec: ", menuLoaiCongViec);
 
   const [searchParams, setSearchParam] = useSearchParams();
   // console.log("searchParams: ");
@@ -88,17 +85,23 @@ const Header = (props) => {
         } `}
       >
         <div>
-          <div className="max-w-[1400px] mx-auto md:flex md:justify-between h-20 md:items-center">
+          <div className="max-width-container flex justify-between h-20 items-center">
             <div className="flex justify-between items-center ">
-              <NavLink to="/home" className="font-bold text-4xl text-inherit">
-                fiverr<span className="text-green-400">.</span>
-              </NavLink>
               <button
-                className="border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden"
+                className={`button-toggle hidden border border-solid rounded px-3 py-1 mr-3 ${
+                  pathname !== "/home"
+                    ? "border-gray-600 text-gray-600"
+                    : isScroll === 1 || isScroll === 2
+                    ? "border-gray-600 text-gray-600"
+                    : "text-white border-white"
+                }  `}
                 id="navbar-toggle"
               >
                 <i className="fas fa-bars" />
               </button>
+              <NavLink to="/home" className="font-bold text-4xl text-inherit">
+                fiverr<span className="text-green-400">.</span>
+              </NavLink>
             </div>
             <div
               className={`header-searchform w-[40%] transition-all duration-300 ease-in-out ${
@@ -146,22 +149,22 @@ const Header = (props) => {
               </form>
             </div>
             <div
-              className="font-bold hidden md:flex flex-col md:flex-row  mt-3 md:mt-0"
+              className="font-bold flex flex-row  mt-3 md:mt-0"
               id="navbar-collapse"
             >
-              <NavLink href="#" className="lg:px-4 md:mx-2 text-inherit">
+              <NavLink href="#" className="header-nav px-4 mx-2 text-inherit">
                 Become a Seller
               </NavLink>
 
               <NavLink
                 to="/dangnhap"
-                className="lg:px-4 md:mx-2 text-center border border-transparent text-inherit"
+                className="button-toggle px-4 mx-2 text-center border border-transparent text-inherit"
               >
                 Sign In
               </NavLink>
               <NavLink
                 to="/dangky"
-                className={`lg:px-4 md:mx-2 text-center border border-solid rounded transition-colors duration-300 mt-1 md:mt-0 md:ml-1 ${
+                className={`button-toggle px-4 mx-2 text-center border border-solid rounded transition-colors duration-300 ${
                   pathname !== "/home"
                     ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
                     : ` ${
@@ -186,10 +189,10 @@ const Header = (props) => {
         >
           <div
             className={
-              "max-w-[1400px] mx-auto transition-all duration-500 ease-in-out"
+              "max-width-container menu transition-all duration-500 ease-in-out"
             }
           >
-            <nav className="categories flex justify-between">
+            <nav className="categories flex justify-between flex-wrap">
               {menuLoaiCongViec.map((loaiCV) => (
                 <div
                   key={loaiCV.id}
@@ -215,8 +218,8 @@ const Header = (props) => {
                             <li key={chiTiet.id}>
                               <div>
                                 <NavLink
-                                  to="/worklist"
-                                  onClick={() => handleClick(chiTiet.id)}
+                                  to={`/worklist/${chiTiet.id}`}
+                                  // onClick={() => handleClick(chiTiet.id)}
                                   className="text-base cursor-pointer text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap"
                                 >
                                   {chiTiet.tenChiTiet}

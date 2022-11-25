@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const initialState = {
   menuLoaiCongViec: [],
   dsCongViecTheoTen: [],
   dsChiTietLoaiCongViec: [],
+  workDetail: [],
   isFetching: false,
 };
 
@@ -70,6 +72,45 @@ export const {
         state.isFetching = false;
         state.error = action.payload;
         console.log(action.payload);
+      })
+
+      // layCongViecChiTiet
+      .addCase(layCongViecChiTiet.pending, (state, action) => {
+        state.isFetching = true;
+      })
+      .addCase(layCongViecChiTiet.fulfilled, (state, action) => {
+        state.workDetail = action.payload;
+        state.isFetching = false;
+      })
+      .addCase(layCongViecChiTiet.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+        console.log(action.payload);
+      })
+
+      // thueCongViec
+      .addCase(thueCongViec.pending, (state, action) => {
+        state.isFetching = true;
+      })
+      .addCase(thueCongViec.fulfilled, (state, action) => {
+        state.isFetching = false;
+        // console.log(action.payload);
+        Swal.fire(
+          "Thành Công!",
+          "Bạn đã thuê công việc thành công!",
+          "success"
+        );
+      })
+      .addCase(thueCongViec.rejected, (state, action) => {
+        state.error = action.payload;
+        console.log(action.payload);
+        state.isFetching = false;
+        Swal.fire({
+          icon: "error",
+          title: "Thất bại...",
+          text: action.payload.content,
+          footer: '<a href="">Xin cảm ơn</a>',
+        });
       });
   },
 });
@@ -88,7 +129,7 @@ export const layMenuLoaiCongViec = createAsyncThunk(
       });
       return result.data.content;
     } catch (err) {
-      return rejectWithValue(err.respone.data);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -107,8 +148,8 @@ export const layDsCongViecTheoTen = createAsyncThunk(
       });
       return result.data.content;
     } catch (err) {
-      console.log(err.respone.data);
-      return rejectWithValue(err.respone.data);
+      console.log(err.response.data);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -127,8 +168,8 @@ export const layDsChiTietLoaiCongViec = createAsyncThunk(
       });
       return result.data.content;
     } catch (err) {
-      console.log(err.respone.data);
-      return rejectWithValue(err.respone.data);
+      console.log(err.response.data);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -147,8 +188,50 @@ export const layCongViecTheoChiTietLoai = createAsyncThunk(
       });
       return result.data.content;
     } catch (err) {
-      console.log(err.respone.data);
-      return rejectWithValue(err.respone.data);
+      console.log(err.response.data);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const layCongViecChiTiet = createAsyncThunk(
+  "quanLyCongViec/layCongViecChiTiet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/cong-viec/lay-cong-viec-chi-tiet/${data}`,
+        method: "GET",
+        headers: {
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+      });
+      return result.data.content;
+    } catch (err) {
+      console.log(err.response.data);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const thueCongViec = createAsyncThunk(
+  "quanLyCongViec/thueCongViec",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec",
+        method: "POST",
+        headers: {
+          token: localStorage.getItem("TOKEN"),
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      return result.data.content;
+    } catch (err) {
+      console.log(err.response.data);
+      return rejectWithValue(err.response.data);
     }
   }
 );

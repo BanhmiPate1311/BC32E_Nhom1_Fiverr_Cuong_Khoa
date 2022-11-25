@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/main/Footer";
 import Header from "../../components/main/Header";
+import "./main.css";
 
 const MainLayout = () => {
   return (

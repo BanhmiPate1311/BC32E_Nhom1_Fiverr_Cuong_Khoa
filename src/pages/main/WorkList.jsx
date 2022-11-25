@@ -1,18 +1,27 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
+  Link,
+  NavLink,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import {
+  layCongViecTheoChiTietLoai,
   layDsCongViecTheoTen,
   useQuanLyCongViec,
 } from "../../store/quanLyCongViec";
 import "./worklist.css";
 
 const WorkList = () => {
-  const [searchParams, setSearchParam] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
-  const query = searchParams.get("query");
   console.log("search: ", search);
-  const navigate = useNavigate();
+  const query = searchParams.get("query");
+  const params = useParams();
+  console.log("params: ", params);
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { dsCongViecTheoTen } = useQuanLyCongViec();
   console.log("dsCongViecTheoTen: ", dsCongViecTheoTen);
@@ -21,13 +30,16 @@ const WorkList = () => {
     if (search !== null) {
       dispatch(layDsCongViecTheoTen(search));
     }
-  }, [search]);
+    if (params.idcv) {
+      dispatch(layCongViecTheoChiTietLoai(params.idcv));
+    }
+  }, [search, params.idcv]);
   return (
-    <div className="worklist max-w-[1400px] mx-auto">
+    <div className="worklist">
       <div className="worklist-content border-b-[1px] border-solid border-[#dadbdd]">
-        <header className="related-search bg-[#f5f5f5]">
-          <nav className="flex px-8 flex-nowrap overflow-hidden h-14">
-            <b className="text-[15px] my-auto px-[10px]">Suggested</b>
+        <header className="max-width-container related-search bg-[#f5f5f5]">
+          <nav className="flex flex-nowrap overflow-hidden h-14">
+            <b className="text-[15px] my-auto">Suggested</b>
             <div className="search-tags">
               <Link
                 to="/worklist?search=html css"
@@ -74,7 +86,7 @@ const WorkList = () => {
             </div>
           </nav>
         </header>
-        <div className="pt-8 px-8 pb-3">
+        <div className="max-width-container pt-8 pb-3">
           <span className="text-black text-[32px] leading-[150%] font-bold">
             {search !== null
               ? `Results for "${search}"`
@@ -83,7 +95,7 @@ const WorkList = () => {
               : ""}
           </span>
         </div>
-        <div className="worklist-menu px-8 flex flex-wrap justify-between text-[18px] font-[600px] text-[#222325] bg-white sticky top-0">
+        <div className="max-width-container worklist-menu overflow-hidden flex flex-wrap justify-between text-[18px] font-[600px] text-[#222325] bg-white sticky top-0">
           <div className="worklist-dropdown flex flex-nowrap mt-4">
             <button className="mr-[6px] border-[1px] border-solid border-[#dadbdd] rounded-[4px] px-3 py-[6px] whitespace-nowrap">
               Category
@@ -200,11 +212,11 @@ const WorkList = () => {
             </div>
           </div>
         </div>
-        <div className="worklist-container">
+        <div className="worklist-container max-width-container">
           <h3 className="text-2xl">
             {dsCongViecTheoTen.length} services available
           </h3>
-          <div className="grid gap-9 grid-cols-4 my-3 pt-[42px] px-8 pb-4 bg-[#f5f5f5]">
+          <div className="worklist-container-item grid gap-9 grid-cols-4 my-3 pt-[42px] px-8 pb-4 bg-[#f5f5f5]">
             {dsCongViecTheoTen.length === 0 ? (
               <div className="text-center col-span-4">
                 <div className="w-1/3 mx-auto">
@@ -224,15 +236,17 @@ const WorkList = () => {
               </div>
             ) : (
               dsCongViecTheoTen.map((dsCV) => (
-                <div key={dsCV.id} className="worklist-container-item">
+                <div key={dsCV.id}>
                   <div className="card bg-white">
-                    <a href="">
+                    <NavLink
+                      to={`/workdetail/${dsCV.tenLoaiCongViec}/${dsCV.id}`}
+                    >
                       <img
                         src={dsCV.congViec.hinhAnh}
                         alt={dsCV.congViec.hinhAnh}
                         style={{ width: "100%" }}
                       />
-                    </a>
+                    </NavLink>
                     <div className="seller-info text-[14px] leading-[21px]">
                       <div className="seller-info-content w-full h-[54px] px-3 pt-3 pb-2 flex items-center">
                         <div className="w-6 h-6">
@@ -242,16 +256,19 @@ const WorkList = () => {
                             alt={dsCV.avatar}
                           />
                         </div>
-                        <div className="ml-2">{dsCV.tenNguoiTao}</div>
+                        <div className="ml-2">
+                          <p className="font-bold mb-0">{dsCV.tenNguoiTao}</p>
+                          <p className="mb-0">Level 2 Seller</p>
+                        </div>
                       </div>
                     </div>
                     <h3 className="text-base leading-[130%]">
-                      <a
-                        href=""
+                      <NavLink
+                        to={`/workdetail/${dsCV.tenLoaiCongViec}/${dsCV.id}`}
                         className="inline-block text-[#222325] leading-[22px] h-[43px] px-3 pb-[5px] mt-[5px] text-left hover:text-inherit"
                       >
                         {dsCV.congViec.tenCongViec}
-                      </a>
+                      </NavLink>
                     </h3>
                     <div className="seller-rate py-[10px] px-3">
                       <span className="flex items-center">
@@ -301,15 +318,15 @@ const WorkList = () => {
                           </span>
                         </div>
                         <div>
-                          <a
-                            href=""
+                          <NavLink
+                            to={`/workdetail/${dsCV.tenLoaiCongViec}/${dsCV.id}`}
                             className="text-[#404145] hover:text-inherit"
                           >
                             <span className="mr-3">STARTING AT</span>
                             <span className="text-[18px] leading-[20px]">
                               $ {dsCV.congViec.giaTien}
                             </span>
-                          </a>
+                          </NavLink>
                         </div>
                       </div>
                     </footer>

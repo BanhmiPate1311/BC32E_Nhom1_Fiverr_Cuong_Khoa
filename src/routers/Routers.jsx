@@ -4,6 +4,7 @@ import MainLayout from "../layouts/mainlayout/MainLayout";
 import Home from "../pages/main/Home";
 
 import WorkCategory from "../pages/main/WorkCategory";
+import WorkDetail from "../pages/main/WorkDetail";
 import WorkList from "../pages/main/WorkList";
 import Profile from "../pages/profile/Profile";
 import SignIn from "../pages/signin/SignIn";
@@ -25,12 +26,20 @@ const Routers = () => {
           element: <WorkList />,
         },
         {
+          path: "worklist/:idcv",
+          element: <WorkList />,
+        },
+        {
           path: "workcategory/:id",
           element: <WorkCategory />,
         },
         {
           path: "workcategory",
           element: <WorkList />,
+        },
+        {
+          path: "workdetail/:idloaiCV/:idwork",
+          element: <WorkDetail />,
         },
       ],
     },
