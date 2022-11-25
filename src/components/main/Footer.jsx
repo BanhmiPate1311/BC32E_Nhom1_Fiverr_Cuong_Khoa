@@ -3,7 +3,7 @@ import "./footer.css";
 
 const Footer = () => {
   return (
-    <footer className="max-width-container text-gray-600 body-font">
+    <footer className="max-width-container pt-14 text-gray-600 body-font">
       <div>
         <div className="flex flex-wrap md:text-left">
           <div className="footer-link w-1/5">

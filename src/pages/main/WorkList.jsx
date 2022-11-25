@@ -37,9 +37,9 @@ const WorkList = () => {
   return (
     <div className="worklist">
       <div className="worklist-content border-b-[1px] border-solid border-[#dadbdd]">
-        <header className="max-width-container related-search bg-[#f5f5f5]">
-          <nav className="flex flex-nowrap overflow-hidden h-14">
-            <b className="text-[15px] my-auto">Suggested</b>
+        <header className="related-search bg-[#f5f5f5]">
+          <nav className="max-width-container flex flex-nowrap items-center overflow-hidden h-14">
+            <b className="text-[15px] mr-2">Suggested</b>
             <div className="search-tags">
               <Link
                 to="/worklist?search=html css"
