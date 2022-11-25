@@ -26,7 +26,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (userLogIn) {
-      return navigate(`/profile/${userLogIn?.user?.id}`);
+      return navigate(`/`);
     }
   }, [userLogIn]);
 

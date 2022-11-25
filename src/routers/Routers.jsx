@@ -1,11 +1,13 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/mainlayout/MainLayout";
+import Admin from "../pages/admin/Admin";
 import Home from "../pages/main/Home";
 
 import WorkCategory from "../pages/main/WorkCategory";
 import WorkDetail from "../pages/main/WorkDetail";
 import WorkList from "../pages/main/WorkList";
+import NotFound from "../pages/notFound/NotFound";
 import Profile from "../pages/profile/Profile";
 import SignIn from "../pages/signin/SignIn";
 import SignUp from "../pages/signup/SignUp";
@@ -41,6 +43,10 @@ const Routers = () => {
           path: "workdetail/:idloaiCV/:idwork",
           element: <WorkDetail />,
         },
+        {
+          path: "/profile/:id",
+          element: <Profile />,
+        },
       ],
     },
     {
@@ -52,8 +58,12 @@ const Routers = () => {
       element: <SignUp />,
     },
     {
-      path: "/profile/:id",
-      element: <Profile />,
+      path: "/admin",
+      element: <Admin />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
   return routing;

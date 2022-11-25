@@ -16,7 +16,13 @@ const initialState = {
 export const { reducer: authReducer, actions: authActions } = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut: (state) => {
+      localStorage.removeItem("TOKEN");
+      localStorage.removeItem("USER_LOGIN");
+      state.userLogIn = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder
       //đăng nhập
@@ -96,3 +102,5 @@ export const signUp = createAsyncThunk(
     }
   }
 );
+
+export const { logOut } = authActions;

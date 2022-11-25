@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   NavLink,
   useLocation,
@@ -12,9 +12,18 @@ import {
   layMenuLoaiCongViec,
   useQuanLyCongViec,
 } from "../../store/quanLyCongViec";
+import Avatar from "react-avatar";
 import "./header.css";
+import {
+  BellOutlined,
+  ContactsTwoTone,
+  MailOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
+import { logOut } from "../../store/auth/authReducer";
 
 const Header = (props) => {
+  const [togglePopover, setTogglePopover] = useState(false);
   const [isScroll, setIsScroll] = useState();
   // Get work's catagory by useParams
 
@@ -46,6 +55,11 @@ const Header = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
+  const { userLogIn } = useSelector((state) => state.authReducer);
+  const userLogOut = () => {
+    dispatch(logOut());
+    navigate("/");
+  };
 
   useEffect(() => {
     dispatch(layMenuLoaiCongViec());
@@ -152,30 +166,90 @@ const Header = (props) => {
               className="font-bold flex flex-row  mt-3 md:mt-0"
               id="navbar-collapse"
             >
-              <NavLink href="#" className="header-nav px-4 mx-2 text-inherit">
-                Become a Seller
-              </NavLink>
-
-              <NavLink
-                to="/dangnhap"
-                className="button-toggle px-4 mx-2 text-center border border-transparent text-inherit"
-              >
-                Sign In
-              </NavLink>
-              <NavLink
-                to="/dangky"
-                className={`button-toggle px-4 mx-2 text-center border border-solid rounded transition-colors duration-300 ${
-                  pathname !== "/home"
-                    ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
-                    : ` ${
-                        isScroll === 1 || isScroll === 2
-                          ? "border-green-400 text-green-400"
-                          : "border-white text-inherit"
-                      }`
-                }   `}
-              >
-                Join
-              </NavLink>
+              {localStorage.getItem("USER_LOGIN") ? (
+                <div className="flex items-center">
+                  <div className="mr-5 mb-2 font-semibold text-zinc-500 text-lg cursor-pointer">
+                    <BellOutlined />
+                  </div>
+                  <div className="mr-5 mb-2 font-semibold text-zinc-500 text-lg cursor-pointer">
+                    <MailOutlined />
+                  </div>
+                  <div className="mr-5 mb-2 font-semibold text-zinc-500 text-lg cursor-pointer">
+                    <StarOutlined />
+                  </div>
+                  <div className="mr-3 font-semibold text-zinc-500 text-lg cursor-pointer">
+                    Orders
+                  </div>
+                  <div
+                    className="relative"
+                    onClick={() => {
+                      setTogglePopover(!togglePopover);
+                    }}
+                  >
+                    <Avatar
+                      className="cursor-pointer"
+                      size="40"
+                      name={userLogIn?.user?.name}
+                      src={userLogIn?.user?.avatar}
+                      round
+                    />
+                  </div>
+                  {togglePopover ? (
+                    <div className="nav-popover-avatar py-3 px-5 h-full bg-white border rounded-md absolute right-[1.5rem] z-10 top-[78px] flex flex-wrap">
+                      <div className="absolute top-[-15px] right-[16px]">
+                        <ContactsTwoTone className="text-xl" />
+                      </div>
+                      <NavLink
+                        to={`/profile/${userLogIn?.user?.id}`}
+                        className="text-md text-zinc-400 font-medium w-full border-b"
+                      >
+                        Profile
+                      </NavLink>
+                      <NavLink
+                        to="/admin"
+                        className="text-md text-zinc-400 font-medium w-full border-b mt-2"
+                      >
+                        Admin
+                      </NavLink>
+                      <div
+                        className="text-md text-zinc-400 font-medium w-full cursor-pointer hover:text-[#40a9ff] mt-2"
+                        onClick={userLogOut}
+                      >
+                        Logout
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div className="font-bold flex flex-row  mt-3 md:mt-0">
+                  <NavLink
+                    href="#"
+                    className="header-nav px-4 mx-2 text-inherit"
+                  >
+                    Become a Seller
+                  </NavLink>
+                  <NavLink
+                    to="/dangnhap"
+                    className="button-toggle px-4 mx-2 text-center border border-transparent text-inherit"
+                  >
+                    Sign In
+                  </NavLink>
+                  <NavLink
+                    to="/dangky"
+                    className={`button-toggle px-4 mx-2 text-center border border-solid rounded transition-colors duration-300 ${
+                      pathname !== "/home"
+                        ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
+                        : ` ${
+                            isScroll === 1 || isScroll === 2
+                              ? "border-green-400 text-green-400"
+                              : "border-white text-inherit"
+                          }`
+                    }   `}
+                  >
+                    Join
+                  </NavLink>
+                </div>
+              )}
             </div>
           </div>
         </div>
