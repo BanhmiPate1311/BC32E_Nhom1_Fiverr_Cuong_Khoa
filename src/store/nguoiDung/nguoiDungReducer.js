@@ -5,6 +5,7 @@ const initialState = {
   isFetching: false,
   userInfo: undefined,
   error: undefined,
+  listUserPageSearch: undefined,
 };
 
 export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
@@ -51,6 +52,20 @@ export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
           state.isFetching = false;
           state.error = action.payload;
           console.log("action.payload reject: ", action.payload);
+        })
+
+        //getUserPageSearch
+        .addCase(getUserPageSearch.pending, (state, action) => {
+          state.isFetching = false;
+        })
+        .addCase(getUserPageSearch.fulfilled, (state, action) => {
+          state.isFetching = true;
+          state.listUserPageSearch = action.payload;
+          console.log("action.payload: ", action.payload);
+        })
+        .addCase(getUserPageSearch.rejected, (state, action) => {
+          state.isFetching = true;
+          state.error = action.payload;
         });
     },
   });
@@ -117,6 +132,25 @@ export const postUploadAvatar = createAsyncThunk(
       return result.data.content;
     } catch (err) {
       console.log("error", err.response.data);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getUserPageSearch = createAsyncThunk(
+  "nguoiDung/getUserPageSearch",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: "https://fiverrnew.cybersoft.edu.vn/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=100",
+        method: "GET",
+        headers: {
+          TokenCybersoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+      });
+      return result.data.content;
+    } catch (err) {
       return rejectWithValue(err.response.data);
     }
   }
