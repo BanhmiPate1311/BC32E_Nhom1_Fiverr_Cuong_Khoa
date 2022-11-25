@@ -3,10 +3,14 @@ import { combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { authReducer } from "./auth/authReducer";
 import { quanLyCongViecReducer } from "./quanLyCongViec";
+import { nguoiDungReducer } from "./nguoiDung/nguoiDungReducer";
+import { thueCongViecReducer } from "./thueCongViec/thueCongViec";
 
 const rootReducer = combineReducers({
   authReducer,
   quanLyCongViecReducer,
+  nguoiDungReducer,
+  thueCongViecReducer,
 });
 
 export const store = configureStore({
