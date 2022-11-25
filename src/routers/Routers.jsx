@@ -6,6 +6,7 @@ import Home from "../pages/main/Home";
 import WorkCategory from "../pages/main/WorkCategory";
 import WorkDetail from "../pages/main/WorkDetail";
 import WorkList from "../pages/main/WorkList";
+import Profile from "../pages/profile/Profile";
 import SignIn from "../pages/signin/SignIn";
 import SignUp from "../pages/signup/SignUp";
 
@@ -49,6 +50,10 @@ const Routers = () => {
     {
       path: "/dangky",
       element: <SignUp />,
+    },
+    {
+      path: "/profile/:id",
+      element: <Profile />,
     },
   ]);
   return routing;

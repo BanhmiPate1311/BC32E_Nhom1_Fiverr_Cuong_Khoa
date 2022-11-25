@@ -21,11 +21,12 @@ const SignIn = () => {
   } = useForm({ mode: "onBlur" });
   const dispatch = useDispatch();
   const { userLogIn } = useSelector((state) => state.authReducer);
+  console.log("userLogIn: ", userLogIn);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userLogIn) {
-      return navigate(-1);
+      return navigate(`/profile/${userLogIn?.user?.id}`);
     }
   }, [userLogIn]);
 
@@ -92,7 +93,6 @@ const SignIn = () => {
         <Form
           className="form-signin justify-center"
           onSubmit={handleSubmit((data) => {
-            console.log("data: ", data);
             dispatch(signIn(data));
           })}
         >
