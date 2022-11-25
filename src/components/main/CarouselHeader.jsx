@@ -1,9 +1,13 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Carousel } from "react-responsive-carousel";
 // Carousel
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Link, useNavigate } from "react-router-dom";
 
 const CarouselHeader = () => {
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm();
   return (
     <div className="carousel relative">
       <Carousel
@@ -23,7 +27,7 @@ const CarouselHeader = () => {
           className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/andrea.png")' }}
         >
-          <div className="container mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Andrea, <b>Fashion Designer</b>
             </p>
@@ -33,7 +37,7 @@ const CarouselHeader = () => {
           className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/gabriell.png")' }}
         >
-          <div className="container mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Gabrielle, <b>Video Editor</b>
             </p>
@@ -43,7 +47,7 @@ const CarouselHeader = () => {
           className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/moon.png")' }}
         >
-          <div className="container mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Moon, <b>Marketing Expert</b>
             </p>
@@ -53,7 +57,7 @@ const CarouselHeader = () => {
           className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/ritika.png")' }}
         >
-          <div className="container mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Ritika, <b>ShoeMaker and Designer</b>
             </p>
@@ -63,7 +67,7 @@ const CarouselHeader = () => {
           className="w-full h-[680px] bg-center bg-no-repeat bg-cover"
           style={{ backgroundImage: 'url("./images/zach.png")' }}
         >
-          <div className="container mx-auto flex justify-end items-end h-full text-right text-white">
+          <div className="max-w-[1400px] mx-auto flex justify-end items-end h-full text-right text-white">
             <p style={{ paddingBottom: 32 }}>
               Zach, <b>Bar Owner</b>
             </p>
@@ -71,13 +75,22 @@ const CarouselHeader = () => {
         </div>
       </Carousel>
 
-      <div className="container mx-auto absolute top-0 left-0 bottom-0 right-0 flex items-center">
+      <div className="max-w-[1400px] mx-auto absolute top-0 left-0 bottom-0 right-0 flex items-center">
         <div className="max-w-[650px]">
-          <h1 className="text-white pb-[24px] text-[48px] leading-[56px] font-bold">
+          <h1 className="text-white pb-[24px] text-[48px] leading-[56px] font-bold mb-0">
             Find the perfect <i>freelance</i> services for your business
           </h1>
           <div>
-            <form className="search-form relative flex">
+            <form
+              onSubmit={handleSubmit((data) => {
+                console.log({ data });
+                if (data.searchText === "") {
+                  return;
+                }
+                navigate(`/worklist?search=${data.searchText}`);
+              })}
+              className="search-form relative flex"
+            >
               <span
                 className="absolute top-[16px] left-[16px]"
                 aria-hidden="true"
@@ -98,6 +111,7 @@ const CarouselHeader = () => {
                 type="text"
                 autoComplete="off"
                 placeholder='Try "building mobile app"'
+                {...register("searchText")}
               />
 
               <button className="m-0 rounded-r block text-[16px] h-[48px] font-bold px-6 py-3 submit-button text-white bg-green-400">
@@ -110,40 +124,40 @@ const CarouselHeader = () => {
             Popular:
             <ul className="flex w-full ml-3">
               <li className="mr-3">
-                <a
-                  href="/categories/graphics-design/website-design?source=hplo_search_tag&pos=1&name=website-design"
+                <Link
+                  to="/worklist?search=Website Design"
                   className="leading-6 font-[600] text-white py-[1px] px-3
               rounded-[40px] border border-solid border-white transition-all duration-200 hover:text-black hover:bg-white"
                 >
                   Website Design
-                </a>
+                </Link>
               </li>
               <li className="mr-3">
-                <a
-                  href="/categories/programming-tech/wordpress-services?source=hplo_search_tag&pos=2&name=wordpress-services"
+                <Link
+                  to="/worklist?search=WordPress"
                   className="leading-6 font-[600] text-white py-[1px] px-3
               rounded-[40px] border border-solid border-white transition-all duration-200 hover:text-black hover:bg-white"
                 >
                   WordPress
-                </a>
+                </Link>
               </li>
               <li className="mr-3">
-                <a
-                  href="/categories/graphics-design/creative-logo-design?source=hplo_search_tag&pos=3&name=creative-logo-design"
+                <Link
+                  to="/worklist?search=Logo Design"
                   className="leading-6 font-[600] text-white py-[1px] px-3
               rounded-[40px] border border-solid border-white transition-all duration-200 hover:text-black hover:bg-white"
                 >
                   Logo Design
-                </a>
+                </Link>
               </li>
               <li className="mr-3">
-                <a
-                  href="/categories/video-animation/video-editing?source=hplo_search_tag&pos=4&name=video-editing"
+                <Link
+                  to="/worklist?search=Video Editing"
                   className="leading-6 font-[600] text-white py-[1px] px-3
               rounded-[40px] border border-solid border-white transition-all duration-200 hover:text-black hover:bg-white"
                 >
                   Video Editing
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

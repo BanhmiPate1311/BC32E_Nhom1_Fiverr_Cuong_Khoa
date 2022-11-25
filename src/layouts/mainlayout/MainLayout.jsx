@@ -1,18 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import CarouselHeader from "../../pages/main/CarouselHeader";
-
-import Header from "../../pages/main/Header";
-import SubCategory from "../../pages/main/SubCategory";
-import Trusted from "../../pages/main/Trusted";
+import Footer from "../../components/main/Footer";
+import Header from "../../components/main/Header";
 
 const MainLayout = () => {
   return (
     <div className="box-border">
       <Header />
-      <CarouselHeader />
-      <Trusted />
-      <SubCategory />
+      <Outlet />
+      <Footer />
     </div>
   );
 };
