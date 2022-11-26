@@ -205,12 +205,16 @@ const Header = (props) => {
                       >
                         Profile
                       </NavLink>
-                      <NavLink
-                        to="/admin"
-                        className="text-md text-zinc-400 font-medium w-full border-b mt-2"
-                      >
-                        Admin
-                      </NavLink>
+                      {userLogIn?.user?.role === "ADMIN" ? (
+                        <NavLink
+                          to="/admin"
+                          className="text-md text-zinc-400 font-medium w-full border-b mt-2"
+                        >
+                          Admin
+                        </NavLink>
+                      ) : (
+                        <div></div>
+                      )}
                       <div
                         className="text-md text-zinc-400 font-medium w-full cursor-pointer hover:text-[#40a9ff] mt-2"
                         onClick={userLogOut}

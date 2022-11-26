@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const initialState = {
   isFetching: false,
@@ -66,6 +67,24 @@ export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
         .addCase(getUserPageSearch.rejected, (state, action) => {
           state.isFetching = true;
           state.error = action.payload;
+        })
+        //deleteUser
+        .addCase(deleteUser.pending, (state, action) => {
+          state.isFetching = false;
+        })
+        .addCase(deleteUser.fulfilled, (state, action) => {
+          state.isFetching = true;
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        })
+        .addCase(deleteUser.rejected, (state, action) => {
+          state.isFetching = true;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
         });
     },
   });
@@ -142,13 +161,34 @@ export const getUserPageSearch = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const result = await axios({
-        url: "https://fiverrnew.cybersoft.edu.vn/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=100",
+        url: "https://fiverrnew.cybersoft.edu.vn/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=200",
         method: "GET",
         headers: {
           TokenCybersoft:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
       });
+      return result.data.content;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deleteUser = createAsyncThunk(
+  "nguoiDung/deleteUser",
+  async (deleteKey, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users?id=${deleteKey}`,
+        method: "DELETE",
+        headers: {
+          TokenCybersoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+      });
+      dispatch(getUserPageSearch());
+      console.log("result.data.content: ", result.data.content);
       return result.data.content;
     } catch (err) {
       return rejectWithValue(err.response.data);
