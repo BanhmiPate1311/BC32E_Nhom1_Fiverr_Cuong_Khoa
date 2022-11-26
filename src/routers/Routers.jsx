@@ -2,6 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/mainlayout/MainLayout";
 import Admin from "../pages/admin/Admin";
+import User from "../pages/admin/user/User";
+import Work from "../pages/admin/work/Work";
 import Home from "../pages/main/Home";
 
 import WorkCategory from "../pages/main/WorkCategory";
@@ -60,6 +62,20 @@ const Routers = () => {
     {
       path: "/admin",
       element: <Admin />,
+      children: [
+        {
+          path: "/admin",
+          element: <User />,
+        },
+        {
+          path: "/admin/user",
+          element: <User />,
+        },
+        {
+          path: "/admin/work",
+          element: <Work />,
+        },
+      ],
     },
     {
       path: "*",
