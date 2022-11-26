@@ -52,14 +52,14 @@ export const getAllWork = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const result = await axios({
-        url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec",
+        url: "https://fiverrnew.cybersoft.edu.vn/api/cong-viec/phan-trang-tim-kiem?pageIndex=1&pageSize=200",
         method: "GET",
         headers: {
           TokenCybersoft:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
       });
-      return result.data.content;
+      return result.data.content.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
@@ -74,8 +74,7 @@ export const deleteWork = createAsyncThunk(
         url: `https://fiverrnew.cybersoft.edu.vn/api/cong-viec/${workId}`,
         method: "DELETE",
         headers: {
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE2NDgiLCJlbWFpbCI6ImhoMkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJuYmYiOjE2Njk0NzI4MDAsImV4cCI6MTY3MDA3NzYwMH0.rWEJHUkalkNp5LlKUjqaDldHr1tyJ-3Wuj-43NYl_kc",
+          token: localStorage.getItem("TOKEN"),
           TokenCybersoft:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },

@@ -4,6 +4,7 @@ import MainLayout from "../layouts/mainlayout/MainLayout";
 import Admin from "../pages/admin/Admin";
 import User from "../pages/admin/user/User";
 import Work from "../pages/admin/work/Work";
+import WorkType from "../pages/admin/worktype/WorkType";
 import Home from "../pages/main/Home";
 
 import WorkCategory from "../pages/main/WorkCategory";
@@ -74,6 +75,10 @@ const Routers = () => {
         {
           path: "/admin/work",
           element: <Work />,
+        },
+        {
+          path: "/admin/worktype",
+          element: <WorkType />,
         },
       ],
     },

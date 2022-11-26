@@ -2,31 +2,33 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
 import { deleteUser } from "../../../store/nguoiDung/nguoiDungReducer";
-import { Table, Button, Input, Space, Layout } from "antd";
+import { Table, Button, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
+import { deleteWork } from "../../../store/congViec/congViecReducer";
 import {
-  deleteWork,
-  getAllWork,
-} from "../../../store/congViec/congViecReducer";
+  deleteWorkType,
+  getWorkType,
+} from "../../../store/chiTietLoaiCongViec/chiTietLoaiCongViecReducer";
 
-const Work = () => {
-  const { allWork } = useSelector((state) => state.congViecReducer);
-  console.log("AllWork: ", allWork);
+const WorkType = () => {
   const dispatch = useDispatch();
-
+  const { listWorkType } = useSelector(
+    (state) => state.chiTietLoaiCongViecReducer
+  );
+  console.log("listWorkType: ", listWorkType);
   useEffect(() => {
-    dispatch(getAllWork());
+    dispatch(getWorkType());
   }, []);
 
   const data = [];
-  allWork?.map((value, i) => {
+
+  listWorkType?.map((value, index) => {
     data.push({
       id: value.id,
-      hinhAnh: <img src={value.hinhAnh} alt="" />,
-      tenCongViec: value.tenCongViec,
-      danhGia: value.danhGia,
-      giaTien: value.giaTien,
+      hinhAnh: <img src={value.hinhAnh}></img>,
+      tenNhom: value.tenNhom,
+      dsChiTietLoai: value.dsChiTietLoai,
     });
   });
 
@@ -158,35 +160,32 @@ const Work = () => {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Picture",
+      title: "Avatar",
       dataIndex: "hinhAnh",
       key: "hinhAnh",
       width: "10%",
     },
     {
-      title: "Work",
-      dataIndex: "tenCongViec",
-      key: "tenCongViec",
+      title: "Group Name",
+      dataIndex: "tenNhom",
+      key: "tenNhom",
+      width: "20%",
+      sorter: (a, b) => a.tenNhom.length - b.tenNhom.length,
+      sortDirections: ["descend", "ascend"],
+      ...getColumnSearchProps("tenNhom"),
+    },
+    {
+      title: "Work Type",
+      dataIndex: "dsChiTietLoai",
+      render: (dsChiTietLoai) =>
+        dsChiTietLoai.map((dsChiTietLoai) => dsChiTietLoai.tenChiTiet).join(),
+      key: "hinhAnh",
       width: "25%",
-      ...getColumnSearchProps("tenCongViec"),
     },
-    {
-      title: "Rate",
-      dataIndex: "danhGia",
-      key: "danhGia",
-      with: "25%",
-      ...getColumnSearchProps("danhGia"),
-    },
-    {
-      title: "Price",
-      dataIndex: "giaTien",
-      key: "giaTien",
-      width: "15%",
-      ...getColumnSearchProps("giaTien"),
-    },
+
     {
       title: "Edit",
-      with: "25%",
+      with: "15%",
       dataIndex: "edit",
       key: "edit",
       render: (_, record) => (
@@ -212,7 +211,7 @@ const Work = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteWork(record.id));
+                    dispatch(deleteWorkType(record.id));
                   }
                 });
               }}
@@ -229,4 +228,4 @@ const Work = () => {
   );
 };
 
-export default Work;
+export default WorkType;
