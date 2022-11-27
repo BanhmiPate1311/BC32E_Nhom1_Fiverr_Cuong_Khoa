@@ -1,20 +1,9 @@
-import {
-  CameraOutlined,
-  ConsoleSqlOutlined,
-  EditOutlined,
-  ManOutlined,
-  UserOutlined,
-  WomanOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ManOutlined, WomanOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import {
-  getUser,
-  postUploadAvatar,
-  putUserInfo,
-} from "../../store/nguoiDung/nguoiDungReducer";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUser, putUserInfo } from "../../store/nguoiDung/nguoiDungReducer";
 import {
   delHiredWork,
   getListHiredWork,
@@ -54,13 +43,6 @@ const Profile = () => {
   Modal.setAppElement("#root");
 
   const onSubmit = (data) => {
-    console.log("s", data.skill);
-    // let file = data.avatar[0];
-    // console.log("data.target.files[0]: ", data.avatar[0]);
-    // let formData = new FormData();
-    // formData.append("File", file, file.name);
-    // console.log("fd", formData.get("File"));
-    // dispatch(postUploadAvatar(formData));
     dispatch(
       putUserInfo({
         id: userInfo?.id || "",
@@ -70,8 +52,8 @@ const Profile = () => {
         birthday: userInfo?.birthday || "",
         gender: userInfo?.gender || Boolean,
         role: userInfo?.role || "",
-        skill: [data.skill] || "",
-        certification: [data.certification] || "",
+        skill: [data.skill] || [],
+        certification: [data.certification] || [],
       })
     );
     setToggleDesc(false);
@@ -121,13 +103,6 @@ const Profile = () => {
               <div className="w-full h-[240px] flex flex-wrap justify-center">
                 <div className="w-[100px] h-[100px] mt-10 relative">
                   <Avatar name={userInfo?.name} src={userInfo?.avatar} round />
-                  <CameraOutlined className="camera-avatar absolute bottom-[0] text-xl" />
-                  <input
-                    type="file"
-                    {...register("avatar")}
-                    accept="image/jpeg, image/png"
-                  />
-                  <button>sub</button>
                 </div>
                 <div className="w-full text-center mb-26 flex flex-wrap justify-center">
                   <div className="w-full font-bold text-2xl">

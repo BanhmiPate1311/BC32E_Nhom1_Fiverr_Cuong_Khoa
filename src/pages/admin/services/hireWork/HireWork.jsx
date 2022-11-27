@@ -4,41 +4,50 @@ import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
 import {
   deleteUser,
   getUserPageSearch,
-} from "../../../store/nguoiDung/nguoiDungReducer";
-import { Table, Button, Input, Space, Layout } from "antd";
+} from "../../../../store/nguoiDung/nguoiDungReducer";
+import { Table, Button, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
+import {
+  delHiredWork,
+  getServicesSearch,
+} from "../../../../store/thueCongViec/thueCongViec";
 
-const User = () => {
-  const { userLogIn } = useSelector((state) => state.authReducer);
-  console.log("userLogIn: ", userLogIn);
-  const { listUserPageSearch } = useSelector((state) => state.nguoiDungReducer);
-  console.log("listUserPageSearch: ", listUserPageSearch);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserPageSearch());
-  }, []);
-
-  const data = [];
-  listUserPageSearch?.data.map((item, i) => {
-    data.push({
-      id: <p key={i}>{item.id}</p>,
-      name: item.name,
-      birthday: item.birthday,
-      email: item.email,
-      phone: item.phone,
-      role: item.role,
-    });
-  });
-  console.log(data);
-
-  const { Content, Footer, Sider } = Layout;
-
-  // Table
+const HireWork = () => {
+  const { listServicesSearch } = useSelector(
+    (state) => state.thueCongViecReducer
+  );
+  console.log("listServicesSearch: ", listServicesSearch);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getServicesSearch());
+  }, []);
+
+  const data = [];
+  listServicesSearch?.data?.map((item, i) => {
+    if (item.hoanThanh === true) {
+      data.push({
+        id: <p key={i}>{item.id}</p>,
+        maCongViec: item.maCongViec,
+        maNguoiThue: item.maNguoiThue,
+        ngayThue: item.ngayThue,
+        hoanThanh: "true",
+      });
+    } else {
+      data.push({
+        id: <p key={i}>{item.id}</p>,
+        maCongViec: item.maCongViec,
+        maNguoiThue: item.maNguoiThue,
+        ngayThue: item.ngayThue,
+        hoanThanh: "false",
+      });
+    }
+  });
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -161,41 +170,36 @@ const User = () => {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      width: "20%",
-      ...getColumnSearchProps("name"),
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "ID Job",
+      dataIndex: "maCongViec",
+      key: "maCongViec",
+      width: "10%",
+      ...getColumnSearchProps("maCongViec"),
+      sorter: (a, b) => a.maCongViec - b.maCongViec,
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Birthday",
-      dataIndex: "birthday",
-      key: "birthday",
+      title: "ID User",
+      dataIndex: "maNguoiThue",
+      key: "maNguoiThue",
       width: "15%",
-      ...getColumnSearchProps("birthday"),
+      ...getColumnSearchProps("maNguoiThue"),
+      sorter: (a, b) => a.maNguoiThue - b.maNguoiThue,
+      sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Start",
+      dataIndex: "ngayThue",
+      key: "ngayThue",
       with: "25%",
-      ...getColumnSearchProps("email"),
+      ...getColumnSearchProps("ngayThue"),
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
+      title: "Finish",
+      dataIndex: "hoanThanh",
+      key: "hoanThanh",
       width: "15%",
-      ...getColumnSearchProps("phone"),
-    },
-    {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-      width: "10%",
-      ...getColumnSearchProps("role"),
+      ...getColumnSearchProps("hoanThanh"),
     },
     {
       title: "Edit",
@@ -225,7 +229,7 @@ const User = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteUser(record.id));
+                    dispatch(delHiredWork(record.id));
                   }
                 });
               }}
@@ -242,4 +246,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default HireWork;

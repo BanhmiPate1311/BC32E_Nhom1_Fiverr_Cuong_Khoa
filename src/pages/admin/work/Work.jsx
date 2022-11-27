@@ -22,7 +22,7 @@ const Work = () => {
   const data = [];
   allWork?.map((value, i) => {
     data.push({
-      id: value.id,
+      id: <p key={i}>{value.id}</p>,
       hinhAnh: <img src={value.hinhAnh} alt="" />,
       tenCongViec: value.tenCongViec,
       danhGia: value.danhGia,

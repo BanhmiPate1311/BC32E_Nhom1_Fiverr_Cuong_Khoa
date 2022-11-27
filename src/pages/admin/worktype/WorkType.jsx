@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
-import { deleteUser } from "../../../store/nguoiDung/nguoiDungReducer";
 import { Table, Button, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
-import { deleteWork } from "../../../store/congViec/congViecReducer";
 import {
   deleteWorkType,
   getWorkType,
@@ -178,7 +176,7 @@ const WorkType = () => {
       title: "Work Type",
       dataIndex: "dsChiTietLoai",
       render: (dsChiTietLoai) =>
-        dsChiTietLoai.map((dsChiTietLoai) => dsChiTietLoai.tenChiTiet).join(),
+        dsChiTietLoai?.map((dsChiTietLoai) => dsChiTietLoai.tenChiTiet).join(),
       key: "hinhAnh",
       width: "25%",
     },

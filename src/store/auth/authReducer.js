@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 let user = undefined;
 if (localStorage.getItem("USER_LOGIN")) {
@@ -39,6 +40,12 @@ export const { reducer: authReducer, actions: authActions } = createSlice({
       .addCase(signIn.rejected, (state, action) => {
         state.error = action.payload;
         state.isFetching = false;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Your Email or Passwork went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       })
 
       //đăng ký
