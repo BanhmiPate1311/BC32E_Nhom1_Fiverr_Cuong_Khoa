@@ -2,6 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/mainlayout/MainLayout";
 import Admin from "../pages/admin/Admin";
+import Comments from "../pages/admin/services/comments/Comments";
+import HireWork from "../pages/admin/services/hireWork/HireWork";
 import User from "../pages/admin/user/User";
 import Work from "../pages/admin/work/Work";
 import WorkType from "../pages/admin/worktype/WorkType";
@@ -79,6 +81,18 @@ const Routers = () => {
         {
           path: "/admin/worktype",
           element: <WorkType />,
+        },
+        {
+          path: "/admin/services",
+          element: <HireWork />,
+        },
+        {
+          path: "/admin/services/hirework",
+          element: <HireWork />,
+        },
+        {
+          path: "/admin/services/comments",
+          element: <Comments />,
         },
       ],
     },

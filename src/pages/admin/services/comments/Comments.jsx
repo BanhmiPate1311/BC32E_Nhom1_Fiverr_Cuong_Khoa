@@ -4,41 +4,42 @@ import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
 import {
   deleteUser,
   getUserPageSearch,
-} from "../../../store/nguoiDung/nguoiDungReducer";
-import { Table, Button, Input, Space, Layout } from "antd";
+} from "../../../../store/nguoiDung/nguoiDungReducer";
+import { Table, Button, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
+import {
+  delHiredWork,
+  getServicesSearch,
+} from "../../../../store/thueCongViec/thueCongViec";
+import {
+  deleteComment,
+  getCommentsSearch,
+} from "../../../../store/quanLyBinhLuan/quanLyBinhLuanReducer";
+import { useQuanLyBinhLuan } from "../../../../store/quanLyBinhLuan/quanLyBinhLuanSelector";
 
-const User = () => {
-  const { userLogIn } = useSelector((state) => state.authReducer);
-  console.log("userLogIn: ", userLogIn);
-  const { listUserPageSearch } = useSelector((state) => state.nguoiDungReducer);
-  console.log("listUserPageSearch: ", listUserPageSearch);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserPageSearch());
-  }, []);
-
-  const data = [];
-  listUserPageSearch?.data.map((item, i) => {
-    data.push({
-      id: <p key={i}>{item.id}</p>,
-      name: item.name,
-      birthday: item.birthday,
-      email: item.email,
-      phone: item.phone,
-      role: item.role,
-    });
-  });
-  console.log(data);
-
-  const { Content, Footer, Sider } = Layout;
-
-  // Table
+const Comments = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const { listCommentsSearch } = useQuanLyBinhLuan();
+  console.log("listCommentsSearch: ", listCommentsSearch);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCommentsSearch());
+  }, []);
+  const data = [];
+  listCommentsSearch?.map((item, i) => {
+    data.push({
+      id: <p key={i}>{item.id}</p>,
+      maCongViec: item.maCongViec,
+      maNguoiBinhLuan: item.maNguoiBinhLuan,
+      ngayBinhLuan: item.ngayBinhLuan,
+      noiDung: item.noiDung,
+      saoBinhLuan: item.saoBinhLuan,
+    });
+  });
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -161,41 +162,43 @@ const User = () => {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      width: "20%",
-      ...getColumnSearchProps("name"),
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "ID Job",
+      dataIndex: "maCongViec",
+      key: "maCongViec",
+      width: "15%",
+      ...getColumnSearchProps("maCongViec"),
+      sorter: (a, b) => a.maCongViec - b.maCongViec,
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Birthday",
-      dataIndex: "birthday",
-      key: "birthday",
+      title: "ID User Cmt",
+      dataIndex: "maNguoiBinhLuan",
+      key: "maNguoiBinhLuan",
       width: "15%",
-      ...getColumnSearchProps("birthday"),
+      ...getColumnSearchProps("maNguoiBinhLuan"),
+      sorter: (a, b) => a.maNguoiBinhLuan - b.maNguoiBinhLuan,
+      sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Date Cmt",
+      dataIndex: "ngayBinhLuan",
+      key: "ngayBinhLuan",
       with: "25%",
-      ...getColumnSearchProps("email"),
+      ...getColumnSearchProps("ngayBinhLuan"),
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-      width: "15%",
-      ...getColumnSearchProps("phone"),
+      title: "Content Cmt",
+      dataIndex: "noiDung",
+      key: "noiDung",
+      width: "30%",
+      ...getColumnSearchProps("noiDung"),
     },
     {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-      width: "10%",
-      ...getColumnSearchProps("role"),
+      title: "Rate Cmt",
+      dataIndex: "saoBinhLuan",
+      key: "saoBinhLuan",
+      width: "5%",
+      ...getColumnSearchProps("saoBinhLuan"),
     },
     {
       title: "Edit",
@@ -225,7 +228,7 @@ const User = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteUser(record.id));
+                    dispatch(deleteComment(record.id));
                   }
                 });
               }}
@@ -242,4 +245,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Comments;

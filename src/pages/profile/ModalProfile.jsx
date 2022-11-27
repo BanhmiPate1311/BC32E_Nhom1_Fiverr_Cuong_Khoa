@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useDispatch } from "react-redux";
-import { putUserInfo } from "../../store/nguoiDung/nguoiDungReducer";
+import {
+  postUploadAvatar,
+  putUserInfo,
+} from "../../store/nguoiDung/nguoiDungReducer";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import Avatar from "react-avatar";
 
 const ModalProfile = (props) => {
+  //Reader
+  // const reader = new FileReader();
+  // reader.readAsDataURL(file);
+  // reader.onload = () => {
+  //   return reader.result;
+  // };
+  // console.log("reader: ", reader.result);
+  // console.log("file: ", file);
   const { modalIsOpen, afterOpenModal, closeModal, customStyles, userInfo } =
     props;
+  console.log("modal", userInfo);
   const dispatch = useDispatch();
   const {
     register,
@@ -26,7 +39,6 @@ const ModalProfile = (props) => {
 
   const onSubmitModal = (data) => {
     checkGender(data);
-    console.log("propsModal", data);
     dispatch(
       putUserInfo({
         id: userInfo?.id || "",
@@ -36,8 +48,8 @@ const ModalProfile = (props) => {
         birthday: data.birthday || "",
         gender: data.gender || Boolean,
         role: userInfo?.role || "",
-        skill: [data.skill] || "",
-        certification: [data.certification] || "",
+        skill: [data.skill] || [],
+        certification: [data.certification] || [],
       })
     );
 
@@ -86,11 +98,36 @@ const ModalProfile = (props) => {
             </button>
           </div>
           <div className="mb-3">
+            <div className="text-center">
+              <Avatar name={userInfo?.name} src={userInfo?.avatar} round />
+              <input
+                type="file"
+                {...register("avatar")}
+                accept="image/*"
+                name="avatar"
+                onChange={(event) => {
+                  const file = event.target.files[0];
+                  const formData = new FormData();
+                  console.log("file: ", file);
+                  formData.append("file", file);
+                  console.log("formData: ", formData.get("file"));
+
+                  // for (let pair of formData.entries()) {
+                  //   console.log(pair[0] + ", " + pair[1]);
+                  // }
+                  // var xhr = new XMLHttpRequest();
+                  // xhr.open("POST", "/", true);
+                  // xhr.send(formData);
+                  dispatch(postUploadAvatar(formData));
+                }}
+              />
+            </div>
             <div className="text-lg font-semibold">Name</div>
             <input
               className="w-full border rounded-md p-2"
               placeholder="Name"
               {...register("name", {
+                required: "Looks like this name is incomplete.",
                 minLength: {
                   value: 6,
                   message:
@@ -109,22 +146,7 @@ const ModalProfile = (props) => {
                 },
               })}
             />
-            <p className="text-red-600 error">{errors.name?.message}</p>
-          </div>
-          <div className="mb-3">
-            <div className="text-lg font-semibold">Birthday</div>
-            <input
-              className="w-full border rounded-md p-2"
-              placeholder="Birthday"
-              {...register("birthday", {
-                pattern: {
-                  value:
-                    /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
-                  message: "Please input dd-mm-yyyy",
-                },
-              })}
-            />
-            <p className="text-red-600 error">{errors.birthday?.message}</p>
+            <p className="text-red-600 error">{errors?.name?.message}</p>
           </div>
           <div className="mb-3">
             <div className="text-lg font-semibold">Phone</div>
@@ -132,6 +154,7 @@ const ModalProfile = (props) => {
               className="w-full border rounded-md p-2"
               placeholder="Phone"
               {...register("phone", {
+                required: "Looks like this phone is incomplete.",
                 minLength: {
                   value: 10,
                   message:
@@ -148,7 +171,47 @@ const ModalProfile = (props) => {
                 },
               })}
             />
-            <p className="text-red-600 error">{errors.phone?.message}</p>
+            <p className="text-red-600 error">{errors?.phone?.message}</p>
+          </div>
+          <div className="mb-3">
+            <div className="text-lg font-semibold">Birthday</div>
+            <input
+              className="w-full border rounded-md p-2"
+              placeholder="Birthday"
+              {...register("birthday", {
+                required: "Looks like this birthday is incomplete.",
+                pattern: {
+                  value:
+                    /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
+                  message: "Please input dd-mm-yyyy",
+                },
+              })}
+            />
+            <p className="text-red-600 error">{errors?.birthday?.message}</p>
+          </div>
+          <div className="mb-3">
+            <div className="text-lg font-semibold">Skills</div>
+            <input
+              className="w-full border rounded-md p-2"
+              placeholder="Skills"
+              {...register("skill", {
+                required: "Looks like this skill is incomplete.",
+              })}
+            />
+            <p className="text-red-600 error">{errors?.skill?.message}</p>
+          </div>
+          <div className="mb-3">
+            <div className="text-lg font-semibold">Certification</div>
+            <input
+              className="w-full border rounded-md p-2"
+              placeholder="Certification"
+              {...register("certification", {
+                required: "Looks like this certification is incomplete.",
+              })}
+            />
+            <p className="text-red-600 error">
+              {errors?.certification?.message}
+            </p>
           </div>
           <div className=" w-full mb-3">
             <div className="w-full text-lg font-semibold mb-1">Gender</div>

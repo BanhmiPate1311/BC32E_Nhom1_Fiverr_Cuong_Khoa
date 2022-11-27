@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const initialState = {
   listHiredWork: [],
   isFetching: false,
   error: undefined,
+  listServicesSearch: [],
 };
 
 export const { reducer: thueCongViecReducer, actions: thueCongViecActions } =
@@ -34,8 +36,27 @@ export const { reducer: thueCongViecReducer, actions: thueCongViecActions } =
           state.isFetching = true;
           state.listHiredWork = action.payload;
           console.log(" action.payload: ", action.payload);
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
         })
         .addCase(delHiredWork.rejected, (state, action) => {
+          state.isFetching = true;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        //getListServicesSearch
+        .addCase(getServicesSearch.pending, (state, action) => {
+          state.isFetching = false;
+        })
+        .addCase(getServicesSearch.fulfilled, (state, action) => {
+          state.isFetching = true;
+          state.listServicesSearch = action.payload;
+        })
+        .addCase(getServicesSearch.rejected, (state, action) => {
           state.isFetching = true;
           state.error = action.payload;
         });
@@ -66,7 +87,7 @@ export const getListHiredWork = createAsyncThunk(
 
 export const delHiredWork = createAsyncThunk(
   "thueCongViec/delHiredWork",
-  async (id, { rejectWithValue }) => {
+  async (id, { dispatch, rejectWithValue }) => {
     try {
       const result = await axios({
         url: `https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/${id}`,
@@ -78,9 +99,30 @@ export const delHiredWork = createAsyncThunk(
         },
       });
       console.log("result.data.content: ", result.data.content);
+      dispatch(getServicesSearch());
       return result.data.content;
     } catch (err) {
       console.log("error", err.response.data);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getServicesSearch = createAsyncThunk(
+  "thueCongViec/getServicesSearch",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/phan-trang-tim-kiem?pageIndex=1&pageSize=2000",
+        method: "GET",
+        headers: {
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      return result.data.content;
+    } catch (err) {
       return rejectWithValue(err.response.data);
     }
   }
