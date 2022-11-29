@@ -1,12 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const initialState = {
   isFetching: false,
-  userInfo: undefined,
+  userInfo: {
+    id: 0,
+    name: "",
+    email: "",
+    phone: "",
+    birthday: "",
+    gender: true,
+    role: "",
+    skill: [],
+    certification: [],
+  },
   error: undefined,
   listUserPageSearch: undefined,
+  newAdmin: undefined,
 };
 
 export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
@@ -22,7 +34,7 @@ export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
         })
         .addCase(getUser.fulfilled, (state, action) => {
           state.userInfo = action.payload;
-          console.log(action.payload);
+          const { skill } = action.payload;
           state.isFetching = false;
         })
         .addCase(getUser.rejected, (state, action) => {
@@ -36,6 +48,7 @@ export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
         .addCase(putUserInfo.fulfilled, (state, action) => {
           state.isFetching = false;
           state.userInfo = action.payload;
+          console.log("action.payload: ", action.payload);
         })
         .addCase(putUserInfo.rejected, (state, action) => {
           state.isFetching = false;
@@ -62,7 +75,6 @@ export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
         .addCase(getUserPageSearch.fulfilled, (state, action) => {
           state.isFetching = true;
           state.listUserPageSearch = action.payload;
-          console.log("action.payload: ", action.payload);
         })
         .addCase(getUserPageSearch.rejected, (state, action) => {
           state.isFetching = true;
@@ -78,6 +90,54 @@ export const { reducer: nguoiDungReducer, actions: nguoiDungActions } =
         })
         .addCase(deleteUser.rejected, (state, action) => {
           state.isFetching = true;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        .addCase(postNewAdmin.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(postNewAdmin.fulfilled, (state, action) => {
+          state.isFetching = false;
+          state.newAdmin = action.payload;
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .addCase(postNewAdmin.rejected, (state, action) => {
+          state.isFetching = false;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        //putChangeUserToAdmin
+        .addCase(putChangeUserToAdmin.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(putChangeUserToAdmin.fulfilled, (state, action) => {
+          state.isFetching = false;
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .addCase(putChangeUserToAdmin.rejected, (state, action) => {
+          state.isFetching = false;
           state.error = action.payload;
           Swal.fire({
             icon: "error",
@@ -123,7 +183,7 @@ export const putUserInfo = createAsyncThunk(
         },
         data,
       });
-      console.log("dat", data);
+      console.log("data: ", data);
       console.log("result.data.content: ", result.data.content);
       return result.data.content;
     } catch (err) {
@@ -189,6 +249,49 @@ export const deleteUser = createAsyncThunk(
       console.log("result.data.content: ", result.data.content);
       return result.data.content;
     } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const postNewAdmin = createAsyncThunk(
+  "nguoiDung/postNewUser",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: "https://fiverrnew.cybersoft.edu.vn/api/users",
+        method: "POST",
+        headers: {
+          TokenCybersoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      return result.data.content;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const putChangeUserToAdmin = createAsyncThunk(
+  "nguoiDung/putChangeUserToAdmin",
+  async (data, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/users/${data.id}`,
+        method: "PUT",
+        headers: {
+          TokenCybersoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      console.log(data);
+      dispatch(getUserPageSearch());
+      return result.data.content;
+    } catch (err) {
+      console.log("err", err.response.data);
       return rejectWithValue(err.response.data);
     }
   }

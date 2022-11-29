@@ -4,17 +4,23 @@ import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
 import {
   deleteUser,
   getUserPageSearch,
+  putChangeUserToAdmin,
 } from "../../../store/nguoiDung/nguoiDungReducer";
 import { Table, Button, Input, Space, Layout } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import Popup from "reactjs-popup";
+import { useForm } from "react-hook-form";
 
 const User = () => {
+  const { Content, Footer, Sider } = Layout;
   const { userLogIn } = useSelector((state) => state.authReducer);
   console.log("userLogIn: ", userLogIn);
   const { listUserPageSearch } = useSelector((state) => state.nguoiDungReducer);
   console.log("listUserPageSearch: ", listUserPageSearch);
   const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     dispatch(getUserPageSearch());
@@ -33,8 +39,6 @@ const User = () => {
   });
   console.log(data);
 
-  const { Content, Footer, Sider } = Layout;
-
   // Table
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -48,6 +52,123 @@ const User = () => {
     clearFilters();
     setSearchText("");
   };
+  const Modal = (i) => (
+    <Popup
+      trigger={
+        <div className="button">
+          <EditTwoTone></EditTwoTone>
+        </div>
+      }
+      modal
+    >
+      {(close) => (
+        <div className="modal-user border bg-white rounded-xl w-[450px] h-full flex flex-wrap justify-center  px-10 pb-10 pt-5 shadow-lg shadow-cyan-500/50">
+          <div className="w-full flex justify-end">
+            <span
+              className="border rounded-lg py-2 px-4 bg-green-500 text-white font-bold text-lg cursor-pointer"
+              onClick={close}
+            >
+              X
+            </span>
+          </div>
+          <div className="w-full text-xl  text-center font-bold mb-1 text-red-600">
+            Change Role
+          </div>
+          <form
+            onSubmit={handleSubmit((data) => {
+              console.log("data: ", data);
+              dispatch(
+                putChangeUserToAdmin({
+                  id: i.id.props.children,
+                  name: i.name,
+                  email: i.email,
+                  phone: i.phone,
+                  birthday: i.birthday,
+                  role: data.role,
+                })
+              );
+            })}
+          >
+            <div className="w-full flex text-center border-b">
+              <div className="w-full flex text-lg font-medium mr-1">
+                ID:
+                <div>{i.id.props.children}</div>
+              </div>
+            </div>
+            <div className="w-full mt-2">
+              <div className="text-lg font-medium">Name:</div>
+              <div className="mb-0 text-lg font-semibold text-green-500">
+                <div>{i.name}</div>
+              </div>
+            </div>
+            <div className="w-full mt-2">
+              <div className="text-lg font-medium mr-1">Email:</div>
+              <div className="mb-0 text-lg font-semibold text-green-500">
+                <div>{i.email}</div>
+              </div>
+            </div>
+            <div className="w-full mt-2">
+              <div className="text-lg font-medium mr-1">Phone:</div>
+              <div className="mb-0 text-lg font-semibold text-green-500">
+                <div>{i.phone}</div>
+              </div>
+            </div>
+            <div className="w-full mt-2">
+              <div className="text-lg font-medium mr-1">Birthday:</div>
+              <div className="mb-0 text-lg font-semibold text-green-500">
+                <div>{i.birthday}</div>
+              </div>
+            </div>
+            <div className="w-full my-3">
+              <div className="text-lg font-semibold mr-1 text-red-500">
+                Change Role
+              </div>
+              {i.role === "USER" ? (
+                <div className="flex flex-wrap w-full justify-center">
+                  <div className="w-full text-lg font-semibold mb-2">
+                    Role:
+                    <div className="text-cyan-500 font-bold">
+                      <span>{i.role}</span>
+                    </div>
+                  </div>
+                  <span className="font-medium text-lg">To</span>
+                  <select
+                    className="ml-2 text-red-500 font-bold text-lg border rounded-md mb-3"
+                    {...register("role")}
+                  >
+                    <option
+                      className="text-lg font-bold text-red-500"
+                      value="USER"
+                    >
+                      USER
+                    </option>
+                    <option
+                      className="text-lg font-bold text-red-500"
+                      value="ADMIN"
+                    >
+                      ADMIN
+                    </option>
+                  </select>
+                  <div className="w-full mt-4 text-center">
+                    <button
+                      className=" border rounded-md bg-green-500 text-white px-4 py-2 text-lg cursor-pointer"
+                      type="submit"
+                    >
+                      Change
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full font-semibold text-lg text-red-500">
+                  Still Admin
+                </div>
+              )}
+            </div>
+          </form>
+        </div>
+      )}
+    </Popup>
+  );
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -205,11 +326,7 @@ const User = () => {
       render: (_, record) => (
         <Space size="middle">
           <a>
-            <EditTwoTone
-              onClick={() => {
-                console.log("hello");
-              }}
-            ></EditTwoTone>
+            <button>{Modal(record)}</button>
           </a>
           <a>
             <DeleteTwoTone
@@ -236,8 +353,18 @@ const User = () => {
     },
   ];
   return (
-    <div>
-      <Table columns={columns} dataSource={data} />
+    <div className="container">
+      <div className="mb-5">
+        <Link
+          to="/admin/user/addadmin"
+          className="border rounded-md text-white bg-green-500 px-4 py-3"
+        >
+          Thêm Admin
+        </Link>
+      </div>
+      <div>
+        <Table columns={columns} dataSource={data} />
+      </div>
     </div>
   );
 };
