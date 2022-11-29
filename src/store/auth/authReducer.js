@@ -61,6 +61,13 @@ export const { reducer: authReducer, actions: authActions } = createSlice({
       .addCase(signUp.rejected, (state, action) => {
         state.error = action.payload;
         state.isFetching = false;
+        console.log(state.error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: state.error.content,
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       });
   },
 });

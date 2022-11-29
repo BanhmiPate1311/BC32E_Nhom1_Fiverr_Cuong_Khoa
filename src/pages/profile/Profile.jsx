@@ -2,8 +2,8 @@ import { EditOutlined, ManOutlined, WomanOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { getUser, putUserInfo } from "../../store/nguoiDung/nguoiDungReducer";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { getUser } from "../../store/nguoiDung/nguoiDungReducer";
 import {
   delHiredWork,
   getListHiredWork,
@@ -11,54 +11,16 @@ import {
 import "./Profile.css";
 import { Rate } from "antd";
 import Avatar from "react-avatar";
-import Modal from "react-modal";
-import ModalProfile from "./ModalProfile";
 
 const Profile = () => {
-  const [toggleDesc, setToggleDesc] = useState(false);
-  const [toggleLanguages, setToggleLanguages] = useState(false);
-  const [modalIsOpen, setIsOpen] = useState(false);
-
   const navigate = useNavigate();
   const params = useParams();
-  console.log("params: ", params.id);
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.nguoiDungReducer);
   console.log("userInfo: ", userInfo);
   const { listHiredWork } = useSelector((state) => state.thueCongViecReducer);
-  console.log("listHiredWork: ", listHiredWork);
-  const { register, handleSubmit } = useForm();
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      width: "50%",
-      height: "70%",
-    },
-  };
-  Modal.setAppElement("#root");
 
-  const onSubmit = (data) => {
-    dispatch(
-      putUserInfo({
-        id: userInfo?.id || "",
-        name: userInfo?.name || "",
-        email: userInfo?.email || "",
-        phone: userInfo?.phone || "",
-        birthday: userInfo?.birthday || "",
-        gender: userInfo?.gender || Boolean,
-        role: userInfo?.role || "",
-        skill: [data.skill] || [],
-        certification: [data.certification] || [],
-      })
-    );
-    setToggleDesc(false);
-    setToggleLanguages(false);
-  };
+  const { register, handleSubmit } = useForm();
 
   const toggleDescWork = (index) => {
     document.getElementById(`full-desc-${index}`).classList.add("openFullDesc");
@@ -66,13 +28,19 @@ const Profile = () => {
     document.getElementById(`short-desc-${index}`).classList.add("hidden");
   };
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  const checkSkill = () =>
+    Array.isArray(userInfo?.skill)
+      ? userInfo?.skill?.filter((val, i, array) => {
+          return array.indexOf(val) === i;
+        })
+      : -1;
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const checkCertification = () =>
+    Array.isArray(userInfo?.certification)
+      ? userInfo?.certification?.filter((val, i, array) => {
+          return array.indexOf(val) === i;
+        })
+      : -1;
 
   useEffect(() => {
     dispatch(getUser(params.id));
@@ -86,13 +54,7 @@ const Profile = () => {
     <div className="container">
       {localStorage.getItem("USER_LOGIN") ? (
         <div className="container flex">
-          <ModalProfile
-            modalIsOpen={modalIsOpen}
-            closeModal={closeModal}
-            customStyles={customStyles}
-            userInfo={userInfo}
-          />
-          <form className="w-2/6 px-3 py-10" onSubmit={handleSubmit(onSubmit)}>
+          <div className="w-2/6 px-3 py-10">
             <div className="card-info flex flex-wrap bg-white rounded-md border w-full p-7 relative mb-10">
               <div className="flex border rounded-xl border-[#1DBF73] w-[70px] h-[25px] absolute right-7 top-5 justify-center items-center">
                 <span className="dot mb-2 mr-[4px] font-bold text-[#1DBF73]">
@@ -113,11 +75,14 @@ const Profile = () => {
                   ) : (
                     <WomanOutlined className="gender-female" />
                   )}
-                  <div className="w-full">
-                    <button onClick={openModal}>
+                  <NavLink
+                    to={`/profile/${params.id}/editprofile`}
+                    className="w-full"
+                  >
+                    <button>
                       <EditOutlined />
                     </button>
-                  </div>
+                  </NavLink>
                 </div>
               </div>
               <div className="w-full  border-t-[1px] pt-5">
@@ -134,54 +99,29 @@ const Profile = () => {
             <div className="card-info flex flex-wrap bg-white rounded-md border w-full p-7">
               <div className="w-full h-full border-b-[1px]">
                 <div
-                  className="w-full flex justify-between hint-top relative"
+                  className="w-full flex flex-wrap justify-between hint-top relative"
                   data-hint="Let your buyers know your skills. Skills gained through your previous jobs, hobbies or even everyday life."
                 >
-                  <div>
+                  <div className="w-full">
                     <span className="font-semibold text-lg">Skills</span>
                   </div>
+                  <div className="empty-list w-full">
+                    <span>Your skill</span>
+                  </div>
                   <div>
-                    <span
-                      className="text-green-500 hover:cursor-pointer hover:underline"
-                      onClick={() => {
-                        const toggleDesc = true;
-                        setToggleDesc(toggleDesc);
-                      }}
-                    >
-                      Add New
-                    </span>
+                    {typeof userInfo?.skill === "string" ? (
+                      <div>{userInfo?.skill}</div>
+                    ) : (
+                      checkSkill()?.map((val, i) => {
+                        return (
+                          <div key={i} className="text-base">
+                            -{val}
+                          </div>
+                        );
+                      })
+                    )}
                   </div>
                 </div>
-                <div className="empty-list">
-                  <span>Add your skills</span>
-                </div>
-                {toggleDesc ? (
-                  <div className="w-full h-full bg-[#e5e5e5] my-4 rounded p-3">
-                    <textarea
-                      className="w-full h-[100px] border bg-transparent txt-description"
-                      placeholder="Please tell us about any hobbies, additional expertise, or anything else you’d like to add."
-                      name="description"
-                      {...register("skill")}
-                    ></textarea>
-                    <div className="border-t-[1px] border-zinc-300">
-                      <div className="flex justify-between mt-6">
-                        <button
-                          type="button"
-                          className="w-2/5 h-[40px] border-solid border border-zinc-300 rounded text-black bg-white"
-                        >
-                          Cancel
-                        </button>
-                        <button className="w-2/5 h-[40px] border-solid border border-green-500 rounded text-white bg-green-500">
-                          Update
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mb-20 w-full flex mt-5">
-                    <p>{userInfo?.skill}</p>
-                  </div>
-                )}
               </div>
               <div className="w-full h-full border-b-[1px]">
                 <div
@@ -191,48 +131,24 @@ const Profile = () => {
                   <div>
                     <span className="font-semibold text-lg">Certification</span>
                   </div>
-                  <div>
-                    <span
-                      className="text-green-500 hover:cursor-pointer hover:underline"
-                      onClick={() => {
-                        const toggleLanguages = true;
-                        setToggleLanguages(toggleLanguages);
-                      }}
-                    >
-                      Add New
-                    </span>
-                  </div>
+                  <div></div>
                 </div>
-                <div className="empty-list">
-                  <span>Add your Certification</span>
+                <div className="empty-list w-full">
+                  <span>Your Certification</span>
                 </div>
-                {toggleLanguages ? (
-                  <div className="w-full h-full bg-[#e5e5e5] my-4 rounded p-3">
-                    <textarea
-                      className="w-full h-[100px] border bg-transparent txt-description"
-                      placeholder="Please tell us about any hobbies, additional expertise, or anything else you’d like to add."
-                      name="description"
-                      {...register("certification")}
-                    ></textarea>
-                    <div className="border-t-[1px] border-zinc-300">
-                      <div className="flex justify-between mt-6">
-                        <button
-                          type="button"
-                          className="w-2/5 h-[40px] border-solid border border-zinc-300 rounded text-black bg-white"
-                        >
-                          Cancel
-                        </button>
-                        <button className="w-2/5 h-[40px] border-solid border border-green-500 rounded text-white bg-green-500">
-                          Update
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mb-20 w-full flex mt-5">
-                    <span>{userInfo?.certification}</span>
-                  </div>
-                )}
+                <div>
+                  {typeof userInfo?.certification === "string" ? (
+                    <div>{userInfo?.certification}</div>
+                  ) : (
+                    checkCertification()?.map((val, i) => {
+                      return (
+                        <div key={i} className="text-base">
+                          -{val}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
               </div>
               <div className="w-full h-full border-b-[1px]">
                 <div
@@ -282,7 +198,7 @@ const Profile = () => {
                 </p>
               </div>
             </div>
-          </form>
+          </div>
           {/* gigs */}
           <div className="w-4/6 px-3 py-10 ml-14">
             {listHiredWork?.length === 0 ? (

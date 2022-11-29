@@ -4,9 +4,11 @@ import MainLayout from "../layouts/mainlayout/MainLayout";
 import Admin from "../pages/admin/Admin";
 import Comments from "../pages/admin/services/comments/Comments";
 import HireWork from "../pages/admin/services/hireWork/HireWork";
+import AddAdmin from "../pages/admin/user/AddAdmin";
 import User from "../pages/admin/user/User";
 import Work from "../pages/admin/work/Work";
 import WorkType from "../pages/admin/worktype/WorkType";
+import EditProfile from "../pages/editProfile/EditProfile";
 import Home from "../pages/main/Home";
 
 import WorkCategory from "../pages/main/WorkCategory";
@@ -52,6 +54,10 @@ const Routers = () => {
           path: "/profile/:id",
           element: <Profile />,
         },
+        {
+          path: "/profile/:id/editprofile",
+          element: <EditProfile />,
+        },
       ],
     },
     {
@@ -93,6 +99,10 @@ const Routers = () => {
         {
           path: "/admin/services/comments",
           element: <Comments />,
+        },
+        {
+          path: "/admin/user/addadmin",
+          element: <AddAdmin />,
         },
       ],
     },

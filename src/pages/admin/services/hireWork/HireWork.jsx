@@ -173,7 +173,7 @@ const HireWork = () => {
       title: "ID Job",
       dataIndex: "maCongViec",
       key: "maCongViec",
-      width: "10%",
+      width: "20%",
       ...getColumnSearchProps("maCongViec"),
       sorter: (a, b) => a.maCongViec - b.maCongViec,
       sortDirections: ["descend", "ascend"],
@@ -182,7 +182,7 @@ const HireWork = () => {
       title: "ID User",
       dataIndex: "maNguoiThue",
       key: "maNguoiThue",
-      width: "15%",
+      width: "20%",
       ...getColumnSearchProps("maNguoiThue"),
       sorter: (a, b) => a.maNguoiThue - b.maNguoiThue,
       sortDirections: ["descend", "ascend"],
@@ -191,7 +191,7 @@ const HireWork = () => {
       title: "Start",
       dataIndex: "ngayThue",
       key: "ngayThue",
-      with: "25%",
+      with: "15%",
       ...getColumnSearchProps("ngayThue"),
     },
     {
@@ -203,7 +203,7 @@ const HireWork = () => {
     },
     {
       title: "Edit",
-      with: "25%",
+      with: "15%",
       dataIndex: "edit",
       key: "edit",
       render: (_, record) => (
