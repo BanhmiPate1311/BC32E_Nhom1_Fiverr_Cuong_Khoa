@@ -11,16 +11,13 @@ import "./workcategory.css";
 
 const WorkCategory = () => {
   const params = useParams();
-  console.log("params: ", params);
 
   const { dsChiTietLoaiCongViec } = useQuanLyCongViec();
-  console.log("dsChiTietLoaiCongViec: ", dsChiTietLoaiCongViec);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(layDsChiTietLoaiCongViec(params.id));
   }, [params]);
-  //   console.log(dataimg);
 
   return (
     <div className="workcategory">

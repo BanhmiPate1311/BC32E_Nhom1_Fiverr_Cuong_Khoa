@@ -8,7 +8,6 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import {
-  layCongViecTheoChiTietLoai,
   layMenuLoaiCongViec,
   useQuanLyCongViec,
 } from "../../store/quanLyCongViec";
@@ -47,10 +46,9 @@ const Header = (props) => {
     };
   }, []);
   const { menuLoaiCongViec } = useQuanLyCongViec();
-  // console.log("menuLoaiCongViec: ", menuLoaiCongViec);
 
   const [searchParams, setSearchParam] = useSearchParams();
-  // console.log("searchParams: ");
+
   const search = searchParams.get("search");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,16 +64,6 @@ const Header = (props) => {
   }, []);
 
   const { pathname } = useLocation();
-  console.log("pathname: ", pathname.slice(1).length);
-
-  const handleClick = async (data) => {
-    try {
-      dispatch(layCongViecTheoChiTietLoai(data));
-      // navigate("/worklist");
-    } catch (error) {
-      // handle any rejections/errors
-    }
-  };
 
   useEffect(() => {
     if (pathname === "/home") {
@@ -308,8 +296,7 @@ const Header = (props) => {
                               <div>
                                 <NavLink
                                   to={`/worklist/${chiTiet.id}`}
-                                  // onClick={() => handleClick(chiTiet.id)}
-                                  className="text-base cursor-pointer text-[#62646a]  hover:bg-gray-400 py-2 px-4 block whitespace-nowrap"
+                                  className="text-base cursor-pointer text-[#62646a]  hover:bg-gray-400 hover:text-inherit py-2 px-4 block whitespace-nowrap"
                                 >
                                   {chiTiet.tenChiTiet}
                                 </NavLink>

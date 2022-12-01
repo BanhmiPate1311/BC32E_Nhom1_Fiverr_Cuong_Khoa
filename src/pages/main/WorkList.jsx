@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  Link,
-  NavLink,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
 import {
   layCongViecTheoChiTietLoai,
   layDsCongViecTheoTen,
@@ -17,14 +11,12 @@ import "./worklist.css";
 const WorkList = () => {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search");
-  console.log("search: ", search);
+
   const query = searchParams.get("query");
   const params = useParams();
-  console.log("params: ", params);
-  // const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { dsCongViecTheoTen } = useQuanLyCongViec();
-  console.log("dsCongViecTheoTen: ", dsCongViecTheoTen);
 
   useEffect(() => {
     if (search !== null) {
