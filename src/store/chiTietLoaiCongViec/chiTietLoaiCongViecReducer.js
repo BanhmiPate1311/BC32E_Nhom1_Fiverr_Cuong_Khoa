@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const initialState = {
   isFetching: false,
@@ -38,6 +39,54 @@ export const {
       .addCase(deleteDetailWorkType.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
+      })
+      //putDetailWorkType
+      .addCase(putDetailWorkType.pending, (state, action) => {
+        state.isFetching = true;
+      })
+      .addCase(putDetailWorkType.fulfilled, (state, action) => {
+        state.isFetching = false;
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .addCase(putDetailWorkType.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      })
+      //postNewDetailWorkType
+      .addCase(postNewDetailWorkType.pending, (state, action) => {
+        state.isFetching = true;
+      })
+      .addCase(postNewDetailWorkType.fulfilled, (state, action) => {
+        state.isFetching = false;
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .addCase(postNewDetailWorkType.rejected, (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       });
   },
 });
@@ -81,6 +130,49 @@ export const deleteDetailWorkType = createAsyncThunk(
         "rejectWithValue(err.response.data): ",
         rejectWithValue(err.response.data)
       );
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const putDetailWorkType = createAsyncThunk(
+  "chiTietLoaiCongViec/putDetailWorkType",
+  async (data, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/chi-tiet-loai-cong-viec/sua-nhom-chi-tiet-loai/${data.id}`,
+        method: "PUT",
+        headers: {
+          token: localStorage.getItem("TOKEN"),
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      dispatch(getDetailWorkType());
+      return result.data.content.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const postNewDetailWorkType = createAsyncThunk(
+  "chiTietLoaiCongViec/postNewDetailWorkType",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: "https://fiverrnew.cybersoft.edu.vn/api/chi-tiet-loai-cong-viec/them-nhom-chi-tiet-loai",
+        method: "POST",
+        headers: {
+          token: localStorage.getItem("TOKEN"),
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      return result.data.content;
+    } catch (err) {
       return rejectWithValue(err.response.data);
     }
   }

@@ -91,7 +91,7 @@ const Work = () => {
               <div className="text-lg font-medium">Work:</div>
               <div className="mb-0 w-full text-lg font-semibold text-green-500">
                 <input
-                  className="w-full"
+                  className="w-full border rounded-sm"
                   {...register("tenCongViec", {
                     required: "Looks like this name is incomplete.",
                   })}
@@ -105,7 +105,7 @@ const Work = () => {
               <div className="text-lg font-medium mr-1">Rate:</div>
               <div className="mb-0 text-lg w-full font-semibold text-green-500">
                 <input
-                  className="w-full"
+                  className="w-full border rounded-sm"
                   {...register("danhGia", {
                     required: "Looks like this rate is incomplete.",
                     pattern: {
@@ -121,7 +121,7 @@ const Work = () => {
               <div className="text-lg font-medium mr-1">Price:</div>
               <div className="mb-0 text-lg w-full font-semibold text-green-500">
                 <input
-                  className="w-full"
+                  className="w-full border rounded-sm"
                   {...register("giaTien", {
                     required: "Looks like this rate is incomplete.",
                     pattern: {
@@ -137,7 +137,7 @@ const Work = () => {
               <div className="text-lg font-medium mr-1">Detail:</div>
               <div className="mb-0 w-full text-lg font-semibold text-green-500">
                 <textarea
-                  className="w-full"
+                  className="w-full border rounded-sm"
                   rows="2"
                   cols="20"
                   {...register("moTa", {
@@ -151,7 +151,7 @@ const Work = () => {
               <div className="text-lg font-medium mr-1">Short Detail:</div>
               <div className="mb-0 w-full text-lg font-semibold text-green-500">
                 <textarea
-                  className="w-full"
+                  className="w-full border rounded-sm"
                   rows="2"
                   cols="20"
                   {...register("moTaNgan", {
@@ -163,7 +163,7 @@ const Work = () => {
             </div>
             <div className="text-center">
               <button
-                className=" border rounded-md bg-green-500 text-white px-4 py-2 text-lg cursor-pointer"
+                className=" border rounded-md bg-green-500 text-white px-4 py-2 text-lg cursor-pointer mb-2"
                 type="submit"
               >
                 Submit
@@ -334,7 +334,7 @@ const Work = () => {
       dataIndex: "moTa",
       key: "moTa",
       width: "35%",
-      responsive: ["md"],
+      responsive: ["xl"],
       ...getColumnSearchProps("moTa"),
     },
     {

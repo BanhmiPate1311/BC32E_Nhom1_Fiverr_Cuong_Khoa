@@ -294,7 +294,7 @@ const User = () => {
       dataIndex: "birthday",
       key: "birthday",
       width: "15%",
-      responsive: ["md"],
+      responsive: ["xl"],
       ...getColumnSearchProps("birthday"),
     },
     {

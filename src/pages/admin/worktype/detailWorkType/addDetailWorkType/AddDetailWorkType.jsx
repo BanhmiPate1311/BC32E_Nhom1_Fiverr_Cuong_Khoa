@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { postNewDetailWorkType } from "../../../../../store/loaiCongViec/loaiCongViec";
+import { postNewDetailWorkType } from "../../../../../store/chiTietLoaiCongViec/chiTietLoaiCongViecReducer";
 
 const AddDetailWorkType = () => {
   const {
@@ -17,9 +17,9 @@ const AddDetailWorkType = () => {
   const onSubmit = (data) => {
     dispatch(
       postNewDetailWorkType({
-        tenNhom: data.tenNhom,
-        maLoaiCongViec: data.maLoaiCongViec,
-        dsChiTietLoai: [data.dsChiTietLoai],
+        tenChiTiet: data.tenChiTiet,
+        maLoaiCongViec: parseInt(data.maLoaiCongViec),
+        dsChiTietLoai: [parseInt(data.dsChiTietLoai)],
       })
     );
   };
@@ -50,19 +50,25 @@ const AddDetailWorkType = () => {
                 <input
                   className="w-full border rounded-md p-2"
                   placeholder="Work"
-                  {...register("tenNhom", {
+                  {...register("tenChiTiet", {
                     required: "Looks like this name is incomplete.",
                   })}
                 />
-                <p className="text-red-600 error">{errors?.tenNhom?.message}</p>
+                <p className="text-red-600 error">
+                  {errors?.tenChiTiet?.message}
+                </p>
               </div>
               <div className="mb-3">
                 <div className="text-lg font-semibold">ID Work Type List</div>
                 <input
                   className="w-full border rounded-md p-2"
-                  placeholder="price"
-                  {...register("maLoaiCongviec", {
+                  placeholder="Id Work Type List"
+                  {...register("maLoaiCongViec", {
                     required: "Looks like this price is incomplete.",
+                    pattern: {
+                      value: /^[0-9\b]+$/,
+                      message: "Please input numeric characters only.",
+                    },
                   })}
                 />
                 <p className="text-red-600 error">
@@ -73,9 +79,13 @@ const AddDetailWorkType = () => {
                 <span className="text-lg font-semibold">Work Type List</span>
                 <input
                   className="w-full border rounded-md p-2"
-                  placeholder="Description"
+                  placeholder="Work Type List"
                   {...register("dsChiTietLoai", {
                     required: "Looks like this description is incomplete.",
+                    pattern: {
+                      value: /^[0-9\b]+$/,
+                      message: "Please input numeric characters only.",
+                    },
                   })}
                 />
                 <p className="text-red-600 error">

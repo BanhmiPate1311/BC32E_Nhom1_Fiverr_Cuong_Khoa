@@ -15,6 +15,7 @@ import Popup from "reactjs-popup";
 import {
   deleteDetailWorkType,
   getDetailWorkType,
+  putDetailWorkType,
 } from "../../../../store/chiTietLoaiCongViec/chiTietLoaiCongViecReducer";
 import { Link } from "react-router-dom";
 import "./detailWorkType.css";
@@ -89,16 +90,14 @@ const DetailWorkType = () => {
             className="w-full h-full"
             onSubmit={handleSubmit((data) => {
               console.log("data: ", data);
-
-              // dispatch();
-              // putWorkDetail({
-              //   id: i.id.props.children,
-              //   tenCongViec: data.tenCongViec,
-              //   danhGia: data.danhGia,
-              //   giaTien: data.giaTien,
-              //   moTa: data.moTa,
-              //   moTaNgan: data.moTaNgan,
-              // })
+              dispatch(
+                putDetailWorkType({
+                  id: i.id,
+                  tenChiTiet: data.tenChiTiet,
+                  maLoaiCongViec: parseInt(data.maLoaiCongViec),
+                  danhSachChiTiet: [parseInt(data.danhSachChiTiet)],
+                })
+              );
             })}
           >
             <div className="w-full flex text-center border-b">
@@ -108,37 +107,25 @@ const DetailWorkType = () => {
               </div>
             </div>
             <div className="w-full mt-2">
-              <div className="text-lg font-medium">Group Name</div>
+              <div className="text-lg font-medium">Detail Name</div>
               <div className="mb-0 w-full text-lg font-semibold text-green-500">
                 <input
-                  className="w-full"
-                  {...register("tenNhom", {
-                    required: "Looks like this group name is incomplete.",
-                  })}
-                />
-                <p className="text-red-600 m-0">{errors.tenNhom?.message}</p>
-              </div>
-            </div>
-            <div className="w-full mt-2">
-              <div className="text-lg font-medium mr-1">Work Type List</div>
-              <div className="mb-0 text-lg w-full font-semibold text-green-500">
-                <input
-                  className="w-full"
-                  {...register("dsChiTietLoai", {
-                    required: "Looks like this work type list is incomplete.",
+                  className="w-full border rounded-sm"
+                  {...register("tenChiTiet", {
+                    required: "Looks like this detail name is incomplete.",
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.dsChiTietLoai?.message}
+                  {errors?.tenChiTiet?.message}
                 </p>
               </div>
             </div>
             <div className="w-full mt-2">
-              <div className="text-lg font-medium mr-1">ID Work Type</div>
-              <div className="mb-0 text-lg w-full font-semibold text-green-500">
+              <div className="text-lg font-medium">ID Work Type</div>
+              <div className="mb-0 w-full text-lg font-semibold text-green-500">
                 <input
-                  className="w-full"
-                  {...register("maLoaiCongviec", {
+                  className="w-full border rounded-md p-2"
+                  {...register("maLoaiCongViec", {
                     required: "Looks like this id work type is incomplete.",
                     pattern: {
                       value: /^[0-9\b]+$/,
@@ -147,7 +134,25 @@ const DetailWorkType = () => {
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.maLoaiCongviec?.message}
+                  {errors?.maLoaiCongviec?.message}
+                </p>
+              </div>
+            </div>
+            <div className="w-full mt-2">
+              <div className="text-lg font-medium">List Work Type</div>
+              <div className="mb-0 w-full text-lg font-semibold text-green-500">
+                <input
+                  className="w-full border rounded-md p-2"
+                  {...register("danhSachChiTiet", {
+                    required: "Looks like this list work type is incomplete.",
+                    pattern: {
+                      value: /^[0-9\b]+$/,
+                      message: "Please input numeric characters only.",
+                    },
+                  })}
+                />
+                <p className="text-red-600 m-0">
+                  {errors?.tenChiTiet?.message}
                 </p>
               </div>
             </div>
