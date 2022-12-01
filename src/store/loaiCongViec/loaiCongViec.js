@@ -118,30 +118,7 @@ export const { reducer: loaiCongViecReducer, actions: loaiCongViecActions } =
           state.isFetching = false;
           state.error = action.payload;
         })
-        //postNewDetailWorkType
-        .addCase(postNewDetailWorkType.pending, (state, action) => {
-          state.isFetching = true;
-        })
-        .addCase(postNewDetailWorkType.fulfilled, (state, action) => {
-          state.isFetching = false;
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        })
-        .addCase(postNewDetailWorkType.rejected, (state, action) => {
-          state.isFetching = false;
-          state.error = action.payload;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        })
+
         //deleteDetailWorkType
         .addCase(deleteDetailWorkType.pending, (state, action) => {
           state.isFetching = true;
@@ -270,27 +247,6 @@ export const getWorkTypeById = createAsyncThunk(
           TokenCyberSoft:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
-      });
-      return result.data.content;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const postNewDetailWorkType = createAsyncThunk(
-  "loaiCongViec/postNewDetailWorkType",
-  async (data, { rejectWithValue }) => {
-    try {
-      const result = await axios({
-        url: "https://fiverrnew.cybersoft.edu.vn/api/chi-tiet-loai-cong-viec/them-nhom-chi-tiet-loai",
-        method: "POST",
-        headers: {
-          token: localStorage.getItem("TOKEN"),
-          TokenCyberSoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
-        },
-        data,
       });
       return result.data.content;
     } catch (err) {

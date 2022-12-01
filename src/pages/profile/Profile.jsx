@@ -51,9 +51,9 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="max-width-container ">
       {localStorage.getItem("USER_LOGIN") ? (
-        <div className="container flex">
+        <div className="max-width-container flex w-full">
           <div className="w-2/6 px-3 py-10">
             <div className="card-info flex flex-wrap bg-white rounded-md border w-full p-7 relative mb-10">
               <div className="flex border rounded-xl border-[#1DBF73] w-[70px] h-[25px] absolute right-7 top-5 justify-center items-center">
@@ -436,9 +436,6 @@ const Profile = () => {
                             }}
                           >
                             View detail
-                          </button>
-                          <button className="bg-green-400 px-5 py-3 rounded-md text-white text-lg mr-3">
-                            Edit
                           </button>
                           <button
                             className="bg-green-300 px-5 py-3 rounded-md text-white text-lg"

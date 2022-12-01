@@ -82,7 +82,7 @@ const WorkType = () => {
               <div className="text-lg font-medium mr-1">Work Type</div>
               <div className="mb-0 text-lg w-full font-semibold text-green-500">
                 <input
-                  className="w-full"
+                  className="w-full border rounded-sm"
                   {...register("tenLoaiCongViec", {
                     required: "Looks like this rate is incomplete.",
                   })}
