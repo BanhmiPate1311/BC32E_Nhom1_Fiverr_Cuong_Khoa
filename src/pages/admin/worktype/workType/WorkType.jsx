@@ -1,45 +1,113 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
-import {
-  deleteUser,
-  getUserPageSearch,
-} from "../../../../store/nguoiDung/nguoiDungReducer";
 import { Table, Button, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
-import {
-  delHiredWork,
-  getServicesSearch,
-} from "../../../../store/thueCongViec/thueCongViec";
-import {
-  deleteComment,
-  getCommentsSearch,
-} from "../../../../store/quanLyBinhLuan/quanLyBinhLuanReducer";
-import { useQuanLyBinhLuan } from "../../../../store/quanLyBinhLuan/quanLyBinhLuanSelector";
 
-const Comments = () => {
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
-  const { listCommentsSearch } = useQuanLyBinhLuan();
-  console.log("listCommentsSearch: ", listCommentsSearch);
+import { useForm } from "react-hook-form";
+import Popup from "reactjs-popup";
+import {
+  deleteWorkType,
+  getWorkType,
+  putWorkType,
+} from "../../../../store/loaiCongViec/loaiCongViec";
+import { Link } from "react-router-dom";
+
+const WorkType = () => {
   const dispatch = useDispatch();
+  const { workType } = useSelector((state) => state.loaiCongViecReducer);
+  console.log("workType: ", workType);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   useEffect(() => {
-    dispatch(getCommentsSearch());
+    dispatch(getWorkType());
   }, []);
+
   const data = [];
-  listCommentsSearch?.map((item, i) => {
+
+  workType?.map((value, index) => {
     data.push({
-      id: <p key={i}>{item.id}</p>,
-      maCongViec: item.maCongViec,
-      maNguoiBinhLuan: item.maNguoiBinhLuan,
-      ngayBinhLuan: item.ngayBinhLuan,
-      noiDung: item.noiDung,
-      saoBinhLuan: item.saoBinhLuan,
+      id: value.id,
+      tenLoaiCongViec: value.tenLoaiCongViec,
     });
   });
 
+  //Popup
+  const Modal = (i) => (
+    <Popup
+      trigger={
+        <div className="button">
+          <EditTwoTone></EditTwoTone>
+        </div>
+      }
+      modal
+    >
+      {(close) => (
+        <div className="modal-user border bg-white rounded-xl w-[600px] h-[400px] overflow-y-scroll flex flex-wrap justify-center  px-10 pb-10 pt-5 shadow-lg shadow-cyan-500/50">
+          <div className="w-full flex justify-end">
+            <span
+              className="border rounded-lg py-2 px-4 bg-green-500 text-white font-bold text-lg cursor-pointer"
+              onClick={close}
+            >
+              X
+            </span>
+          </div>
+          <div className="w-full text-xl text-center font-bold mb-1 text-red-600">
+            Page WorkType
+          </div>
+          <form
+            className="w-full h-full"
+            onSubmit={handleSubmit((data) => {
+              console.log("data: ", data);
+              dispatch(
+                putWorkType({
+                  id: i.id || i.id.props.children,
+                  tenLoaiCongViec: data.tenLoaiCongViec,
+                })
+              );
+            })}
+          >
+            <div className="w-full flex text-center border-b">
+              <div className="w-full flex text-lg font-medium mr-1">
+                ID:
+                <div>{i.id}</div>
+              </div>
+            </div>
+            <div className="w-full mt-20 mb-14">
+              <div className="text-lg font-medium mr-1">Work Type</div>
+              <div className="mb-0 text-lg w-full font-semibold text-green-500">
+                <input
+                  className="w-full"
+                  {...register("tenLoaiCongViec", {
+                    required: "Looks like this rate is incomplete.",
+                  })}
+                />
+                <p className="text-red-600 m-0">
+                  {errors.tenLoaiCongViec?.message}
+                </p>
+              </div>
+            </div>
+            <div className="text-center">
+              <button
+                className=" border rounded-md bg-green-500 text-white px-4 py-2 text-lg cursor-pointer"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </Popup>
+  );
+  //Table
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -156,81 +224,36 @@ const Comments = () => {
       title: "ID",
       dataIndex: "id",
       key: "id",
-      width: "5%",
+      width: "25%",
       ...getColumnSearchProps("id"),
       sorter: (a, b) => a.id - b.id,
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "ID Job",
-      dataIndex: "maCongViec",
-      key: "maCongViec",
-      width: "15%",
-      ...getColumnSearchProps("maCongViec"),
-      sorter: (a, b) => a.maCongViec - b.maCongViec,
+      title: "Work Type",
+      dataIndex: "tenLoaiCongViec",
+      key: "tenLoaiCongViec",
+      width: "65%",
+      ...getColumnSearchProps("tenLoaiCongViec"),
+      sorter: (a, b) => a.id.length - b.id.length,
       sortDirections: ["descend", "ascend"],
-    },
-    {
-      title: "ID User Cmt",
-      dataIndex: "maNguoiBinhLuan",
-      key: "maNguoiBinhLuan",
-      width: "15%",
-      ...getColumnSearchProps("maNguoiBinhLuan"),
-      sorter: (a, b) => a.maNguoiBinhLuan - b.maNguoiBinhLuan,
-      sortDirections: ["descend", "ascend"],
-    },
-    {
-      title: "Date Cmt",
-      dataIndex: "ngayBinhLuan",
-      key: "ngayBinhLuan",
-      with: "25%",
-      ...getColumnSearchProps("ngayBinhLuan"),
-    },
-    {
-      title: "Content Cmt",
-      dataIndex: "noiDung",
-      key: "noiDung",
-      width: "30%",
-      ...getColumnSearchProps("noiDung"),
-    },
-    {
-      title: "Rate Cmt",
-      dataIndex: "saoBinhLuan",
-      key: "saoBinhLuan",
-      width: "5%",
-      ...getColumnSearchProps("saoBinhLuan"),
     },
     {
       title: "Edit",
-      with: "25%",
+      with: "10%",
       dataIndex: "edit",
       key: "edit",
       render: (_, record) => (
         <Space size="middle">
+          {console.log("record: ", record)}
           <a>
-            <EditTwoTone
-              onClick={() => {
-                console.log("hello");
-              }}
-            ></EditTwoTone>
+            <button>{Modal(record)}</button>
           </a>
           <a>
             <DeleteTwoTone
               twoToneColor="#ee1d40"
               onClick={() => {
-                Swal.fire({
-                  title: "Are you sure?",
-                  text: "You won't be able to revert this!",
-                  icon: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "Yes, delete it!",
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    dispatch(deleteComment(record.id));
-                  }
-                });
+                dispatch(deleteWorkType(record.id || record.id.props.children));
               }}
             ></DeleteTwoTone>
           </a>
@@ -239,10 +262,18 @@ const Comments = () => {
     },
   ];
   return (
-    <div>
+    <div className="h-full">
+      <div className="mb-5">
+        <Link
+          to="/admin/worktype/addworktype"
+          className="border rounded-md text-white bg-green-500 px-4 py-3"
+        >
+          Add New Work Type
+        </Link>
+      </div>
       <Table columns={columns} dataSource={data} />
     </div>
   );
 };
 
-export default Comments;
+export default WorkType;

@@ -72,14 +72,14 @@ const User = () => {
             </span>
           </div>
           <div className="w-full text-xl  text-center font-bold mb-1 text-red-600">
-            Change Role
+            Page Role
           </div>
           <form
             onSubmit={handleSubmit((data) => {
               console.log("data: ", data);
               dispatch(
                 putChangeUserToAdmin({
-                  id: i.id.props.children,
+                  id: i.id.props.children || i.id,
                   name: i.name,
                   email: i.email,
                   phone: i.phone,
@@ -121,32 +121,31 @@ const User = () => {
             </div>
             <div className="w-full my-3">
               <div className="text-lg font-semibold mr-1 text-red-500">
-                Change Role
+                Assign a new page role
               </div>
               {i.role === "USER" ? (
-                <div className="flex flex-wrap w-full justify-center">
-                  <div className="w-full text-lg font-semibold mb-2">
+                <div className="flex flex-wrap w-full">
+                  <div className="text-lg flex font-semibold mb-2">
                     Role:
-                    <div className="text-cyan-500 font-bold">
+                    <div className="text-cyan-500 font-bold ml-1 mr-2">
                       <span>{i.role}</span>
                     </div>
                   </div>
-                  <span className="font-medium text-lg">To</span>
                   <select
                     className="ml-2 text-red-500 font-bold text-lg border rounded-md mb-3"
                     {...register("role")}
                   >
                     <option
                       className="text-lg font-bold text-red-500"
-                      value="USER"
-                    >
-                      USER
-                    </option>
-                    <option
-                      className="text-lg font-bold text-red-500"
                       value="ADMIN"
                     >
                       ADMIN
+                    </option>
+                    <option
+                      className="text-lg font-bold text-red-500"
+                      value="USER"
+                    >
+                      USER
                     </option>
                   </select>
                   <div className="w-full mt-4 text-center">
@@ -160,7 +159,7 @@ const User = () => {
                 </div>
               ) : (
                 <div className="w-full font-semibold text-lg text-red-500">
-                  Still Admin
+                  User is currently an Admin
                 </div>
               )}
             </div>
@@ -325,6 +324,7 @@ const User = () => {
       key: "edit",
       render: (_, record) => (
         <Space size="middle">
+          {console.log("record: ", record)}
           <a>
             <button>{Modal(record)}</button>
           </a>
@@ -342,7 +342,7 @@ const User = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteUser(record.id));
+                    dispatch(deleteUser(record.id.props.children));
                   }
                 });
               }}
@@ -359,7 +359,7 @@ const User = () => {
           to="/admin/user/addadmin"
           className="border rounded-md text-white bg-green-500 px-4 py-3"
         >
-          Thêm Admin
+          Add New Admin
         </Link>
       </div>
       <div>

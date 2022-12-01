@@ -249,6 +249,7 @@ export const deleteUser = createAsyncThunk(
       console.log("result.data.content: ", result.data.content);
       return result.data.content;
     } catch (err) {
+      console.log("err.response.data: ", err.response.data);
       return rejectWithValue(err.response.data);
     }
   }

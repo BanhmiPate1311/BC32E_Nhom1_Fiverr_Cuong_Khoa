@@ -21,8 +21,19 @@ function getItem(label, key, children) {
 const item = [
   getItem(<NavLink to="/admin/user">Quản lý người dùng</NavLink>, "1"),
   getItem(<NavLink to="/admin/work">Quản lý công việc</NavLink>, "2"),
-  getItem(<NavLink to="/admin/worktype">Quản lý loại công việc</NavLink>, "3"),
-  getItem("Quản lý dịch vụ", "sub1", [
+  getItem(
+    <NavLink to="/admin/worktype">Quản lý loại công việc</NavLink>,
+    "sub1",
+    [
+      getItem(
+        <NavLink to="/admin/worktype/detailworktype">
+          Chi tiết loại công việc
+        </NavLink>,
+        "3"
+      ),
+    ]
+  ),
+  getItem("Quản lý dịch vụ", "sub2", [
     getItem(
       <NavLink to="/admin/services/hirework">Quản lý thuê công việc</NavLink>,
       "4"
@@ -155,7 +166,10 @@ const Admin = () => {
                   <Outlet />
                 </div>
               </Content>
-              <Footer style={{ textAlign: "center" }}></Footer>
+              <Footer
+                className="h-[310px]"
+                style={{ textAlign: "center" }}
+              ></Footer>
             </Layout>
           </Layout>
         </div>

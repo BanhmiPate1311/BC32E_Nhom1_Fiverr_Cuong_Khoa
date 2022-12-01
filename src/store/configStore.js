@@ -8,6 +8,7 @@ import { nguoiDungReducer } from "./nguoiDung/nguoiDungReducer";
 import { thueCongViecReducer } from "./thueCongViec/thueCongViec";
 import { congViecReducer } from "./congViec/congViecReducer";
 import { chiTietLoaiCongViecReducer } from "./chiTietLoaiCongViec/chiTietLoaiCongViecReducer";
+import { loaiCongViecReducer } from "./loaiCongViec/loaiCongViec";
 
 const rootReducer = combineReducers({
   authReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   quanLyBinhLuanReducer,
   congViecReducer,
   chiTietLoaiCongViecReducer,
+  loaiCongViecReducer,
 });
 
 export const store = configureStore({

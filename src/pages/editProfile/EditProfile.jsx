@@ -87,27 +87,6 @@ const EditProfile = (props) => {
             <div className="mb-3">
               <div className="text-center">
                 <Avatar name={userInfo?.name} src={userInfo?.avatar} round />
-                <input
-                  type="file"
-                  {...register("avatar")}
-                  accept="image/*"
-                  name="avatar"
-                  onChange={(event) => {
-                    const file = event.target.files[0];
-                    const formData = new FormData();
-                    console.log("file: ", file);
-                    formData.append("file", file);
-                    console.log("formData: ", formData.get("file"));
-
-                    // for (let pair of formData.entries()) {
-                    //   console.log(pair[0] + ", " + pair[1]);
-                    // }
-                    // var xhr = new XMLHttpRequest();
-                    // xhr.open("POST", "/", true);
-                    // xhr.send(formData);
-                    dispatch(postUploadAvatar(formData));
-                  }}
-                />
               </div>
               <div className="text-lg font-semibold">Name</div>
               <input
