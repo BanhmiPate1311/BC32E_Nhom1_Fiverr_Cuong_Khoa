@@ -356,6 +356,7 @@ const Comments = () => {
       dataIndex: "noiDung",
       key: "noiDung",
       width: "30%",
+      responsive: ["md"],
       ...getColumnSearchProps("noiDung"),
     },
     {
@@ -363,6 +364,7 @@ const Comments = () => {
       dataIndex: "saoBinhLuan",
       key: "saoBinhLuan",
       width: "5%",
+      responsive: ["lg"],
       ...getColumnSearchProps("saoBinhLuan"),
     },
     {
@@ -370,6 +372,7 @@ const Comments = () => {
       with: "25%",
       dataIndex: "edit",
       key: "edit",
+      responsive: ["md"],
       render: (_, record) => (
         <Space size="middle">
           {console.log("record: ", record)}
@@ -412,7 +415,7 @@ const Comments = () => {
     },
   ];
   return (
-    <div>
+    <div className="table-comment overflow-hidden pt-5">
       {expand ? (
         <div className="popup-expand-cmt">
           <div className="popup-expand-content-cmt w-[700px] h-[500px] rounded-md">
@@ -471,7 +474,7 @@ const Comments = () => {
       ) : (
         ""
       )}
-      <div className="mb-5">
+      <div className="btn-comments mb-5 text-center max-[767.95px]:hidden">
         <Link
           to="/admin/services/comments/addnewcomments"
           className="border rounded-md text-white bg-green-500 px-4 py-3"

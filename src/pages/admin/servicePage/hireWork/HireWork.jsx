@@ -307,6 +307,7 @@ const HireWork = () => {
       dataIndex: "id",
       key: "id",
       width: "5%",
+      responsive: ["md"],
       ...getColumnSearchProps("id"),
       sorter: (a, b) => a.id - b.id,
       sortDirections: ["descend", "ascend"],
@@ -325,6 +326,7 @@ const HireWork = () => {
       dataIndex: "maNguoiThue",
       key: "maNguoiThue",
       width: "20%",
+      responsive: ["md"],
       ...getColumnSearchProps("maNguoiThue"),
       sorter: (a, b) => a.maNguoiThue - b.maNguoiThue,
       sortDirections: ["descend", "ascend"],
@@ -348,6 +350,7 @@ const HireWork = () => {
       with: "15%",
       dataIndex: "edit",
       key: "edit",
+      responsive: ["md"],
       render: (_, record) => (
         <Space size="middle">
           {console.log("record: ", record)}
@@ -385,8 +388,8 @@ const HireWork = () => {
     },
   ];
   return (
-    <div>
-      <div className="mb-5">
+    <div className="overflow-hidden pt-5">
+      <div className="btn-hirework mb-5 text-center max-[767.95px]:hidden">
         <Link
           to="/admin/services/hirework/addnewhire"
           className="border rounded-md text-white bg-green-500 px-4 py-3"

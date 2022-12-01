@@ -294,6 +294,7 @@ const User = () => {
       dataIndex: "birthday",
       key: "birthday",
       width: "15%",
+      responsive: ["md"],
       ...getColumnSearchProps("birthday"),
     },
     {
@@ -301,6 +302,7 @@ const User = () => {
       dataIndex: "email",
       key: "email",
       with: "25%",
+      responsive: ["md"],
       ...getColumnSearchProps("email"),
     },
     {
@@ -308,6 +310,7 @@ const User = () => {
       dataIndex: "phone",
       key: "phone",
       width: "15%",
+      responsive: ["lg"],
       ...getColumnSearchProps("phone"),
     },
     {
@@ -319,9 +322,10 @@ const User = () => {
     },
     {
       title: "Edit",
-      with: "25%",
+      with: "10%",
       dataIndex: "edit",
       key: "edit",
+      responsive: ["md"],
       render: (_, record) => (
         <Space size="middle">
           {console.log("record: ", record)}
@@ -353,8 +357,8 @@ const User = () => {
     },
   ];
   return (
-    <div className="container">
-      <div className="mb-5">
+    <div className="container overflow-hidden pt-5">
+      <div className="mb-5 text-center max-[767.95px]:hidden">
         <Link
           to="/admin/user/addadmin"
           className="border rounded-md text-white bg-green-500 px-4 py-3"

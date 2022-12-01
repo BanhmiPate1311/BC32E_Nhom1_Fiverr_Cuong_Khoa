@@ -13,6 +13,7 @@ import {
   putWorkType,
 } from "../../../../store/loaiCongViec/loaiCongViec";
 import { Link } from "react-router-dom";
+import "./worktype.css";
 
 const WorkType = () => {
   const dispatch = useDispatch();
@@ -243,6 +244,7 @@ const WorkType = () => {
       with: "10%",
       dataIndex: "edit",
       key: "edit",
+      responsive: ["md"],
       render: (_, record) => (
         <Space size="middle">
           {console.log("record: ", record)}
@@ -262,13 +264,13 @@ const WorkType = () => {
     },
   ];
   return (
-    <div className="h-full">
-      <div className="mb-5">
+    <div className="table-worktype h-full overflow-hidden pt-5">
+      <div className="mb-5 text-center max-[767.95px]:hidden">
         <Link
           to="/admin/worktype/addworktype"
-          className="border rounded-md text-white bg-green-500 px-4 py-3"
+          className="btn-worktype border rounded-md text-white bg-green-500 px-4 py-3"
         >
-          Add New Work Type
+          Add Work Type
         </Link>
       </div>
       <Table columns={columns} dataSource={data} />

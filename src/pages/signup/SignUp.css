@@ -14,3 +14,14 @@
   border-radius: 4px;
   background-color: rgb(29, 191, 115);
 }
+
+@media only screen and (max-width: 768px) {
+  .signup-introduce {
+    display: none;
+  }
+  .signup-form {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+}
