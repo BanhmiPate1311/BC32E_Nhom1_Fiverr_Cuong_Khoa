@@ -66,6 +66,7 @@ const Header = (props) => {
   }, []);
 
   const { pathname } = useLocation();
+  console.log("pathname: ", pathname.slice(1).length);
 
   const handleClick = async (data) => {
     try {
@@ -89,7 +90,7 @@ const Header = (props) => {
     <div className="main_header relative">
       <nav
         className={` ${
-          pathname !== "/home"
+          pathname !== "/home" && pathname.slice(1).length !== 0
             ? "bg-white border-b-[1px] border-solid border-[#e4e5e7] text-black"
             : `fixed top-0 w-full z-[2] transition-all duration-300 ease-in-out ${
                 isScroll === 1 || isScroll === 2
@@ -103,7 +104,7 @@ const Header = (props) => {
             <div className="flex justify-between items-center ">
               <button
                 className={`button-toggle hidden border border-solid rounded px-3 py-1 mr-3 ${
-                  pathname !== "/home"
+                  pathname !== "/home" && pathname.slice(1).length !== 0
                     ? "border-gray-600 text-gray-600"
                     : isScroll === 1 || isScroll === 2
                     ? "border-gray-600 text-gray-600"
@@ -119,7 +120,7 @@ const Header = (props) => {
             </div>
             <div
               className={`header-searchform w-[40%] transition-all duration-300 ease-in-out ${
-                pathname !== "/home"
+                pathname !== "/home" && pathname.slice(1).length !== 0
                   ? "opacity-100 block"
                   : `${
                       isScroll === 2 ? "opacity-100 block" : "opacity-0 hidden"
@@ -167,17 +168,27 @@ const Header = (props) => {
               id="navbar-collapse"
             >
               {localStorage.getItem("USER_LOGIN") ? (
-                <div className="flex items-center">
-                  <div className="mr-5 mb-2 font-semibold text-zinc-500 text-lg cursor-pointer">
+                <div
+                  className={`flex items-center transition-colors duration-300 ${
+                    pathname !== "/home" && pathname.slice(1).length !== 0
+                      ? "text-zinc-500"
+                      : ` ${
+                          isScroll === 0 || isScroll === undefined
+                            ? "text-white"
+                            : "text-zinc-500"
+                        }`
+                  }   `}
+                >
+                  <div className="mr-5 mb-2 font-semibold  text-lg cursor-pointer">
                     <BellOutlined />
                   </div>
-                  <div className="mr-5 mb-2 font-semibold text-zinc-500 text-lg cursor-pointer">
+                  <div className="mr-5 mb-2 font-semibold  text-lg cursor-pointer">
                     <MailOutlined />
                   </div>
-                  <div className="mr-5 mb-2 font-semibold text-zinc-500 text-lg cursor-pointer">
+                  <div className="mr-5 mb-2 font-semibold  text-lg cursor-pointer">
                     <StarOutlined />
                   </div>
-                  <div className="mr-3 font-semibold text-zinc-500 text-lg cursor-pointer">
+                  <div className="mr-3 font-semibold  text-lg cursor-pointer">
                     Orders
                   </div>
                   <div
@@ -241,7 +252,7 @@ const Header = (props) => {
                   <NavLink
                     to="/signup"
                     className={`button-toggle px-4 mx-2 text-center border border-solid rounded transition-colors duration-300 ${
-                      pathname !== "/home"
+                      pathname !== "/home" && pathname.slice(1).length !== 0
                         ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"
                         : ` ${
                             isScroll === 1 || isScroll === 2
@@ -260,7 +271,7 @@ const Header = (props) => {
 
         <div
           className={`border-t-[1px] border-solid border-[#e4e5e7] ${
-            pathname !== "/home"
+            pathname !== "/home" && pathname.slice(1).length !== 0
               ? "opacity-100 block"
               : `${isScroll === 2 ? "opacity-100 block" : "opacity-0 hidden"}`
           } `}
