@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import "./workdetail.css";
 import {
   guiBinhLuan,
@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import moment from "moment";
 
 const WorkDetail = () => {
+  const navigate = useNavigate();
+
   const params = useParams();
 
   const { userLogIn } = useSelector((state) => state.authReducer);
@@ -53,26 +55,34 @@ const WorkDetail = () => {
   }, [workDetail]);
 
   const onSubmit = async (data) => {
-    try {
-      await dispatch(guiBinhLuan(data));
-      reset({
-        noiDung: "",
-      });
-      dispatch(layBinhLuanTheoCongViec(params.idwork));
-    } catch (error) {
-      // handle any rejections/errors
+    if (!userLogIn) {
+      return navigate("/signin");
+    } else {
+      try {
+        await dispatch(guiBinhLuan(data));
+        reset({
+          noiDung: "",
+        });
+        dispatch(layBinhLuanTheoCongViec(params.idwork));
+      } catch (error) {
+        // handle any rejections/errors
+      }
     }
   };
 
   const handleButton = () => {
-    const data = {
-      maCongViec: workDetail[0]?.id,
-      maNguoiThue: userLogIn?.user.id,
-      ngayThue: time,
-      hoanThanh: true,
-    };
-    console.log(data);
-    dispatch(thueCongViec(data));
+    if (!userLogIn) {
+      return navigate("/signin");
+    } else {
+      const data = {
+        maCongViec: workDetail[0]?.id,
+        maNguoiThue: userLogIn?.user.id,
+        ngayThue: time,
+        hoanThanh: true,
+      };
+      console.log(data);
+      dispatch(thueCongViec(data));
+    }
   };
 
   return (
