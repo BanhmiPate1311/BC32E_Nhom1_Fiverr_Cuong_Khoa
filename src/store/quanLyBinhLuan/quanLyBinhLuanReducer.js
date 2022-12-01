@@ -80,6 +80,32 @@ export const {
           text: "Something went wrong!",
           footer: '<a href="">Why do I have this issue?</a>',
         });
+      })
+      // Doi Binh luan
+      .addCase(changeComment.pending, (state, action) => {
+        state.isFetching = true;
+      })
+      .addCase(changeComment.fulfilled, (state, action) => {
+        state.isFetching = false;
+        console.log(action.payload);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .addCase(changeComment.rejected, (state, action) => {
+        state.error = action.payload;
+        console.log(action.payload);
+        state.isFetching = false;
+        Swal.fire({
+          icon: "error",
+          title: "Thất bại...",
+          text: action.payload.content,
+          footer: '<a href="">Xin cảm ơn</a>',
+        });
       });
   },
 });
@@ -96,6 +122,7 @@ export const layBinhLuanTheoCongViec = createAsyncThunk(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
       });
+      console.log("result.data.content: ", result.data.content);
       return result.data.content;
     } catch (err) {
       console.log(err.response.data);
@@ -118,6 +145,7 @@ export const guiBinhLuan = createAsyncThunk(
         },
         data,
       });
+      console.log("data2", data);
       return result.data.content;
     } catch (err) {
       console.log(err.response.data);
@@ -162,6 +190,29 @@ export const deleteComment = createAsyncThunk(
       dispatch(getCommentsSearch());
       return result.data.content;
     } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const changeComment = createAsyncThunk(
+  "quanLyBinhLuan/changeComment",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/binh-luan/${data.id}`,
+        method: "PUT",
+        headers: {
+          token: localStorage.getItem("TOKEN"),
+          tokenCybersoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      dispatch(getCommentsSearch());
+      return result.data.content;
+    } catch (err) {
+      console.log(err.response.data);
       return rejectWithValue(err.response.data);
     }
   }

@@ -3,132 +3,166 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const initialState = {
-  listHiredWork: [],
   isFetching: false,
+  workType: [],
   error: undefined,
-  listServicesSearch: [],
+  workTypeById: undefined,
 };
 
-export const { reducer: thueCongViecReducer, actions: thueCongViecActions } =
+export const { reducer: loaiCongViecReducer, actions: loaiCongViecActions } =
   createSlice({
-    name: "thueCongViec",
+    name: "loaiCongViec",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
       builder
-        //getListHiredWork
-        .addCase(getListHiredWork.pending, (state, action) => {
+        //getWorkType
+        .addCase(getWorkType.pending, (state, action) => {
           state.isFetching = true;
         })
-        .addCase(getListHiredWork.fulfilled, (state, action) => {
+        .addCase(getWorkType.fulfilled, (state, action) => {
           state.isFetching = false;
-          state.listHiredWork = action.payload;
+          state.workType = action.payload;
         })
-        .addCase(getListHiredWork.rejected, (state, action) => {
+        .addCase(getWorkType.rejected, (state, action) => {
           state.isFetching = false;
           state.error = action.payload;
         })
-        //delHiredWork
-        .addCase(delHiredWork.pending, (state, action) => {
+        //deleteWorkType
+        .addCase(deleteWorkType.pending, (state, action) => {
           state.isFetching = true;
         })
-        .addCase(delHiredWork.fulfilled, (state, action) => {
-          state.isFetching = false;
-          state.listHiredWork = action.payload;
-          console.log(" action.payload: ", action.payload);
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        })
-        .addCase(delHiredWork.rejected, (state, action) => {
-          state.isFetching = false;
-          state.error = action.payload;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        })
-        //getListServicesSearch
-        .addCase(getServicesSearch.pending, (state, action) => {
-          state.isFetching = true;
-        })
-        .addCase(getServicesSearch.fulfilled, (state, action) => {
-          state.isFetching = false;
-          state.listServicesSearch = action.payload;
-        })
-        .addCase(getServicesSearch.rejected, (state, action) => {
-          state.isFetching = false;
-          state.error = action.payload;
-        })
-        //putHireWork
-        .addCase(putHireWork.pending, (state, action) => {
-          state.isFetching = true;
-        })
-        .addCase(putHireWork.fulfilled, (state, action) => {
+        .addCase(deleteWorkType.fulfilled, (state, action) => {
           state.isFetching = false;
           Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        })
-        .addCase(putHireWork.rejected, (state, action) => {
-          state.isFetching = false;
-          state.error = action.payload;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        })
-        //postHireWork
-        .addCase(postHireWork.pending, (state, action) => {
-          state.isFetching = true;
-        })
-        .addCase(postHireWork.fulfilled, (state, action) => {
-          state.isFetching = false;
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        })
-        .addCase(postHireWork.rejected, (state, action) => {
-          state.isFetching = false;
-          state.error = action.payload;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        })
-        //checkDoneWork
-        .addCase(checkDoneWork.pending, (state, action) => {
-          state.isFetching = true;
-        })
-        .addCase(checkDoneWork.fulfilled, (state, action) => {
-          state.isFetching = false;
-          Swal.fire({
-            title: "Done Task?",
+            title: "Are you sure?",
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes!",
+            confirmButtonText: "Yes, delete it!",
           }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire("Finish!", "Your job is done.", "success");
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
             }
           });
         })
-        .addCase(checkDoneWork.rejected, (state, action) => {
+        .addCase(deleteWorkType.rejected, (state, action) => {
+          state.isFetching = false;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        //putWorkType
+        .addCase(putWorkType.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(putWorkType.fulfilled, (state, action) => {
+          state.isFetching = false;
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .addCase(putWorkType.rejected, (state, action) => {
+          state.isFetching = false;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        //postNewWorkType
+        .addCase(postNewWorkType.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(postNewWorkType.fulfilled, (state, action) => {
+          state.isFetching = false;
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .addCase(postNewWorkType.rejected, (state, action) => {
+          state.isFetching = false;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        //getWorkTypeById
+        .addCase(getWorkTypeById.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(getWorkTypeById.fulfilled, (state, action) => {
+          state.isFetching = false;
+          state.workTypeById = action.payload;
+        })
+        .addCase(getWorkTypeById.rejected, (state, action) => {
+          state.isFetching = false;
+          state.error = action.payload;
+        })
+        //postNewDetailWorkType
+        .addCase(postNewDetailWorkType.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(postNewDetailWorkType.fulfilled, (state, action) => {
+          state.isFetching = false;
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .addCase(postNewDetailWorkType.rejected, (state, action) => {
+          state.isFetching = false;
+          state.error = action.payload;
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        })
+        //deleteDetailWorkType
+        .addCase(deleteDetailWorkType.pending, (state, action) => {
+          state.isFetching = true;
+        })
+        .addCase(deleteDetailWorkType.fulfilled, (state, action) => {
+          state.isFetching = false;
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+          });
+        })
+        .addCase(deleteDetailWorkType.rejected, (state, action) => {
           state.isFetching = false;
           state.error = action.payload;
           Swal.fire({
@@ -141,34 +175,31 @@ export const { reducer: thueCongViecReducer, actions: thueCongViecActions } =
     },
   });
 
-export const getListHiredWork = createAsyncThunk(
-  "thueCongViec/getHiredWork",
+export const getWorkType = createAsyncThunk(
+  "loaiCongViec/getWorkType",
   async (data, { rejectWithValue }) => {
     try {
       const result = await axios({
-        url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/lay-danh-sach-da-thue",
+        url: "https://fiverrnew.cybersoft.edu.vn/api/loai-cong-viec",
         method: "GET",
         headers: {
-          token: localStorage.getItem("TOKEN"),
           TokenCyberSoft:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
       });
-      console.log("result.data.content: ", result.data.content);
       return result.data.content;
     } catch (err) {
-      console.log("error", err.response.data);
       return rejectWithValue(err.response.data);
     }
   }
 );
 
-export const delHiredWork = createAsyncThunk(
-  "thueCongViec/delHiredWork",
-  async (id, { dispatch, rejectWithValue }) => {
+export const deleteWorkType = createAsyncThunk(
+  "loaiCongViec/deleteWorkType",
+  async (workId, { dispatch, rejectWithValue }) => {
     try {
       const result = await axios({
-        url: `https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/${id}`,
+        url: `https://fiverrnew.cybersoft.edu.vn/api/loai-cong-viec/${workId}`,
         method: "DELETE",
         headers: {
           token: localStorage.getItem("TOKEN"),
@@ -176,29 +207,7 @@ export const delHiredWork = createAsyncThunk(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
       });
-      console.log("result.data.content: ", result.data.content);
-      dispatch(getServicesSearch());
-      return result.data.content;
-    } catch (err) {
-      console.log("error", err.response.data);
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const getServicesSearch = createAsyncThunk(
-  "thueCongViec/getServicesSearch",
-  async (data, { rejectWithValue }) => {
-    try {
-      const result = await axios({
-        url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/phan-trang-tim-kiem?pageIndex=1&pageSize=2000",
-        method: "GET",
-        headers: {
-          TokenCyberSoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
-        },
-        data,
-      });
+      dispatch(getWorkType());
       return result.data.content;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -206,12 +215,12 @@ export const getServicesSearch = createAsyncThunk(
   }
 );
 
-export const putHireWork = createAsyncThunk(
-  "thueCongViec/putHireWork",
+export const putWorkType = createAsyncThunk(
+  "loaiCongViec/putWorkType",
   async (data, { dispatch, rejectWithValue }) => {
     try {
       const result = await axios({
-        url: `https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/${data.id}`,
+        url: `https://fiverrnew.cybersoft.edu.vn/api/loai-cong-viec/${data.id}`,
         method: "PUT",
         headers: {
           token: localStorage.getItem("TOKEN"),
@@ -220,7 +229,8 @@ export const putHireWork = createAsyncThunk(
         },
         data,
       });
-      dispatch(getServicesSearch());
+      console.log("data: ", data);
+      dispatch(getWorkType());
       return result.data.content;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -228,33 +238,12 @@ export const putHireWork = createAsyncThunk(
   }
 );
 
-export const checkDoneWork = createAsyncThunk(
-  "thueCongViec/checkDoneWork",
-  async (workId, { dispatch, rejectWithValue }) => {
-    try {
-      const result = await axios({
-        url: `https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec/hoan-thanh-cong-viec/${workId}`,
-        method: "POST",
-        headers: {
-          token: localStorage.getItem("TOKEN"),
-          TokenCyberSoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
-        },
-      });
-      dispatch(getServicesSearch());
-      return result.data.content;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const postHireWork = createAsyncThunk(
-  "thueCongViec/postHireWork",
+export const postNewWorkType = createAsyncThunk(
+  "loaiCongViec/postNewWorkType",
   async (data, { rejectWithValue }) => {
     try {
       const result = await axios({
-        url: "https://fiverrnew.cybersoft.edu.vn/api/thue-cong-viec",
+        url: "https://fiverrnew.cybersoft.edu.vn/api/loai-cong-viec",
         method: "POST",
         headers: {
           token: localStorage.getItem("TOKEN"),
@@ -263,6 +252,67 @@ export const postHireWork = createAsyncThunk(
         },
         data,
       });
+      return result.data.content;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getWorkTypeById = createAsyncThunk(
+  "loaiCongViec/getWorkTypeById",
+  async (workTypeId, { rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/loai-cong-viec/${workTypeId}`,
+        method: "GET",
+        headers: {
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+      });
+      return result.data.content;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const postNewDetailWorkType = createAsyncThunk(
+  "loaiCongViec/postNewDetailWorkType",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: "https://fiverrnew.cybersoft.edu.vn/api/chi-tiet-loai-cong-viec/them-nhom-chi-tiet-loai",
+        method: "POST",
+        headers: {
+          token: localStorage.getItem("TOKEN"),
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+        data,
+      });
+      return result.data.content;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deleteDetailWorkType = createAsyncThunk(
+  "loaiCongViec/deleteDetailWorkType",
+  async (detailWorkId, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await axios({
+        url: `https://fiverrnew.cybersoft.edu.vn/api/chi-tiet-loai-cong-viec/${detailWorkId}`,
+        method: "DELETE",
+        headers: {
+          token: localStorage.getItem("TOKEN"),
+          TokenCyberSoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
+        },
+      });
+      dispatch(getWorkType());
       return result.data.content;
     } catch (err) {
       return rejectWithValue(err.response.data);

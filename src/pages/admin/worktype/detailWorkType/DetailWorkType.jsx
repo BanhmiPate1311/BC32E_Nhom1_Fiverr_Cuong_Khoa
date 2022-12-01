@@ -1,22 +1,40 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DeleteTwoTone, EditTwoTone, SearchOutlined } from "@ant-design/icons";
-import { Table, Button, Input, Space, Layout } from "antd";
+import {
+  DeleteTwoTone,
+  EditTwoTone,
+  InfoCircleTwoTone,
+  SearchOutlined,
+} from "@ant-design/icons";
+import { Table, Button, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import Swal from "sweetalert2";
-import {
-  deleteWork,
-  getAllWork,
-  putWorkDetail,
-} from "../../../store/congViec/congViecReducer";
-import Popup from "reactjs-popup";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 
-const Work = () => {
-  const { allWork } = useSelector((state) => state.congViecReducer);
-  console.log("AllWork: ", allWork);
+import { useForm } from "react-hook-form";
+import Popup from "reactjs-popup";
+import {
+  deleteDetailWorkType,
+  getDetailWorkType,
+} from "../../../../store/chiTietLoaiCongViec/chiTietLoaiCongViecReducer";
+import { Link } from "react-router-dom";
+import "./detaliWorkType.css";
+import {
+  getWorkType,
+  getWorkTypeById,
+} from "../../../../store/loaiCongViec/loaiCongViec";
+
+const DetailWorkType = () => {
+  const [expand, setExpand] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
   const dispatch = useDispatch();
+  const { listWorkType } = useSelector(
+    (state) => state.chiTietLoaiCongViecReducer
+  );
+  const { workType } = useSelector((state) => state.loaiCongViecReducer);
+  const { workTypeById } = useSelector((state) => state.loaiCongViecReducer);
+
   const {
     register,
     handleSubmit,
@@ -24,24 +42,26 @@ const Work = () => {
   } = useForm();
 
   useEffect(() => {
-    dispatch(getAllWork());
+    dispatch(getDetailWorkType());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getWorkType());
   }, []);
 
   const data = [];
-  allWork?.map((value, i) => {
+
+  listWorkType?.map((value, index) => {
     data.push({
-      id: <p key={i}>{value.id}</p>,
-      hinhAnh: <img src={value.hinhAnh} alt="" />,
-      tenCongViec: value.tenCongViec,
-      danhGia: value.danhGia,
-      giaTien: value.giaTien,
-      moTa: value.moTa,
-      moTaNgan: value.moTaNgan,
+      id: value.id,
+      hinhAnh: <img src={value.hinhAnh}></img>,
+      tenNhom: value.tenNhom,
+      dsChiTietLoai: value.dsChiTietLoai,
+      maLoaiCongviec: value.maLoaiCongviec,
     });
   });
 
   console.log(data);
-
   //Popup
   const Modal = (i) => (
     <Popup
@@ -63,102 +83,72 @@ const Work = () => {
             </span>
           </div>
           <div className="w-full text-xl text-center font-bold mb-1 text-red-600">
-            Page Role
+            Page Detail WorkType
           </div>
           <form
             className="w-full h-full"
             onSubmit={handleSubmit((data) => {
               console.log("data: ", data);
-              dispatch(
-                putWorkDetail({
-                  id: i.id.props.children || i.id,
-                  tenCongViec: data.tenCongViec,
-                  danhGia: data.danhGia,
-                  giaTien: data.giaTien,
-                  moTa: data.moTa,
-                  moTaNgan: data.moTaNgan,
-                })
-              );
+
+              // dispatch();
+              // putWorkDetail({
+              //   id: i.id.props.children,
+              //   tenCongViec: data.tenCongViec,
+              //   danhGia: data.danhGia,
+              //   giaTien: data.giaTien,
+              //   moTa: data.moTa,
+              //   moTaNgan: data.moTaNgan,
+              // })
             })}
           >
             <div className="w-full flex text-center border-b">
               <div className="w-full flex text-lg font-medium mr-1">
                 ID:
-                <div>{i.id.props.children}</div>
+                <div className="ml-1">{i.id}</div>
               </div>
             </div>
             <div className="w-full mt-2">
-              <div className="text-lg font-medium">Work:</div>
+              <div className="text-lg font-medium">Group Name</div>
               <div className="mb-0 w-full text-lg font-semibold text-green-500">
                 <input
                   className="w-full"
-                  {...register("tenCongViec", {
-                    required: "Looks like this name is incomplete.",
+                  {...register("tenNhom", {
+                    required: "Looks like this group name is incomplete.",
+                  })}
+                />
+                <p className="text-red-600 m-0">{errors.tenNhom?.message}</p>
+              </div>
+            </div>
+            <div className="w-full mt-2">
+              <div className="text-lg font-medium mr-1">Work Type List</div>
+              <div className="mb-0 text-lg w-full font-semibold text-green-500">
+                <input
+                  className="w-full"
+                  {...register("dsChiTietLoai", {
+                    required: "Looks like this work type list is incomplete.",
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.tenCongViec?.message}
+                  {errors.dsChiTietLoai?.message}
                 </p>
               </div>
             </div>
             <div className="w-full mt-2">
-              <div className="text-lg font-medium mr-1">Rate:</div>
+              <div className="text-lg font-medium mr-1">ID Work Type</div>
               <div className="mb-0 text-lg w-full font-semibold text-green-500">
                 <input
                   className="w-full"
-                  {...register("danhGia", {
-                    required: "Looks like this rate is incomplete.",
+                  {...register("maLoaiCongviec", {
+                    required: "Looks like this id work type is incomplete.",
                     pattern: {
                       value: /^[0-9\b]+$/,
                       message: "Please input numeric characters only.",
                     },
                   })}
                 />
-                <p className="text-red-600 m-0">{errors.danhGia?.message}</p>
-              </div>
-            </div>
-            <div className="w-full mt-2">
-              <div className="text-lg font-medium mr-1">Price:</div>
-              <div className="mb-0 text-lg w-full font-semibold text-green-500">
-                <input
-                  className="w-full"
-                  {...register("giaTien", {
-                    required: "Looks like this rate is incomplete.",
-                    pattern: {
-                      value: /^[0-9\b]+$/,
-                      message: "Please input numeric characters only.",
-                    },
-                  })}
-                />
-                <p className="text-red-600 m-0">{errors.giaTien?.message}</p>
-              </div>
-            </div>
-            <div className="w-full mt-2">
-              <div className="text-lg font-medium mr-1">Detail:</div>
-              <div className="mb-0 w-full text-lg font-semibold text-green-500">
-                <textarea
-                  className="w-full"
-                  rows="2"
-                  cols="20"
-                  {...register("moTa", {
-                    required: "Looks like this name is incomplete.",
-                  })}
-                ></textarea>
-                <p className="text-red-600 m-0">{errors.moTa?.message}</p>
-              </div>
-            </div>
-            <div className="w-full mt-2">
-              <div className="text-lg font-medium mr-1">Short Detail:</div>
-              <div className="mb-0 w-full text-lg font-semibold text-green-500">
-                <textarea
-                  className="w-full"
-                  rows="2"
-                  cols="20"
-                  {...register("moTaNgan", {
-                    required: "Looks like this name is incomplete.",
-                  })}
-                ></textarea>
-                <p className="text-red-600 m-0">{errors.moTaNgan?.message}</p>
+                <p className="text-red-600 m-0">
+                  {errors.maLoaiCongviec?.message}
+                </p>
               </div>
             </div>
             <div className="text-center">
@@ -176,9 +166,6 @@ const Work = () => {
   );
 
   // Table
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
-  const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -301,54 +288,52 @@ const Work = () => {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Picture",
+      title: "Avatar",
       dataIndex: "hinhAnh",
       key: "hinhAnh",
-      width: "5%",
+      width: "20%",
     },
     {
-      title: "Work",
-      dataIndex: "tenCongViec",
-      key: "tenCongViec",
-      width: "15%",
-      ...getColumnSearchProps("tenCongViec"),
+      title: "Group Name",
+      dataIndex: "tenNhom",
+      key: "tenNhom",
+      width: "30%",
+      sorter: (a, b) => a.tenNhom.length - b.tenNhom.length,
+      sortDirections: ["descend", "ascend"],
+      ...getColumnSearchProps("tenNhom"),
     },
     {
-      title: "Rate",
-      dataIndex: "danhGia",
-      key: "danhGia",
-      with: "5%",
-      ...getColumnSearchProps("danhGia"),
+      title: "Work Type List",
+      dataIndex: "dsChiTietLoai",
+      render: (dsChiTietLoai) =>
+        dsChiTietLoai?.map((dsChiTietLoai) => dsChiTietLoai.tenChiTiet).join(),
+      key: "hinhAnh",
+      width: "30%",
     },
     {
-      title: "Price",
-      dataIndex: "giaTien",
-      key: "giaTien",
-      width: "5%",
-      ...getColumnSearchProps("giaTien"),
-    },
-    {
-      title: "Detail",
-      dataIndex: "moTa",
-      key: "moTa",
-      width: "35%",
-      ...getColumnSearchProps("moTa"),
-    },
-    {
-      title: "ShortDetail",
-      dataIndex: "moTaNgan",
-      key: "moTaNgan",
-      width: "25%",
-      ...getColumnSearchProps("moTaNgan"),
+      title: "ID Work Type",
+      dataIndex: "maLoaiCongviec",
+      key: "maLoaiCongviec",
+      width: "10%",
     },
     {
       title: "Edit",
-      with: "5%",
+      with: "10%",
       dataIndex: "edit",
       key: "edit",
       render: (_, record) => (
         <Space size="middle">
-          {console.log("record: ", record)}
+          {console.log("record", record)}
+          <InfoCircleTwoTone
+            onClick={() => {
+              setExpand(true);
+              workType?.map((item) => {
+                if (item?.id === record?.maLoaiCongviec) {
+                  dispatch(getWorkTypeById(record?.maLoaiCongviec));
+                }
+              });
+            }}
+          />
           <a>
             <button>{Modal(record)}</button>
           </a>
@@ -366,7 +351,7 @@ const Work = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteWork(record.id.props.children || record.id));
+                    dispatch(deleteDetailWorkType(record?.id));
                   }
                 });
               }}
@@ -378,12 +363,38 @@ const Work = () => {
   ];
   return (
     <div className="h-full">
+      {expand ? (
+        <div className="popup-expand">
+          <div className="popup-expand-content w-[300px] h-[300px] rounded-md">
+            <div className="flex justify-end">
+              <button
+                className="border bg-green-500 text-white font-semibold py-2 px-4 rounded-md"
+                onClick={() => {
+                  setExpand(false);
+                }}
+              >
+                X
+              </button>
+            </div>
+            <div>
+              <div className="w-full flex flex-wrap justify-center text-lg font-medium mr-1 mt-10">
+                <div className="w-full text-center">Work Type:</div>
+                <div className="ml-1 text-green-500 text-xl">
+                  {workTypeById?.tenLoaiCongViec}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="mb-5">
         <Link
-          to="/admin/user/addwork"
+          to="/admin/worktype/detailworktype/adddetailworktype"
           className="border rounded-md text-white bg-green-500 px-4 py-3"
         >
-          Add New Work
+          Add New Detail Work Type
         </Link>
       </div>
       <Table columns={columns} dataSource={data} />
@@ -391,4 +402,4 @@ const Work = () => {
   );
 };
 
-export default Work;
+export default DetailWorkType;
