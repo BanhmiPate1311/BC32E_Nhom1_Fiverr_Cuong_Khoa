@@ -36,7 +36,7 @@ const AddNewComment = () => {
   };
   return (
     <div>
-      <div className="container flex justify-center my-3">
+      <div className="container flex justify-center overflow-hidden my-3 h-[625px]">
         <Container className="w-2/3 p-3">
           <div className="border rounded-md w-full p-3 mb-3">
             <div className="flex justify-center">
@@ -111,7 +111,7 @@ const AddNewComment = () => {
               <div className="mb-3">
                 <div className="text-lg font-semibold">Conmment</div>
                 <textarea
-                  cols="70"
+                  cols="45"
                   rows="5"
                   {...register("noiDung", {
                     required: "Looks like this comment is incomplete.",

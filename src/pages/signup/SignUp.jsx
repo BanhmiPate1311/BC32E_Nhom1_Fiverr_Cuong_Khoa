@@ -34,7 +34,7 @@ const SignUp = () => {
 
   return (
     <Container className="conatiner flex">
-      <div className="w-2/4 bg-[#F1FDF7]">
+      <div className="signup-introduce w-2/4 bg-[#F1FDF7]">
         <div className="px-10 py-5 animate__animated animate__bounce animate__fadeInLeft">
           <h1 className="text-4xl font-bold mb-10">
             A whole world of freelance talent at your fingertips
@@ -91,7 +91,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-      <div className="w-2/4 p-5">
+      <div className="signup-form w-2/4 p-5">
         <Form
           className="form-signup justify-center"
           onSubmit={handleSubmit((data) => {
@@ -276,7 +276,7 @@ const SignUp = () => {
               <span className="text-black-500">
                 Already a member?
                 <Link
-                  to="/dangnhap"
+                  to="/signin"
                   className="cursor-pointer underline text-green-600 ml-2"
                 >
                   Sign In

@@ -25,7 +25,7 @@ const AddDetailWorkType = () => {
   };
   return (
     <div>
-      <div className="container flex justify-center my-3">
+      <div className="container flex justify-center my-3 h-[625px]">
         <Container className="w-2/3 p-3">
           <div className="border rounded-md w-full p-3 mb-3">
             <div className="flex justify-center">

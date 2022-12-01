@@ -305,6 +305,7 @@ const Work = () => {
       dataIndex: "hinhAnh",
       key: "hinhAnh",
       width: "5%",
+      responsive: ["lg"],
     },
     {
       title: "Work",
@@ -318,6 +319,7 @@ const Work = () => {
       dataIndex: "danhGia",
       key: "danhGia",
       with: "5%",
+      responsive: ["lg"],
       ...getColumnSearchProps("danhGia"),
     },
     {
@@ -332,6 +334,7 @@ const Work = () => {
       dataIndex: "moTa",
       key: "moTa",
       width: "35%",
+      responsive: ["md"],
       ...getColumnSearchProps("moTa"),
     },
     {
@@ -339,6 +342,7 @@ const Work = () => {
       dataIndex: "moTaNgan",
       key: "moTaNgan",
       width: "25%",
+      responsive: ["md"],
       ...getColumnSearchProps("moTaNgan"),
     },
     {
@@ -346,6 +350,7 @@ const Work = () => {
       with: "5%",
       dataIndex: "edit",
       key: "edit",
+      responsive: ["md"],
       render: (_, record) => (
         <Space size="middle">
           {console.log("record: ", record)}
@@ -377,8 +382,8 @@ const Work = () => {
     },
   ];
   return (
-    <div className="h-full">
-      <div className="mb-5">
+    <div className="h-full overflow-hidden pt-5">
+      <div className="mb-5 text-center max-[767.95px]:hidden">
         <Link
           to="/admin/user/addwork"
           className="border rounded-md text-white bg-green-500 px-4 py-3"

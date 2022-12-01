@@ -195,7 +195,7 @@ const Header = (props) => {
                     />
                   </div>
                   {togglePopover ? (
-                    <div className="nav-popover-avatar py-3 px-5 h-full bg-white border rounded-md absolute right-[1.5rem] z-10 top-[78px] flex flex-wrap">
+                    <div className="nav-popover-avatar py-3 px-5 h-[150px] bg-white border rounded-md absolute right-[1.5rem] z-10 top-[78px] flex flex-wrap">
                       <div className="absolute top-[-15px] right-[16px]">
                         <ContactsTwoTone className="text-xl" />
                       </div>
@@ -233,13 +233,13 @@ const Header = (props) => {
                     Become a Seller
                   </NavLink>
                   <NavLink
-                    to="/dangnhap"
+                    to="/signin"
                     className="button-toggle px-4 mx-2 text-center border border-transparent text-inherit"
                   >
                     Sign In
                   </NavLink>
                   <NavLink
-                    to="/dangky"
+                    to="/signup"
                     className={`button-toggle px-4 mx-2 text-center border border-solid rounded transition-colors duration-300 ${
                       pathname !== "/home"
                         ? "border-green-400 text-green-400 hover:bg-green-600 hover:text-white"

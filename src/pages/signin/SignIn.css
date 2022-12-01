@@ -18,3 +18,26 @@
 .signin {
   color: rgb(29, 191, 115);
 }
+
+@media only screen and (max-width: 768px) {
+  .signin-introduce {
+    display: none;
+  }
+  .signin-form {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+  .signin-form .signin-title {
+    margin: 0 20px;
+  }
+  .signin-form .signin-title span {
+    font-size: 20px;
+  }
+  .signin-form .signin-social {
+    margin: 0;
+  }
+  .signin-footer {
+    margin-bottom: 10px;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DeleteTwoTone,
@@ -17,7 +17,7 @@ import {
   getDetailWorkType,
 } from "../../../../store/chiTietLoaiCongViec/chiTietLoaiCongViecReducer";
 import { Link } from "react-router-dom";
-import "./detaliWorkType.css";
+import "./detailWorkType.css";
 import {
   getWorkType,
   getWorkTypeById,
@@ -292,6 +292,7 @@ const DetailWorkType = () => {
       dataIndex: "hinhAnh",
       key: "hinhAnh",
       width: "20%",
+      responsive: ["lg"],
     },
     {
       title: "Group Name",
@@ -321,6 +322,7 @@ const DetailWorkType = () => {
       with: "10%",
       dataIndex: "edit",
       key: "edit",
+      responsive: ["md"],
       render: (_, record) => (
         <Space size="middle">
           {console.log("record", record)}
@@ -362,7 +364,7 @@ const DetailWorkType = () => {
     },
   ];
   return (
-    <div className="h-full">
+    <div className=" overflow-hidden table-detailworktype pt-5 h-full">
       {expand ? (
         <div className="popup-expand">
           <div className="popup-expand-content w-[300px] h-[300px] rounded-md">
@@ -389,12 +391,12 @@ const DetailWorkType = () => {
       ) : (
         ""
       )}
-      <div className="mb-5">
+      <div className="mb-5 text-center max-[767.95px]:hidden">
         <Link
           to="/admin/worktype/detailworktype/adddetailworktype"
-          className="border rounded-md text-white bg-green-500 px-4 py-3"
+          className="btn-detailworktype border rounded-md text-white bg-green-500 px-4 py-3"
         >
-          Add New Detail Work Type
+          Add Detail Work
         </Link>
       </div>
       <Table columns={columns} dataSource={data} />

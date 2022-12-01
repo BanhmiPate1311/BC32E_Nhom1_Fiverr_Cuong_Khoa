@@ -32,7 +32,7 @@ const SignIn = () => {
 
   return (
     <Container className="conatiner flex">
-      <div className="w-2/4 bg-[#F1FDF7]">
+      <div className="signin-introduce w-2/4 bg-[#F1FDF7]">
         <div className="px-10 py-5 animate__animated animate__bounce animate__fadeInLeft">
           <h1 className="text-4xl font-bold mb-10">
             A whole world of freelance talent at your fingertips
@@ -89,15 +89,15 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-      <div className="w-2/4 p-5">
+      <div className="signin-form w-2/4 p-5">
         <Form
           className="form-signin justify-center"
           onSubmit={handleSubmit((data) => {
             dispatch(signIn(data));
           })}
         >
-          <div className="border-b w-full text-center pt-2 mx-24">
-            <span className="text-3xl font-bold mb-3 signin">
+          <div className="signin-title border-b w-full text-center pt-2 mx-24">
+            <span className=" text-3xl font-bold mb-3 signin">
               Sign In to Fiverr
             </span>
           </div>
@@ -105,7 +105,7 @@ const SignIn = () => {
             <div className="w-full text-center mb-3">
               <span className="text-lg font-semibold">Continue with</span>
             </div>
-            <div className="w-full flex justify-center border-b mx-32 pb-4">
+            <div className="signin-social w-full flex justify-center border-b mx-32 pb-4">
               <span className="mr-3 cursor-pointer">
                 <svg
                   className="w-[30px] h-[30px]"
@@ -193,7 +193,7 @@ const SignIn = () => {
               <p className="text-red-600 error">{errors?.password?.message}</p>
             </div>
           </div>
-          <div className="w-full px-6">
+          <div className="signin-footer w-full px-6">
             <button className="btn-signin w-full h-[40px] mb-3">
               <span className="text-white text-xl font-semibold">Continue</span>
             </button>
@@ -202,7 +202,7 @@ const SignIn = () => {
                 <span className="text-black-500">
                   Not a remember yet?
                   <Link
-                    to="/dangky"
+                    to="/signup"
                     className="cursor-pointer underline text-green-600 ml-2"
                   >
                     Join Now

@@ -67,11 +67,11 @@ const Routers = () => {
       ],
     },
     {
-      path: "/dangnhap",
+      path: "/signin",
       element: <SignIn />,
     },
     {
-      path: "/dangky",
+      path: "/signup",
       element: <SignUp />,
     },
     {
