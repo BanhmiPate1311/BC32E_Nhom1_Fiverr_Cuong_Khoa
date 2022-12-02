@@ -34,7 +34,6 @@ export const { reducer: thueCongViecReducer, actions: thueCongViecActions } =
         })
         .addCase(delHiredWork.fulfilled, (state, action) => {
           state.isFetching = false;
-          state.listHiredWork = action.payload;
           console.log(" action.payload: ", action.payload);
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
         })
@@ -165,6 +164,7 @@ export const delHiredWork = createAsyncThunk(
         },
       });
       console.log("result.data.content: ", result.data.content);
+      dispatch(getListHiredWork());
       dispatch(getServicesSearch());
       return result.data.content;
     } catch (err) {

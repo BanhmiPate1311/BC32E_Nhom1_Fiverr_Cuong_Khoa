@@ -11,6 +11,7 @@ import {
 import "./Profile.css";
 import { Rate } from "antd";
 import Avatar from "react-avatar";
+import Swal from "sweetalert2";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -440,7 +441,19 @@ const Profile = () => {
                           <button
                             className="bg-green-300 px-5 py-3 rounded-md text-white text-lg"
                             onClick={() => {
-                              dispatch(delHiredWork(item?.id));
+                              Swal.fire({
+                                title: "Are you sure?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Yes, delete it!",
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                  dispatch(delHiredWork(item?.id));
+                                }
+                              });
                             }}
                           >
                             X

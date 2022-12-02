@@ -36,9 +36,9 @@ const SignUp = () => {
     <Container className="conatiner flex">
       <div className="signup-introduce w-2/4 bg-[#F1FDF7]">
         <div className="px-10 py-5 animate__animated animate__bounce animate__fadeInLeft">
-          <h1 className="text-4xl font-bold mb-10">
+          <Link to="/" className="text-4xl font-bold mb-10 text-green-500">
             A whole world of freelance talent at your fingertips
-          </h1>
+          </Link>
           <div>
             <div className="mb-5">
               <div className="text-xl font-semibold flex items-center">
