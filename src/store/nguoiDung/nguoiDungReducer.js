@@ -169,7 +169,7 @@ export const putUserInfo = createAsyncThunk(
         },
         data,
       });
-      dispatch(getUser());
+      dispatch(getUser(data.id));
       return result.data.content;
     } catch (err) {
       console.log("error", err.response.data);
