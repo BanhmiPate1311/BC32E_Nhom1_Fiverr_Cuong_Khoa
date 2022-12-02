@@ -114,19 +114,7 @@ export const { reducer: thueCongViecReducer, actions: thueCongViecActions } =
         })
         .addCase(checkDoneWork.fulfilled, (state, action) => {
           state.isFetching = false;
-          Swal.fire({
-            title: "Done Task?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes!",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire("Finish!", "Your job is done.", "success");
-            }
-          });
+          Swal.fire("Finish!", "Your job is done.", "success");
         })
         .addCase(checkDoneWork.rejected, (state, action) => {
           state.isFetching = false;

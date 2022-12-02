@@ -105,7 +105,7 @@ const AddNewComment = () => {
                   })}
                 />
                 <p className="text-red-600 error">
-                  {errors.ngayBinhLuan?.message}
+                  {errors?.ngayBinhLuan?.message}
                 </p>
               </div>
               <div className="mb-3">
@@ -127,13 +127,13 @@ const AddNewComment = () => {
                   {...register("saoBinhLuan", {
                     required: "Looks like this rate is incomplete.",
                     pattern: {
-                      value: /^[0-9\b]+$/,
-                      message: "Please input numeric characters only.",
+                      value: /^[0-5\b]+$/,
+                      message: "Please input numeric 1 to 5 characters only.",
                     },
                   })}
                 />
                 <p className="text-red-600 error">
-                  {errors.saoBinhLuan?.message}
+                  {errors?.saoBinhLuan?.message}
                 </p>
               </div>
               <div className="mt-3 text-center">

@@ -51,12 +51,12 @@ const Comments = () => {
   const data = [];
   listCommentsSearch?.map((item, i) => {
     data.push({
-      id: <p key={i}>{item.id}</p>,
-      maCongViec: item.maCongViec,
-      maNguoiBinhLuan: item.maNguoiBinhLuan,
-      ngayBinhLuan: moment(item.ngayBinhLuan).format("l"),
-      noiDung: item.noiDung,
-      saoBinhLuan: item.saoBinhLuan,
+      id: item?.id,
+      maCongViec: item?.maCongViec,
+      maNguoiBinhLuan: item?.maNguoiBinhLuan,
+      ngayBinhLuan: moment(item?.ngayBinhLuan).format("l"),
+      noiDung: item?.noiDung,
+      saoBinhLuan: item?.saoBinhLuan,
     });
   });
 
@@ -88,7 +88,7 @@ const Comments = () => {
             onSubmit={handleSubmit((data) => {
               dispatch(
                 changeComment({
-                  id: i.id.props.children,
+                  id: i?.id,
                   maCongViec: parseInt(data.maCongViec),
                   maNguoiBinhLuan: parseInt(data.maNguoiBinhLuan),
                   ngayBinhLuan: data.ngayBinhLuan,
@@ -101,7 +101,7 @@ const Comments = () => {
             <div className="w-full flex text-center border-b">
               <div className="w-full flex text-lg font-medium mr-1">
                 ID:
-                <div>{i?.id?.props?.children}</div>
+                <div>{i?.id}</div>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -117,7 +117,9 @@ const Comments = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 m-0">{errors.maCongViec?.message}</p>
+                <p className="text-red-600 m-0">
+                  {errors?.maCongViec?.message}
+                </p>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -134,7 +136,7 @@ const Comments = () => {
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.maNguoiBinhLuan?.message}
+                  {errors?.maNguoiBinhLuan?.message}
                 </p>
               </div>
             </div>
@@ -153,7 +155,7 @@ const Comments = () => {
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.ngayBinhLuan?.message}
+                  {errors?.ngayBinhLuan?.message}
                 </p>
               </div>
             </div>
@@ -180,13 +182,13 @@ const Comments = () => {
                   {...register("saoBinhLuan", {
                     required: "Looks like this rate is incomplete.",
                     pattern: {
-                      value: /^[0-9\b]+$/,
-                      message: "Please input numeric characters only.",
+                      value: /^[0-5\b]+$/,
+                      message: "Please input numeric 1 to 5 characters only.",
                     },
                   })}
                 />
                 <p className="text-red-600 error">
-                  {errors.saoBinhLuan?.message}
+                  {errors?.saoBinhLuan?.message}
                 </p>
               </div>
             </div>
@@ -382,7 +384,6 @@ const Comments = () => {
               allWork?.map((item) => {
                 if (item?.id === record?.maCongViec) {
                   dispatch(layBinhLuanTheoCongViec(record?.maCongViec));
-                  console.log("record.maLoaiCongviec: ", record?.maCongViec);
                 }
               });
             }}
@@ -404,7 +405,7 @@ const Comments = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteComment(record?.id?.props?.children));
+                    dispatch(deleteComment(record?.id));
                   }
                 });
               }}

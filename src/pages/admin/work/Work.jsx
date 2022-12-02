@@ -30,13 +30,13 @@ const Work = () => {
   const data = [];
   allWork?.map((value, i) => {
     data.push({
-      id: <p key={i}>{value.id}</p>,
-      hinhAnh: <img src={value.hinhAnh} alt="" />,
-      tenCongViec: value.tenCongViec,
-      danhGia: value.danhGia,
-      giaTien: value.giaTien,
-      moTa: value.moTa,
-      moTaNgan: value.moTaNgan,
+      id: value?.id,
+      hinhAnh: <img src={value?.hinhAnh} alt="" />,
+      tenCongViec: value?.tenCongViec,
+      danhGia: value?.danhGia,
+      giaTien: value?.giaTien,
+      moTa: value?.moTa,
+      moTaNgan: value?.moTaNgan,
     });
   });
 
@@ -71,7 +71,7 @@ const Work = () => {
               console.log("data: ", data);
               dispatch(
                 putWorkDetail({
-                  id: i.id.props.children || i.id,
+                  id: i.id,
                   tenCongViec: data.tenCongViec,
                   danhGia: data.danhGia,
                   giaTien: data.giaTien,
@@ -84,7 +84,7 @@ const Work = () => {
             <div className="w-full flex text-center border-b">
               <div className="w-full flex text-lg font-medium mr-1">
                 ID:
-                <div>{i.id.props.children}</div>
+                <div>{i.id}</div>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -97,7 +97,7 @@ const Work = () => {
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.tenCongViec?.message}
+                  {errors?.tenCongViec?.message}
                 </p>
               </div>
             </div>
@@ -114,7 +114,7 @@ const Work = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 m-0">{errors.danhGia?.message}</p>
+                <p className="text-red-600 m-0">{errors?.danhGia?.message}</p>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -130,7 +130,7 @@ const Work = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 m-0">{errors.giaTien?.message}</p>
+                <p className="text-red-600 m-0">{errors?.giaTien?.message}</p>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -144,7 +144,7 @@ const Work = () => {
                     required: "Looks like this name is incomplete.",
                   })}
                 ></textarea>
-                <p className="text-red-600 m-0">{errors.moTa?.message}</p>
+                <p className="text-red-600 m-0">{errors?.moTa?.message}</p>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -158,7 +158,7 @@ const Work = () => {
                     required: "Looks like this name is incomplete.",
                   })}
                 ></textarea>
-                <p className="text-red-600 m-0">{errors.moTaNgan?.message}</p>
+                <p className="text-red-600 m-0">{errors?.moTaNgan?.message}</p>
               </div>
             </div>
             <div className="text-center">
@@ -371,7 +371,7 @@ const Work = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteWork(record.id.props.children || record.id));
+                    dispatch(deleteWork(record?.id));
                   }
                 });
               }}
