@@ -158,7 +158,7 @@ export const getUser = createAsyncThunk(
 
 export const putUserInfo = createAsyncThunk(
   "nguoiDung/putUserProfile",
-  async (data, { rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue }) => {
     try {
       const result = await axios({
         url: `https://fiverrnew.cybersoft.edu.vn/api/users/${data.id}`,
@@ -169,8 +169,7 @@ export const putUserInfo = createAsyncThunk(
         },
         data,
       });
-      console.log("data: ", data);
-      console.log("result.data.content: ", result.data.content);
+      dispatch(getUser());
       return result.data.content;
     } catch (err) {
       console.log("error", err.response.data);
