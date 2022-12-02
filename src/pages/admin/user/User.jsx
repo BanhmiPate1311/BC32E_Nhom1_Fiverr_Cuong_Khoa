@@ -27,14 +27,14 @@ const User = () => {
   }, []);
 
   const data = [];
-  listUserPageSearch?.data.map((item, i) => {
+  listUserPageSearch?.data?.map((item, i) => {
     data.push({
-      id: <p key={i}>{item.id}</p>,
-      name: item.name,
-      birthday: item.birthday,
-      email: item.email,
-      phone: item.phone,
-      role: item.role,
+      id: item?.id,
+      name: item?.name,
+      birthday: item?.birthday,
+      email: item?.email,
+      phone: item?.phone,
+      role: item?.role,
     });
   });
   console.log(data);
@@ -79,7 +79,7 @@ const User = () => {
               console.log("data: ", data);
               dispatch(
                 putChangeUserToAdmin({
-                  id: i.id.props.children || i.id,
+                  id: i.id,
                   name: i.name,
                   email: i.email,
                   phone: i.phone,
@@ -92,7 +92,7 @@ const User = () => {
             <div className="w-full flex text-center border-b">
               <div className="w-full flex text-lg font-medium mr-1">
                 ID:
-                <div>{i.id.props.children}</div>
+                <div>{i.id}</div>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -346,7 +346,7 @@ const User = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(deleteUser(record.id.props.children));
+                    dispatch(deleteUser(record?.id));
                   }
                 });
               }}

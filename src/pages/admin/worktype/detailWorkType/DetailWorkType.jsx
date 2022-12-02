@@ -54,11 +54,11 @@ const DetailWorkType = () => {
 
   listWorkType?.map((value, index) => {
     data.push({
-      id: value.id,
-      hinhAnh: <img src={value.hinhAnh}></img>,
-      tenNhom: value.tenNhom,
-      dsChiTietLoai: value.dsChiTietLoai,
-      maLoaiCongviec: value.maLoaiCongviec,
+      id: value?.id,
+      hinhAnh: <img src={value?.hinhAnh}></img>,
+      tenNhom: value?.tenNhom,
+      dsChiTietLoai: value?.dsChiTietLoai,
+      maLoaiCongviec: value?.maLoaiCongviec,
     });
   });
 
@@ -92,7 +92,7 @@ const DetailWorkType = () => {
               console.log("data: ", data);
               dispatch(
                 putDetailWorkType({
-                  id: i.id,
+                  id: i?.id,
                   tenChiTiet: data.tenChiTiet,
                   maLoaiCongViec: parseInt(data.maLoaiCongViec),
                   danhSachChiTiet: [parseInt(data.danhSachChiTiet)],
@@ -103,7 +103,7 @@ const DetailWorkType = () => {
             <div className="w-full flex text-center border-b">
               <div className="w-full flex text-lg font-medium mr-1">
                 ID:
-                <div className="ml-1">{i.id}</div>
+                <div className="ml-1">{i?.id}</div>
               </div>
             </div>
             <div className="w-full mt-2">

@@ -116,7 +116,9 @@ const AddAdmin = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 error">{errors.password?.message}</p>
+                <p className="text-red-600 error">
+                  {errors?.password?.message}
+                </p>
               </div>
               <div className="mb-3">
                 <div className="text-lg font-semibold">Phone</div>

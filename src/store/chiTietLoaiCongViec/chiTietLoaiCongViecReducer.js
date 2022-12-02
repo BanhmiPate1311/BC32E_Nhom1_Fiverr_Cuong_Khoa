@@ -35,10 +35,17 @@ export const {
       })
       .addCase(deleteDetailWorkType.fulfilled, (state, action) => {
         state.isFetching = false;
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       })
       .addCase(deleteDetailWorkType.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
       })
       //putDetailWorkType
       .addCase(putDetailWorkType.pending, (state, action) => {

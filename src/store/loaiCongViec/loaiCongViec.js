@@ -34,19 +34,7 @@ export const { reducer: loaiCongViecReducer, actions: loaiCongViecActions } =
         })
         .addCase(deleteWorkType.fulfilled, (state, action) => {
           state.isFetching = false;
-          Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
-            }
-          });
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
         })
         .addCase(deleteWorkType.rejected, (state, action) => {
           state.isFetching = false;
@@ -117,37 +105,6 @@ export const { reducer: loaiCongViecReducer, actions: loaiCongViecActions } =
         .addCase(getWorkTypeById.rejected, (state, action) => {
           state.isFetching = false;
           state.error = action.payload;
-        })
-
-        //deleteDetailWorkType
-        .addCase(deleteDetailWorkType.pending, (state, action) => {
-          state.isFetching = true;
-        })
-        .addCase(deleteDetailWorkType.fulfilled, (state, action) => {
-          state.isFetching = false;
-          Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
-            }
-          });
-        })
-        .addCase(deleteDetailWorkType.rejected, (state, action) => {
-          state.isFetching = false;
-          state.error = action.payload;
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
         });
     },
   });
@@ -248,27 +205,6 @@ export const getWorkTypeById = createAsyncThunk(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
         },
       });
-      return result.data.content;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const deleteDetailWorkType = createAsyncThunk(
-  "loaiCongViec/deleteDetailWorkType",
-  async (detailWorkId, { dispatch, rejectWithValue }) => {
-    try {
-      const result = await axios({
-        url: `https://fiverrnew.cybersoft.edu.vn/api/chi-tiet-loai-cong-viec/${detailWorkId}`,
-        method: "DELETE",
-        headers: {
-          token: localStorage.getItem("TOKEN"),
-          TokenCyberSoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzMkUiLCJIZXRIYW5TdHJpbmciOiIyMC8wMy8yMDIzIiwiSGV0SGFuVGltZSI6IjE2NzkyNzA0MDAwMDAiLCJuYmYiOjE2NTA0NzQwMDAsImV4cCI6MTY3OTQxODAwMH0.S7l5kogAVJjRW8mjJ5gosJraYq5ahYjrBwnMJAaGxlY",
-        },
-      });
-      dispatch(getWorkType());
       return result.data.content;
     } catch (err) {
       return rejectWithValue(err.response.data);

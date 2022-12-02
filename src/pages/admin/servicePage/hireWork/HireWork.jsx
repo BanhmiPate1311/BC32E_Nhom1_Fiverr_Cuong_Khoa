@@ -49,20 +49,20 @@ const HireWork = () => {
 
   const data = [];
   listServicesSearch?.data?.map((item, i) => {
-    if (item.hoanThanh === true) {
+    if (item?.hoanThanh === true) {
       data.push({
-        id: <p key={i}>{item.id}</p>,
-        maCongViec: item.maCongViec,
-        maNguoiThue: item.maNguoiThue,
-        ngayThue: moment(item.ngayThue).format("MMMM Do YYYY, h:mm:ss a"),
+        id: item?.id,
+        maCongViec: item?.maCongViec,
+        maNguoiThue: item?.maNguoiThue,
+        ngayThue: moment(item?.ngayThue).format("MMMM Do YYYY, h:mm:ss a"),
         hoanThanh: "true",
       });
     } else {
       data.push({
-        id: <p key={i}>{item.id}</p>,
-        maCongViec: item.maCongViec,
-        maNguoiThue: item.maNguoiThue,
-        ngayThue: moment(item.ngayThue).format("MMMM Do YYYY, h:mm:ss a"),
+        id: item?.id,
+        maCongViec: item?.maCongViec,
+        maNguoiThue: item?.maNguoiThue,
+        ngayThue: moment(item?.ngayThue).format("MMMM Do YYYY, h:mm:ss a"),
         hoanThanh: "false",
       });
     }
@@ -94,11 +94,10 @@ const HireWork = () => {
           <form
             className="w-full h-full"
             onSubmit={handleSubmit((data) => {
-              console.log("data: ", typeof parseInt(data.maCongViec));
               checkGender(data);
               dispatch(
                 putHireWork({
-                  id: i.id.props.children,
+                  id: i?.id,
                   maCongViec: parseInt(data.maCongViec),
                   maNguoiThue: parseInt(data.maNguoiThue),
                   ngayThue: data.ngayThue,
@@ -110,7 +109,7 @@ const HireWork = () => {
             <div className="w-full flex text-center border-b">
               <div className="w-full flex text-lg font-medium mr-1">
                 ID:
-                <div>{i.id.props.children}</div>
+                <div>{i?.id}</div>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -126,7 +125,9 @@ const HireWork = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 m-0">{errors.maCongViec?.message}</p>
+                <p className="text-red-600 m-0">
+                  {errors?.maCongViec?.message}
+                </p>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -143,7 +144,7 @@ const HireWork = () => {
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.maNguoiThue?.message}
+                  {errors?.maNguoiThue?.message}
                 </p>
               </div>
             </div>
@@ -161,7 +162,7 @@ const HireWork = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 m-0">{errors.ngayThue?.message}</p>
+                <p className="text-red-600 m-0">{errors?.ngayThue?.message}</p>
               </div>
             </div>
             <div className="w-full mt-2">
@@ -357,7 +358,19 @@ const HireWork = () => {
           <CheckCircleTwoTone
             className="cursor-pointer"
             onClick={() => {
-              dispatch(checkDoneWork(record.id.props.children));
+              Swal.fire({
+                title: "Done Task?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes!",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  dispatch(checkDoneWork(record?.id));
+                }
+              });
             }}
           />
           <a>
@@ -377,7 +390,7 @@ const HireWork = () => {
                   confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    dispatch(delHiredWork(record.id.props.children));
+                    dispatch(delHiredWork(record?.id));
                   }
                 });
               }}

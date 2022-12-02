@@ -113,7 +113,7 @@ const AddWork = () => {
                     },
                   })}
                 />
-                <p className="text-red-600 error">{errors.moTa?.message}</p>
+                <p className="text-red-600 error">{errors?.moTa?.message}</p>
               </div>
               <div className="mb-3">
                 <div className="text-lg font-semibold">Short description</div>

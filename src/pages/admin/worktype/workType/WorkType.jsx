@@ -66,7 +66,7 @@ const WorkType = () => {
               console.log("data: ", data);
               dispatch(
                 putWorkType({
-                  id: i.id || i.id.props.children,
+                  id: i.id,
                   tenLoaiCongViec: data.tenLoaiCongViec,
                 })
               );
@@ -88,7 +88,7 @@ const WorkType = () => {
                   })}
                 />
                 <p className="text-red-600 m-0">
-                  {errors.tenLoaiCongViec?.message}
+                  {errors?.tenLoaiCongViec?.message}
                 </p>
               </div>
             </div>
@@ -236,8 +236,6 @@ const WorkType = () => {
       key: "tenLoaiCongViec",
       width: "65%",
       ...getColumnSearchProps("tenLoaiCongViec"),
-      sorter: (a, b) => a.id.length - b.id.length,
-      sortDirections: ["descend", "ascend"],
     },
     {
       title: "Edit",
@@ -255,7 +253,19 @@ const WorkType = () => {
             <DeleteTwoTone
               twoToneColor="#ee1d40"
               onClick={() => {
-                dispatch(deleteWorkType(record.id || record.id.props.children));
+                Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    dispatch(deleteWorkType(record?.id));
+                  }
+                });
               }}
             ></DeleteTwoTone>
           </a>
