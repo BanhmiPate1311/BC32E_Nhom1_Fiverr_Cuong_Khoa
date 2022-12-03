@@ -111,7 +111,6 @@ const AddNewHire = () => {
                   className="border rounded-sm px-3 py-2"
                   {...register("hoanThanh")}
                 >
-                  <option value="true">True</option>
                   <option value="false">False</option>
                 </select>
                 <p className="text-red-600 error">
